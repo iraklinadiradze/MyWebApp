@@ -1,0 +1,63 @@
+<!-- Vertical splitter -->
+
+<kendo-splitter orientation="vertical" class="full-height">
+
+  <kendo-splitter-pane style="height:60px;" [resizable]="false">
+    <h3>Top pane</h3>
+
+  </kendo-splitter-pane>
+
+  <kendo-splitter-pane style="height:100%;">
+
+    <kendo-splitter orientation="horizontal" style="height:100%;">
+
+      <kendo-splitter-pane size="200px;">
+        <h3>Menu pane</h3>
+
+        <kendo-treeview
+                        [nodes]="treeNodes"
+                        [textField]="[ 'menuName', 'menuName' ]"
+                        kendoTreeViewExpandable
+                        kendoTreeViewHierarchyBinding
+                        childrenField="subMenus"
+                        [trackBy]="trackBy"
+                        [isSelected]="false"
+                        (nodeClick)="handleNodeClick($event)"
+                        >
+        </kendo-treeview>
+
+      </kendo-splitter-pane>
+
+
+      <kendo-splitter-pane>
+        <p>Content pane</p>
+
+        <!--
+        <div>
+          Debug Info: {{selectedTabName}}
+        </div>
+        -->
+
+        <kendo-tabstrip (tabSelect)="onTabSelect($event)">
+
+          <kendo-tabstrip-tab *ngFor="let _tab of tabs; index as i;" [title]="_tab.menuName" [selected]="_tab.menuName==selectedTab">
+
+            <ng-template kendoTabTitle>
+              <button kendoButton icon="delete" look="flat" (click)="onTabCloseClick(i)"></button>
+            </ng-template>
+
+          </kendo-tabstrip-tab>
+
+        </kendo-tabstrip>
+
+        <ng-template DynamicComponentHost>
+        </ng-template>
+
+      </kendo-splitter-pane>
+      </kendo-splitter>
+
+    </kendo-splitter-pane>
+
+    <kendo-splitter-pane style="height:50px;" [resizable]="false"> <h3>Bottom pane</h3> </kendo-splitter-pane>
+
+  </kendo-splitter>

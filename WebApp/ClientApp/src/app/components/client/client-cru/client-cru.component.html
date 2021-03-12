@@ -1,0 +1,76 @@
+
+Params:{{debugMesssage}}
+<br>
+<div class="example-wrap">
+  <form [formGroup]="registerForm" class="k-form k-form-horizontal">
+    <fieldset class="k-form-fieldset">
+      <legend class="k-form-legend">Client Fetch Paramteres</legend>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label for="Id" text="Client Id"></kendo-label>
+        <kendo-numerictextbox formControlName="Id"
+                              format="'n'">
+        </kendo-numerictextbox>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label for="firstName" text="First Name"></kendo-label>
+        <kendo-textbox formControlName="firstName">
+        </kendo-textbox>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label for="lastName" text="Last Name"></kendo-label>
+        <kendo-textbox formControlName="lastName">
+        </kendo-textbox>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label for="personalId" text="Personal ID"></kendo-label>
+        <kendo-textbox formControlName="personalId">
+        </kendo-textbox>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label for="birthDate" text="Birth Date"></kendo-label>
+        <kendo-datepicker #birthDate
+                          formControlName="birthDate"
+                          [min]="min"
+                          [max]="max">
+        </kendo-datepicker>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label for="address" text="address"></kendo-label>
+        <kendo-textbox formControlName="address">
+        </kendo-textbox>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label for="mobile" text="mobile"></kendo-label>
+        <kendo-textbox formControlName="mobile">
+        </kendo-textbox>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label for="clientTypeId" text="Client Type"></kendo-label>
+
+        <kendo-dropdownlist
+                            formControlName="clientTypeId"
+                            [data]="clientTypes"
+                            [textField]="'clientTypeName'"
+                            [valueField]="'id'"
+                            [valuePrimitive]="false"
+                            >
+        </kendo-dropdownlist>
+      </kendo-formfield>
+
+      <div class="k-form-buttons example-wrap">
+        <button class='btn btn-primary' (click)="saveClicked()">Ok</button>
+
+        <button class='btn btn-primary' (click)="cancelClicked()">Cancel</button>
+      </div>
+
+    </fieldset>
+  </form>
+</div>

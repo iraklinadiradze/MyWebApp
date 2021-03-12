@@ -1,0 +1,162 @@
+<!--
+  id : number;
+  topRecords: number;
+  firstName : string;
+  lastName  : string;
+  pid: string;
+  bodFrom: Date;
+  bodTo: Date;
+  clientTypeID: number;
+
+
+  <form [formGroup]="form">
+  <kendo-label [for]="edt_TopRecords" text="Maximum Records"></kendo-label>
+  <kendo-numerictextbox formControlName="edt_TopRecords1"
+                        placeholder="Enter Maximum Records to return"
+                        [showSuccessIcon]="'initial'"
+                        [showErrorIcon]="'initial'"
+                        [format]="'n'">
+  </kendo-numerictextbox>
+
+  <fieldset class="k-form-fieldset">
+    <kendo-formfield>
+      <kendo-label [for]="edt_TopRecords" text="Maximum Records"></kendo-label>
+      <kendo-numerictextbox formControlName="edt_TopRecords"
+                            placeholder="Enter Maximum Records to return"
+                            [showSuccessIcon]="'initial'"
+                            [showErrorIcon]="'initial'"
+                            [format]="'n'">
+      </kendo-numerictextbox>
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <kendo-label [for]="edt_Id" text="Client Id"></kendo-label>
+      <kendo-numerictextbox formControlName="edt_Id"
+                            placeholder="Enter Client id"
+                            [showSuccessIcon]="'initial'"
+                            [showErrorIcon]="'initial'"
+                            [format]="'n'">
+      </kendo-numerictextbox>
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <kendo-label [for]="edt_FirstName" text="First Name Starts with"></kendo-label>
+      <kendo-textbox formControlName="edt_FirstName"
+                     placeholder="Enter First Name"
+                     [showSuccessIcon]="'initial'"
+                     [showErrorIcon]="'initial'">
+      </kendo-textbox>
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <kendo-label [for]="edt_LastName" text="Last Name Starts with"></kendo-label>
+      <kendo-textbox formControlName="edt_LastName"
+                     placeholder="Enter Last Name"
+                     [showSuccessIcon]="'initial'"
+                     [showErrorIcon]="'initial'">
+      </kendo-textbox>
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <kendo-label [for]="edt_pid" text="Personal ID"></kendo-label>
+      <kendo-textbox formControlName="edt_pid"
+                     placeholder="Enter Personal IDs"
+                     [showSuccessIcon]="'initial'"
+                     [showErrorIcon]="'initial'">
+      </kendo-textbox>
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <kendo-label [for]="edt_bodFrom" text="Birth Date From"></kendo-label>
+      <kendo-textbox formControlName="edt_bodFrom"
+                     placeholder="Birth Date From "
+                     [showSuccessIcon]="'initial'"
+                     [showErrorIcon]="'initial'">
+      </kendo-textbox>
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <kendo-label [for]="edt_bodTo" text="Birth Date To"></kendo-label>
+      <kendo-textbox formControlName="edt_bodTo"
+                     placeholder="Birth Date To "
+                     [showSuccessIcon]="'initial'"
+                     [showErrorIcon]="'initial'">
+      </kendo-textbox>
+    </kendo-formfield>
+
+  </fieldset>
+</form>
+
+
+-->
+Params:{{debugMesssage}}
+<br>
+<div class="example-wrap">
+  <form [formGroup]="registerForm" class="k-form k-form-horizontal" >
+    <fieldset class="k-form-fieldset">
+      <legend class="k-form-legend">Client Fetch Paramteres</legend>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label [for]="edt_TopRecords" text="Maximum Records"></kendo-label>
+        <kendo-numerictextbox formControlName="topRecords"
+                              [format]="'n'">
+        </kendo-numerictextbox>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label [for]="edt_Id" text="Client Id"></kendo-label>
+        <kendo-numerictextbox formControlName="id"
+                              [format]="'n'">
+        </kendo-numerictextbox>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label [for]="edt_FirstName" text="First Name Starts with" ></kendo-label>
+        <kendo-textbox formControlName="firstName"
+                       >
+        </kendo-textbox>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label [for]="edt_LastName" text="Last Name Starts with" ></kendo-label>
+        <kendo-textbox formControlName="lastName"
+                       >
+        </kendo-textbox>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label [for]="edt_pid" text="Personal ID" ></kendo-label>
+        <kendo-textbox formControlName="pid"
+                       >
+        </kendo-textbox>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label [for]="edt_bodFrom" text="Birth Date From" ></kendo-label>
+        <kendo-datepicker #birthDate
+                          formControlName="bodFrom"
+                          [min]="min"
+                          [max]="max"
+                          >
+        </kendo-datepicker>
+      </kendo-formfield>
+
+      <kendo-formfield [orientation]="'horizontal'">
+        <kendo-label [for]="edt_bodTo" text="Birth Date To" ></kendo-label>
+        <kendo-datepicker #birthDate
+                          formControlName="bodTo"
+                          [min]="min"
+                          [max]="max"
+                          >
+        </kendo-datepicker>
+      </kendo-formfield>
+
+      <div class="k-form-buttons example-wrap">
+        <button class='btn btn-primary' (click)="dataFetchClicked()">Ok</button>
+
+        <button class='btn btn-primary' (click)="dataFetchCancelClicked()">Cancel</button>
+      </div>
+
+    </fieldset>
+  </form>
+</div>
