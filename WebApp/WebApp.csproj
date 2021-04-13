@@ -25,16 +25,25 @@
 
   <ItemGroup>
     <None Remove="ClientApp\file.ts" />
+    <None Remove="ClientApp\src\app\common\Auth.service.ts" />
     <None Remove="ClientApp\src\app\common\ComponentTypes.ts" />
     <None Remove="ClientApp\src\app\common\DynamicDirectives\dynamic-component.service.ts" />
     <None Remove="ClientApp\src\app\common\DynamicDirectives\dynamic-component.ts" />
     <None Remove="ClientApp\src\app\common\file.ts" />
+    <None Remove="ClientApp\src\app\common\FormActionTypes.ts" />
+    <None Remove="ClientApp\src\app\common\HttpInterceptor.ts" />
     <None Remove="ClientApp\src\app\common\KendoGridColumnDateFormatDirective.ts" />
     <None Remove="ClientApp\src\app\components\clientType\clientType-entity.ts" />
     <None Remove="ClientApp\src\app\components\clientType\clientType.service.ts" />
     <None Remove="ClientApp\src\app\components\client\client-entity.ts" />
     <None Remove="ClientApp\src\app\components\client\client-fetchdata\client-fetchdata.service.ts" />
     <None Remove="ClientApp\src\app\components\client\client-list\client-list.service.ts" />
+    <None Remove="ClientApp\src\app\components\security\auth.guard.ts" />
+    <None Remove="ClientApp\src\app\components\security\error.interceptor.ts" />
+    <None Remove="ClientApp\src\app\components\security\jwt.interceptor.ts" />
+    <None Remove="ClientApp\src\app\components\security\login\authentication.service.ts" />
+    <None Remove="ClientApp\src\app\components\security\sessionInfo.ts" />
+    <None Remove="ClientApp\src\app\components\security\user\user.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,10 +52,13 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\file.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\Auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\FormActionTypes.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\ComponentTypes.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\DynamicDirectives\dynamic-component.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\DynamicDirectives\dynamic-component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\file.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\HttpInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\KendoGridColumnDateFormatDirective.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\clientType\clientType-entity.ts">
       <SubType>Code</SubType>
@@ -59,6 +71,12 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\components\client\client.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\security\auth.guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\security\error.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\security\authentication.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\security\jwt.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\security\sessionInfo.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\security\user.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

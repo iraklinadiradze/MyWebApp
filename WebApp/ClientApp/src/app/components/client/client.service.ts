@@ -16,11 +16,15 @@ export class ClientService {
   }
 
   createClient(client: Client) {
+    console.log("add client:" + JSON.stringify(client));
     return this.http.post(this.baseUrl, client);
   }
 
-  editClient(client: Client) {
-    return this.http.put(this.baseUrl, client);
+  editClient(id, client: Client) {
+    console.log("id:" + id);
+    console.log("client:" + JSON.stringify(client));
+
+    return this.http.put(this.baseUrl+'/'+id, client);
   }
 
   deleteClient(clientID: number) {
@@ -36,6 +40,11 @@ export class ClientService {
     return this.http.put(this.baseUrl + '/' + clientID + "/unpost", "");
   }
   */
+
+  getClient(id: number) {
+    console.log(this.baseUrl + '/' + id);
+    return this.http.get < Client>(this.baseUrl + '/' + id);
+  }
 
   getClientView(clientViewParams: ClientViewParams) {
     var queryStr="";

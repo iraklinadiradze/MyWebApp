@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -38,12 +38,15 @@ import { KendoGridColumnDateFormatDirective } from './common/KendoGridColumnDate
 import { ClientListComponent } from './components/client/client-list/client-list.component';
 import { ClientFetchDataComponent } from './components/client/client-fetchdata/client-fetchdata.component';
 import { ClientCruComponent } from './components/client/client-cru/client-cru.component';
+import { LoginComponent } from './components/security/login/login.component';
+import { ContainerComponent } from './common/DynamicDirectives/container/container.component';
+
+
+import { JsonDateInterceptor, ErrorInterceptor} from './common/HttpInterceptor';
+
 
 // environment
 import { environment } from '../environments/environment';
-import { from } from 'rxjs';
-
-
 
 
 Config.PLATFORM_TARGET = Config.PLATFORMS.WEB;
@@ -57,9 +60,12 @@ export function createTranslateLoader(http: HttpClient) {
         AppComponent,
         LoadingComponent,
 
+        LoginComponent,
+
         ClientListComponent,
         ClientFetchDataComponent,
         ClientCruComponent,
+        ContainerComponent,
 
         DynamicComponentDirective,
         KendoGridColumnDateFormatDirective
@@ -93,7 +99,12 @@ export function createTranslateLoader(http: HttpClient) {
             }
         })
     ],
-    providers: [DynamicComponentService, KendoGridColumnDateFormatDirective],
+  providers: [
+    DynamicComponentService,
+    KendoGridColumnDateFormatDirective,
+    { provide: HTTP_INTERCEPTORS, useClass: JsonDateInterceptor, multi: true },
+//    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

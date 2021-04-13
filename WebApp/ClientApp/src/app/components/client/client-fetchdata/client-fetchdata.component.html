@@ -90,8 +90,7 @@
 
 -->
 Params:{{debugMesssage}}
-<br>
-<div class="example-wrap">
+<div style="width:50%;margin: auto;">
   <form [formGroup]="registerForm" class="k-form k-form-horizontal" >
     <fieldset class="k-form-fieldset">
       <legend class="k-form-legend">Client Fetch Paramteres</legend>
@@ -111,51 +110,47 @@ Params:{{debugMesssage}}
       </kendo-formfield>
 
       <kendo-formfield [orientation]="'horizontal'">
-        <kendo-label [for]="edt_FirstName" text="First Name Starts with" ></kendo-label>
-        <kendo-textbox formControlName="firstName"
-                       >
+        <kendo-label [for]="edt_FirstName" text="First Name Starts with"></kendo-label>
+        <kendo-textbox formControlName="firstName">
         </kendo-textbox>
       </kendo-formfield>
 
       <kendo-formfield [orientation]="'horizontal'">
-        <kendo-label [for]="edt_LastName" text="Last Name Starts with" ></kendo-label>
-        <kendo-textbox formControlName="lastName"
-                       >
+        <kendo-label [for]="edt_LastName" text="Last Name Starts with"></kendo-label>
+        <kendo-textbox formControlName="lastName">
         </kendo-textbox>
       </kendo-formfield>
 
       <kendo-formfield [orientation]="'horizontal'">
-        <kendo-label [for]="edt_pid" text="Personal ID" ></kendo-label>
-        <kendo-textbox formControlName="pid"
-                       >
+        <kendo-label [for]="edt_pid" text="Personal ID"></kendo-label>
+        <kendo-textbox formControlName="pid">
         </kendo-textbox>
       </kendo-formfield>
 
       <kendo-formfield [orientation]="'horizontal'">
-        <kendo-label [for]="edt_bodFrom" text="Birth Date From" ></kendo-label>
+        <kendo-label [for]="edt_bodFrom" text="Birth Date From"></kendo-label>
         <kendo-datepicker #birthDate
                           formControlName="bodFrom"
                           [min]="min"
                           [max]="max"
-                          >
+                          style="font-size:10px">
         </kendo-datepicker>
       </kendo-formfield>
 
       <kendo-formfield [orientation]="'horizontal'">
-        <kendo-label [for]="edt_bodTo" text="Birth Date To" ></kendo-label>
-        <kendo-datepicker #birthDate
-                          formControlName="bodTo"
+        <kendo-label [for]="edt_bodTo" text="Birth Date To"></kendo-label>
+        <kendo-datepicker formControlName="bodTo"
                           [min]="min"
-                          [max]="max"
-                          >
+                          [max]="max">
         </kendo-datepicker>
       </kendo-formfield>
 
-      <div class="k-form-buttons example-wrap">
-        <button class='btn btn-primary' (click)="dataFetchClicked()">Ok</button>
+      <div class="k-form-buttons" style="margin:auto;width:50%;margin-top:15px">
+        <button class='btn btn-primary' (click)="dataFetchClicked()" style="width:100px">Ok</button>
 
-        <button class='btn btn-primary' (click)="dataFetchCancelClicked()">Cancel</button>
+        <button class='btn btn-primary' (click)="dataFetchCancelClicked()" style="width:100px">Cancel</button>
       </div>
+
 
     </fieldset>
   </form>

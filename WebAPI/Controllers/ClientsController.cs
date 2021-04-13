@@ -137,8 +137,9 @@ namespace WebAPI.Controllers
       )
         {
            var result = from a in _context.Client
-                        join b in _context.ClientType on a.ClientTypeId equals b.Id
-                           select new
+                        join b in _context.ClientType on a.ClientTypeId equals b.Id into c
+                        from b in c.DefaultIfEmpty()
+                        select new
                            {
                                client = new 
                                {

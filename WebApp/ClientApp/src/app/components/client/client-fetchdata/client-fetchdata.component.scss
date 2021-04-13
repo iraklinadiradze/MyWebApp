@@ -1,17 +1,12 @@
 
-.example-wrap {
-  justify-content: center;
-}
-.k-form {
-  width: 700px;
-}
-.k-input {
-  width: 200px;
-  display: flex;
-  justify-content: left;
-}
-.k-label {
-  display: flex;
-  justify-content: left;
+kendo-formfield {
+  font-size: 10px
 }
 
+kendo-numerictextbox {
+  font-size: 10px
+}
+
+kendo-textbox {
+  font-size: 10px
+}

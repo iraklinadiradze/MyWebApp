@@ -1,0 +1,202 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebAPI.Models;
+
+namespace WebAPI.Controllers
+{
+    //   [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
+    public class [###entityName###]Controller : ControllerBase
+    {
+        private readonly [###dbContextName###] _context;
+
+        public [###entityName###]Controller([###dbContextName###] context)
+        {
+            _context = context;
+        }
+
+        // GET: api/[###entityName###]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<[###entityName###]>>> Get[###entityName###]()
+        {
+            return await _context.[###entityName###].ToListAsync();
+        }
+
+        // GET: api/[###entityName###]/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<[###entityName###]>> Get[###entityName###](int id)
+        {
+            var [###entityVariableName###] = await _context.[###entityName###].FindAsync(id);
+
+            if ([###entityVariableName###] == null)
+            {
+                return NotFound();
+            }
+
+            return [###entityVariableName###];
+        }
+
+        // PUT: api/[###entityName###]/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put[###entityName###](int id, [###entityName###] [###entityVariableName###])
+        {
+            if (id != [###entityVariableName###].Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry([###entityVariableName###]).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (![###entityName###]Exists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/[###entityName###]
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        public async Task<ActionResult<[###entityName###]>> Post[###entityName###]([###entityName###] [###entityVariableName###])
+        {
+            _context.[###entityName###].Add([###entityVariableName###]);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if ([###entityName###]Exists([###entityVariableName###].Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtAction("Get[###entityName###]", new { id = [###entityVariableName###].Id }, [###entityVariableName###]);
+        }
+
+        // DELETE: api/[###entityName###]/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<[###entityName###]>> Delete[###entityName###](int id)
+        {
+            var [###entityVariableName###] = await _context.[###entityName###].FindAsync(id);
+            if ([###entityVariableName###] == null)
+            {
+                return NotFound();
+            }
+
+            _context.[###entityName###].Remove([###entityVariableName###]);
+            await _context.SaveChangesAsync();
+
+            return [###entityVariableName###];
+        }
+
+        private bool [###entityName###]Exists(int id)
+        {
+            return _context.[###entityName###].Any(e => e.Id == id);
+        }
+
+        // GET: api/[###entityName###]/5
+        [Route("[###entityName###]View")]
+        [HttpGet]
+        public async Task<IActionResult> Get[###entityName###]View(
+        /*
+            int? id ,
+            int? topRecords ,
+            string firstName,
+            string lastName,
+            string pid,
+            DateTime? bodFrom ,
+            DateTime? bodTo ,
+            int? clientTypeID
+       */
+       [###entityPropertyAsParameters###]
+      )
+        {
+          /*
+           var result = from a in _context.[###entityName###]
+                        join b in _context.ClienType on a.ClientTypeId equals b.Id into c
+                        from b in c.DefaultIfEmpty()
+                        select new
+                           {
+                               client = new 
+                               {
+                                   a.Id,
+                                   a.FirstName,
+                                   a.LastName,
+                                   a.Mobile,
+                                   a.PersonalId,
+                                   a.BirthDate,
+                                   a.Address,
+                                   a.ClientTypeId
+                               },
+                               clientType = new {
+                                                 b.Id, 
+                                                 b.ClientTypeName
+                                                }
+                           };
+            */
+            
+           var result = from e in _context.[###entityName###]
+                        [###JoinedEntities###]
+                        select new
+                           {
+                             [###JoinedEntities###]={
+                             [###JoinedEntities###]
+                            },
+
+                           }
+
+            if (id != null)
+                result = result.Where(r => r.[###entityVariableName###].Id == id);
+
+            if (topRecords != null)
+                result = result.Take((int)topRecords);
+
+            if (firstName != null)
+                result = result.Where( r=>r.[###entityVariableName###].FirstName.StartsWith(firstName) );
+
+            if (lastName != null)
+                result = result.Where(r => r.[###entityVariableName###].LastName.StartsWith(lastName));
+
+            if (pid != null)
+                result = result.Where(r =>r.[###entityVariableName###].PersonalId == pid);
+
+            if (bodFrom != null)
+                result = result.Where(r => r.[###entityVariableName###].BirthDate >= (DateTime)bodFrom );
+
+            if (bodTo != null)
+                result = result.Where(r => r.[###entityVariableName###].BirthDate >= (DateTime)bodTo);
+
+
+            return Ok(await result.ToListAsync());
+        }
+
+    }
+}

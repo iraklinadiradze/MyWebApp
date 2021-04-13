@@ -51,6 +51,16 @@ namespace WebAPI
              }
             );
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("EnableCORS", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod();
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,7 +79,8 @@ namespace WebAPI
 
             app.UseAuthorization();
 
-            app.UseCors(options=>options.AllowAnyOrigin());
+            //            Access - Control - Allow - Headers
+            app.UseCors("EnableCORS");
 
             app.UseEndpoints(endpoints =>
             {

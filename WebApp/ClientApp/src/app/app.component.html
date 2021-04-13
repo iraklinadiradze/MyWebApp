@@ -1,63 +1,112 @@
-<!-- Vertical splitter -->
-
 <kendo-splitter orientation="vertical" class="full-height">
 
-  <kendo-splitter-pane style="height:60px;" [resizable]="false">
-    <h3>Top pane</h3>
+  <kendo-splitter-pane size="60px" [resizable]="false">
+
+    <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" (click)="logout()">Logout</a>
+      </div>
+    </nav>
 
   </kendo-splitter-pane>
 
-  <kendo-splitter-pane style="height:100%;">
+  <kendo-splitter-pane [resizable]="true" style="height: 100%;width:100%">
 
-    <kendo-splitter orientation="horizontal" style="height:100%;">
+    <kendo-splitter orientation="horizontal" style="height: 100%;width:100%">
 
-      <kendo-splitter-pane size="200px;">
-        <h3>Menu pane</h3>
+      <kendo-splitter-pane size="100px" *ngIf="isAuthenticated">
 
-        <kendo-treeview
-                        [nodes]="treeNodes"
+        <kendo-treeview [nodes]="treeNodes"
                         [textField]="[ 'menuName', 'menuName' ]"
                         kendoTreeViewExpandable
                         kendoTreeViewHierarchyBinding
                         childrenField="subMenus"
                         [trackBy]="trackBy"
                         [isSelected]="false"
-                        (nodeClick)="handleNodeClick($event)"
-                        >
+                        (nodeClick)="handleNodeClick($event)">
         </kendo-treeview>
 
       </kendo-splitter-pane>
 
-
-      <kendo-splitter-pane>
-        <p>Content pane</p>
+      <kendo-splitter-pane *ngIf="isAuthenticated" [resizable]="false" style="width:90%;background-color: #ff7a59; ">
 
         <!--
-        <div>
-          Debug Info: {{selectedTabName}}
-        </div>
-        -->
+  <div>
+    Debug Info: {{selectedTabName}}
+  </div>
+  -->
+        <!--
+          <kendo-tabstrip (tabSelect)="onTabSelect($event)" >
 
-        <kendo-tabstrip (tabSelect)="onTabSelect($event)">
+            <kendo-tabstrip-tab *ngFor="let _tab of tabs; index as i;" [title]="_tab.menuName" [selected]="_tab.menuName==selectedTab">
 
-          <kendo-tabstrip-tab *ngFor="let _tab of tabs; index as i;" [title]="_tab.menuName" [selected]="_tab.menuName==selectedTab">
+              <ng-template kendoTabTitle>
+                <button kendoButton icon="delete" look="flat" (click)="onTabCloseClick(i)"></button>
+              </ng-template>
 
-            <ng-template kendoTabTitle>
-              <button kendoButton icon="delete" look="flat" (click)="onTabCloseClick(i)"></button>
-            </ng-template>
+            </kendo-tabstrip-tab>
 
-          </kendo-tabstrip-tab>
+          </kendo-tabstrip>
+  -->
+        <!--
+      <kendo-chip-list selection="single"
+                       (selectedChange)="onTabSelect($event)"
+                       (remove)="onTabCloseClick($event)">
 
-        </kendo-tabstrip>
+        <kendo-chip *ngFor="let _tab of tabs"
+                    [label]="_tab.menuName"
+                    [removable]="true"
+                    [type]="'none'"
+                    [look]="outlined"
+                    [selected]="_tab.menuName==selectedTab">
+        </kendo-chip>
 
-        <ng-template DynamicComponentHost>
-        </ng-template>
+      </kendo-chip-list>
+
+  -->
+        <kendo-splitter orientation="vertical" style="width:100%;">
+
+          <!--
+   <kendo-splitter-pane style="height:50px;padding:10px" [resizable]="false">
+
+   </kendo-splitter-pane>
+   -->
+          <kendo-splitter-pane *ngIf="isAuthenticated" style="height:100%;box-sizing: border-box" >
+
+            <kendo-tabstrip (tabSelect)="onTabSelect($event)" [keepTabContent]="true" [height]="'100%'">
+
+              <kendo-tabstrip-tab *ngFor="let _tab of tabs; index as i;" [title]="_tab.menuName" [selected]="_tab.menuName==selectedTab" >
+
+                <ng-template kendoTabTitle>
+                  <button kendoButton icon="delete" look="flat" (click)="onTabCloseClick(i)"></button>
+                </ng-template>
+
+                <ng-template kendoTabContent>
+                  <app-container [componentName]="currentComponentName"></app-container>
+                </ng-template>
+
+              </kendo-tabstrip-tab>
+
+            </kendo-tabstrip>
+
+           </kendo-splitter-pane>
+
+        </kendo-splitter>
 
       </kendo-splitter-pane>
-      </kendo-splitter>
 
-    </kendo-splitter-pane>
+      <kendo-splitter-pane *ngIf="isAuthenticated" [scrollable]="false" size="20px" style="">
+        
+      </kendo-splitter-pane>
 
-    <kendo-splitter-pane style="height:50px;" [resizable]="false"> <h3>Bottom pane</h3> </kendo-splitter-pane>
+        <kendo-splitter-pane *ngIf="!isAuthenticated">
+          <app-login (submitEvent)="onLoginSubmit()"></app-login>
+        </kendo-splitter-pane>
 
-  </kendo-splitter>
+    </kendo-splitter>
+
+  </kendo-splitter-pane>
+
+  <kendo-splitter-pane style="height:50px;" [resizable]="false"> </kendo-splitter-pane>
+
+</kendo-splitter>

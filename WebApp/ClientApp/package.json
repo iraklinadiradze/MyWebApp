@@ -58,6 +58,7 @@
     "@progress/kendo-theme-default": "^4.26.0",
     "@progress/kendo-theme-material": "^3.22.0",
     "@progress/kendo-ui": "^2020.3.1118",
+    "angular2-jwt": "^0.2.3",
     "apollo-angular": "^1.8.0",
     "apollo-angular-link-http": "^1.9.0",
     "apollo-cache-inmemory": "^1.6.5",

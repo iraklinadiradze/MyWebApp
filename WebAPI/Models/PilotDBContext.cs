@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -10,6 +8,21 @@ namespace WebAPI.Models
 {
     public partial class PilotDBContext : DbContext
     {
+
+        internal static string connection_string
+        {
+            get
+            {
+                return "Server=.;Database=PilotDB;Integrated Security=True";
+            }
+        }
+
+//        /*
+        private PilotDBContext(): base()
+        {
+
+        }
+//        */
 
         public PilotDBContext(DbContextOptions<PilotDBContext> options)
             : base(options)
@@ -25,7 +38,7 @@ namespace WebAPI.Models
             if (!optionsBuilder.IsConfigured)
             {
   ///#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("Server=.;Database=PilotDB;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Server=.;Database=PilotDB;Integrated Security=True");
             }
         }
 

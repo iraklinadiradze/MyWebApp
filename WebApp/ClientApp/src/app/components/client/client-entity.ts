@@ -4,11 +4,12 @@ export class Client {
   id : number;
   firstName: string;
   lastName: string;
-  mobile: string;
   personalId: string;
+  clientTypeId: number;
   birthDate: Date;
   address: string;
-  clientTypeId: number;
+  mobile: string;
+  clientType: ClientType;
 };
 
 export class ClientView {
