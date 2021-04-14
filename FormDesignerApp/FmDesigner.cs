@@ -51,16 +51,27 @@ namespace FormDesignerApp
 
             var entityDescriptor = new EntityDescriptor(entity);
 
+            ContextDescriptor contextDescriptor = new ContextDescriptor(this.dbContext);
+//            contextDescriptor.entities.Add(entityDescriptor);
+
+
             var _result = "GetProperties:" + Environment.NewLine;
             _result = _result + entityDescriptor.ToString() + Environment.NewLine;
 
             rtbCompiledFiles.AppendText(_result);
 
-            var resultController = FormDesignerApp.Generators.ControllerGenerator.renderController(entityName, edtDBContextName.Text, this.dbContext, edtTemplateFolder.Text, edtAPIControllerFolder.Text);
+            var resultController = FormDesignerApp.Generators.ControllerGenerator.renderController(
+                                                                                    entityName, 
+                                                                                    contextDescriptor, 
+                                                                                    edtDBContextName.Text,
+                                                                                    edtTemplateFolder.Text, 
+                                                                                    edtAPIControllerFolder.Text
+                                                                                    );
             rtbOutput.Clear();
             rtbOutput.AppendText(resultController);
             rtbOutput.AppendText(Environment.NewLine);
 
+            /*
             // Controller View Params
             var _resultTemp = from item in entityDescriptor.properties
                               where item.filterParameter != null
@@ -127,6 +138,7 @@ namespace FormDesignerApp
                     select item;
 
             rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, b));
+            */
 
         }
 

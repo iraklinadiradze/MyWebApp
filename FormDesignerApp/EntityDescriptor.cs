@@ -37,7 +37,7 @@ namespace FormDesignerApp
 
     }
 
-    class EntityDescriptor
+    public class EntityDescriptor
     {
         public string Name;
         public string CSharpVariableName;
@@ -90,7 +90,6 @@ namespace FormDesignerApp
 
                     }
 
-
                     if (_att.AttributeType.Name == "LookupDisplayAttribute") {
                         propertyDesciptor.lookupDisplay = new LookupDisplayAttribute();
                     }
@@ -137,13 +136,13 @@ namespace FormDesignerApp
 
                     if (propertyDesciptor.filterParameter.equals)
                         propertyDesciptor.CSharpFilterStatements.Add(
-                            "if (" + propertyDesciptor.CSharpParamName + "!= null) " + Environment.NewLine +
+                            "                if (" + propertyDesciptor.CSharpParamName + "!= null) " + Environment.NewLine +
                                         " result = result.Where(r => r." + CSharpVariableName + "." + propertyDesciptor.Name + "== " + propertyDesciptor.CSharpParamName + ");"
                             );
 
                     if (propertyDesciptor.filterParameter.startsWith)
                         propertyDesciptor.CSharpFilterStatements.Add(
-                            "if (" + propertyDesciptor.CSharpParamName + "!= null) " + Environment.NewLine +
+                            "                if (" + propertyDesciptor.CSharpParamName + "!= null) " + Environment.NewLine +
                                         " result = result.Where(r => r." + CSharpVariableName + "." + propertyDesciptor.Name + ".StartsWith(" + propertyDesciptor.CSharpParamName + "));"
                             );
 
@@ -156,12 +155,12 @@ namespace FormDesignerApp
                             propertyDesciptor.CSharpFilterParameters.Add(fieldNameTo);
 
                             propertyDesciptor.CSharpFilterStatements.Add(
-                                "if (" + fieldNameFrom + "!= null) " + Environment.NewLine +
+                                "                if (" + fieldNameFrom + "!= null) " + Environment.NewLine +
                                             " result = result.Where(r => r." + CSharpVariableName + "." + propertyDesciptor.Name + ">= " + fieldNameFrom + ");"
                                 );
 
                             propertyDesciptor.CSharpFilterStatements.Add(
-                                "if (" + fieldNameTo + "!= null) " + Environment.NewLine +
+                                "                if (" + fieldNameTo + "!= null) " + Environment.NewLine +
                                             " result = result.Where(r => r." + CSharpVariableName + "." + propertyDesciptor.Name + "<= " + fieldNameTo + ");"
                                 );
 
@@ -177,9 +176,26 @@ namespace FormDesignerApp
 
     }
 
-    class ContextDescriptor
+    public class ContextDescriptor
     {
         public List<EntityDescriptor> entities;
+
+
+        public ContextDescriptor()
+        {
+            entities = new List<EntityDescriptor>();
+        }
+
+        public ContextDescriptor(DbContext dbContext)
+        {
+            entities = new List<EntityDescriptor>();
+
+            foreach (var _entity in dbContext.Model.GetEntityTypes())
+            {
+                entities.Add(new EntityDescriptor(_entity));
+            }
+        }
+
     }
 
 

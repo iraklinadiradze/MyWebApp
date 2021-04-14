@@ -136,7 +136,7 @@ namespace WebAPI.Controllers
             DateTime? bodTo ,
             int? clientTypeID
        */
-       [###entityPropertyAsParameters###]
+[###entityFilterParameters###]
       )
         {
           /*
@@ -167,12 +167,12 @@ namespace WebAPI.Controllers
                         [###JoinedEntities###]
                         select new
                            {
-                             [###JoinedEntities###]={
-                             [###JoinedEntities###]
+                             [###entityVariableName###]={
+                             [###entitySelectPropertiesWithPrefix###]
                             },
 
                            }
-
+            /*
             if (id != null)
                 result = result.Where(r => r.[###entityVariableName###].Id == id);
 
@@ -193,7 +193,9 @@ namespace WebAPI.Controllers
 
             if (bodTo != null)
                 result = result.Where(r => r.[###entityVariableName###].BirthDate >= (DateTime)bodTo);
+            */
 
+[###entityFilterStatements###]
 
             return Ok(await result.ToListAsync());
         }
