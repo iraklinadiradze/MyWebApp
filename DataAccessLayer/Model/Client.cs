@@ -28,6 +28,7 @@ namespace DataAccessLayer
         public string PersonalId { get; set; }
 
         [FilterParam(equals = true)]
+        [ForeignKey("Id")]
         public int? ClientTypeId { get; set; }
 
         [FilterParam(range = true)]
@@ -42,7 +43,6 @@ namespace DataAccessLayer
         [MaxLength(45)]
         public string Email { get; set; }
 
-        [ForeignKey("Id")]
         public virtual ClientType ClientType { get; set; }
     }
 

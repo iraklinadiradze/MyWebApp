@@ -18,10 +18,11 @@ namespace DataAccessLayer
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [FilterParam(equals = true, useInJoin = true)]
         public int Id { get; set; }
     
         [LookupDisplayAttribute]
-        [FilterParam(equals=true)]
+        [FilterParam(equals=true,useInJoin =true)]
         [MaxLength(30)]
         public string ClientTypeName { get; set; }
 

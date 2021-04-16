@@ -13,10 +13,13 @@ namespace FormDesignerApp
     {
         public string Name;
         public string CSharpParamName;
+        public string TSParamName;
 
         public string Type;
         public string CSharpType;
         public string CSharpParamType;
+        public string TSType;
+        public string TSParamType;
 
         public int? MaxLength;
         public string ColumnType;
@@ -122,8 +125,10 @@ namespace FormDesignerApp
 
                 if (_e.IsForeignKey())
                 {
-                    propertyDesciptor.ForeignKeyTable = _e.GetContainingForeignKeys().First().PrincipalToDependent.Name;
-                    propertyDesciptor.ForeignKeyColumn = _e.GetContainingForeignKeys().First().PrincipalToDependent.ForeignKey.PrincipalKey.Properties.First().Name;
+                    propertyDesciptor.ForeignKeyTable = _e.GetContainingForeignKeys().First().DependentToPrincipal.Name;
+                    propertyDesciptor.ForeignKeyColumn = _e.GetContainingForeignKeys().First().PrincipalKey.Properties.First().Name;//  DependentToPrincipal.ForeignKey.PrincipalKey.Properties.First().Name;
+
+                
                 }
 
                 propertyDesciptor.CSharpFilterParameters = new List<string>();
@@ -184,7 +189,7 @@ namespace FormDesignerApp
         public ContextDescriptor()
         {
             entities = new List<EntityDescriptor>();
-        }
+        } 
 
         public ContextDescriptor(DbContext dbContext)
         {

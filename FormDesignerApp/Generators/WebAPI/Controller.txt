@@ -164,13 +164,13 @@ namespace WebAPI.Controllers
             */
             
            var result = from e in _context.[###entityName###]
-                        [###JoinedEntities###]
+                        [###RelatedentitySelect###]
                         select new
                            {
                              [###entityVariableName###]={
                              [###entitySelectPropertiesWithPrefix###]
                             },
-
+                            [###RelatedentitySelectPropertiesWithPrefix###]
                            }
             /*
             if (id != null)
