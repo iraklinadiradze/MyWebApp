@@ -1,0 +1,42 @@
+﻿
+/**
+import { ClientType } from "../clientType/clientType-entity"
+*/
+
+
+export class [###entityName###]
+{
+/**
+  id : number;
+  firstName: string;
+  lastName: string;
+  personalId: string;
+  clientTypeId: number;
+  birthDate: Date;
+  address: string;
+  mobile: string;
+  clientType: ClientType;
+*/
+	[###entityWithColumnsAndTypes###]
+};
+
+export class [###entityName###]View
+{
+  [###entityVariableName###]: [###entityName###];
+  clientType: ClientType;
+};
+
+export class [###entityName###]ViewParams
+{
+  topRecords: number;
+  /**
+  id : number;
+  firstName : string;
+  lastName  : string;
+  pid: string;
+  bodFrom: Date;
+  bodTo: Date;
+  clientTypeID: number;
+  */
+  [###entityWithFilterParamsAndTypes###]
+};

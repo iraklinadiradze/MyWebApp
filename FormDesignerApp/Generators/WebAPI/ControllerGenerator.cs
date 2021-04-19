@@ -82,6 +82,9 @@ namespace FormDesignerApp.Generators
 
             File.WriteAllText(outpuPath + "\\" + entityName + "Controller1.cs", templateContext);
 
+            Console.WriteLine(Environment.NewLine);
+            Console.WriteLine(templateContext);
+
             return templateContext;
 
 

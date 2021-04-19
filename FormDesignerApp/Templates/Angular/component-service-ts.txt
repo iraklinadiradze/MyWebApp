@@ -1,0 +1,54 @@
+﻿import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { [###entityName###], [###entityName###]View, [###entityName###]ViewParams } from './[###entityVariableName###]-entity';
+import { environment } from "../../../environments/environment";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class [###entityName###]Service {
+
+  baseUrl = environment.apiURL + '/[###entityVariableName###]';
+
+  constructor(private http: HttpClient) {
+  }
+
+  create[###entityName###]([###entityVariableName###]: [###entityName###]) {
+    console.log("add [###entityVariableName###]:" + JSON.stringify([###entityVariableName###]));
+    return this.http.post(this.baseUrl, [###entityVariableName###]);
+  }
+
+  edit[###entityName###](id, [###entityVariableName###]: [###entityName###]) {
+    console.log("id:" + id);
+    console.log("client:" + JSON.stringify([###entityVariableName###]));
+
+    return this.http.put(this.baseUrl+'/'+id, [###entityVariableName###]);
+  }
+
+  delete[###entityName###]([###entityVariableName###]ID: number) {
+    return this.http.delete(this.baseUrl + '/' + [###entityVariableName###]ID);
+  }
+
+  get[###entityName###](id: number) {
+    console.log(this.baseUrl + '/' + id);
+    return this.http.get <[###entityName###]>(this.baseUrl + '/' + id);
+  }
+
+  get[###entityName###]View([###entityVariableName###]ViewParams: [###entityName###]ViewParams) {
+    var queryStr="";
+
+    for (var key in [###entityVariableName###]ViewParams) {
+      if ([###entityVariableName###]ViewParams[key] != null) {
+        if (queryStr != "") queryStr = queryStr  + "&"
+        queryStr = queryStr + key + "=" + [###entityVariableName###]ViewParams[key];
+      }
+    }
+
+    console.log(queryStr);
+
+    return this.http.get<[###entityName###]View[]>(this.baseUrl + '/[###entityName###]View?' + queryStr );
+
+  }
+
+}

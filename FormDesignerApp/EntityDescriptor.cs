@@ -12,6 +12,8 @@ namespace FormDesignerApp
     public class PropertyDesciptor
     {
         public string Name;
+        public string TSName;
+
         public string CSharpParamName;
         public string TSParamName;
 
@@ -36,7 +38,11 @@ namespace FormDesignerApp
 
         public List<string> CSharpFilterParameters;
         public List<string> CSharpFilterStatements;
+
+        public List<string> TSFilterParameters;
+
         public List<string> LookupEntities;
+
 
     }
 
@@ -54,12 +60,14 @@ namespace FormDesignerApp
             CSharpVariableName = Name.Substring(0, 1).ToLower() + Name.Remove(0, 1);
             CSharpTypeName = Name.Substring(0, 1).ToUpper() + Name.Remove(0, 1);
 
+
             foreach (var _e in entity.GetProperties())
             {
                 PropertyDesciptor propertyDesciptor = new PropertyDesciptor();
 
                 propertyDesciptor.Name = _e.Name;
                 propertyDesciptor.CSharpParamName = _e.Name.Substring(0, 1).ToLower() + _e.Name.Remove(0, 1);
+                propertyDesciptor.TSName = _e.Name.Substring(0, 1).ToLower() + _e.Name.Remove(0, 1);
 
                 foreach (var _att in _e.PropertyInfo.CustomAttributes)
                 {
@@ -103,6 +111,8 @@ namespace FormDesignerApp
                 else
                     propertyDesciptor.Type = _e.ClrType.Name;
 
+                propertyDesciptor.TSType = Helper.GetPrimitiveMemberType(propertyDesciptor.Type);
+
                 propertyDesciptor.MaxLength = _e.GetMaxLength();
                 propertyDesciptor.ColumnType = _e.GetColumnType();
                 propertyDesciptor.IsNullable = _e.IsColumnNullable();
@@ -134,10 +144,15 @@ namespace FormDesignerApp
                 propertyDesciptor.CSharpFilterParameters = new List<string>();
                 propertyDesciptor.CSharpFilterStatements = new List<string>();
 
+                propertyDesciptor.TSFilterParameters = new List<string>();
+
                 if (propertyDesciptor.filterParameter != null)
                 {
                     if (propertyDesciptor.filterParameter.startsWith || propertyDesciptor.filterParameter.equals)
+                    {
                         propertyDesciptor.CSharpFilterParameters.Add(propertyDesciptor.CSharpParamName);
+                        propertyDesciptor.TSFilterParameters.Add(propertyDesciptor.CSharpParamName);
+                    }
 
                     if (propertyDesciptor.filterParameter.equals)
                         propertyDesciptor.CSharpFilterStatements.Add(
@@ -159,7 +174,10 @@ namespace FormDesignerApp
                             propertyDesciptor.CSharpFilterParameters.Add(fieldNameFrom);
                             propertyDesciptor.CSharpFilterParameters.Add(fieldNameTo);
 
-                            propertyDesciptor.CSharpFilterStatements.Add(
+                            propertyDesciptor.TSFilterParameters.Add(fieldNameFrom);
+                            propertyDesciptor.TSFilterParameters.Add(fieldNameTo);
+
+                        propertyDesciptor.CSharpFilterStatements.Add(
                                 "                if (" + fieldNameFrom + "!= null) " + Environment.NewLine +
                                             " result = result.Where(r => r." + CSharpVariableName + "." + propertyDesciptor.Name + ">= " + fieldNameFrom + ");"
                                 );

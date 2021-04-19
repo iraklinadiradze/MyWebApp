@@ -60,15 +60,67 @@ namespace FormDesignerApp
 
             rtbCompiledFiles.AppendText(_result);
 
+            rtbOutput.Clear();
+
             var resultController = FormDesignerApp.Generators.ControllerGenerator.renderController(
                                                                                     entityName, 
                                                                                     contextDescriptor, 
                                                                                     edtDBContextName.Text,
                                                                                     edtTemplateFolder.Text, 
-                                                                                    edtAPIControllerFolder.Text
+                                                                                    edtAngularCompFolder.Text
                                                                                     );
-            rtbOutput.Clear();
             rtbOutput.AppendText(resultController);
+            rtbOutput.AppendText(Environment.NewLine);
+
+            _result = FormDesignerApp.Generators.Angular.Component_entity.renderComponentEntityTS(
+                                                                                    entityName,
+                                                                                    contextDescriptor,
+                                                                                    edtDBContextName.Text,
+                                                                                    edtTemplateFolder.Text,
+                                                                                    edtAngularCompFolder.Text
+                                                                                    );
+
+            rtbOutput.AppendText(_result);
+            rtbOutput.AppendText(Environment.NewLine);
+            rtbOutput.AppendText(Environment.NewLine);
+            rtbOutput.AppendText(Environment.NewLine);
+
+
+            _result = FormDesignerApp.Generators.Angular.Component_service.renderComponentServiceTS(
+                                                                                    entityName,
+                                                                                    contextDescriptor,
+                                                                                    edtDBContextName.Text,
+                                                                                    edtTemplateFolder.Text,
+                                                                                    edtAngularCompFolder.Text
+                                                                                    );
+            rtbOutput.AppendText(_result);
+            rtbOutput.AppendText(Environment.NewLine);
+            rtbOutput.AppendText(Environment.NewLine);
+            rtbOutput.AppendText(Environment.NewLine);
+
+
+            _result = FormDesignerApp.Generators.Angular.Component_list.renderComponentListHTML(
+                                                                                    entityName,
+                                                                                    contextDescriptor,
+                                                                                    edtDBContextName.Text,
+                                                                                    edtTemplateFolder.Text,
+                                                                                    edtAngularCompFolder.Text
+                                                                                    );
+            rtbOutput.AppendText(_result);
+            rtbOutput.AppendText(Environment.NewLine);
+            rtbOutput.AppendText(Environment.NewLine);
+            rtbOutput.AppendText(Environment.NewLine);
+
+            _result = FormDesignerApp.Generators.Angular.Component_list.renderComponentListTS(
+                                                                                    entityName,
+                                                                                    contextDescriptor,
+                                                                                    edtDBContextName.Text,
+                                                                                    edtTemplateFolder.Text,
+                                                                                    edtAngularCompFolder.Text
+                                                                                    );
+            rtbOutput.AppendText(_result);
+            rtbOutput.AppendText(Environment.NewLine);
+            rtbOutput.AppendText(Environment.NewLine);
             rtbOutput.AppendText(Environment.NewLine);
 
             /*

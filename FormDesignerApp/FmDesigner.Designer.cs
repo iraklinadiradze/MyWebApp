@@ -31,6 +31,9 @@ namespace FormDesignerApp
         {
             this.designerTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button6 = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.edtAngularCompFolder = new System.Windows.Forms.TextBox();
             this.button5 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.tbAttributesFolder = new System.Windows.Forms.TextBox();
@@ -79,6 +82,9 @@ namespace FormDesignerApp
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button6);
+            this.tabPage1.Controls.Add(this.label8);
+            this.tabPage1.Controls.Add(this.edtAngularCompFolder);
             this.tabPage1.Controls.Add(this.button5);
             this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.tbAttributesFolder);
@@ -105,6 +111,32 @@ namespace FormDesignerApp
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Settings";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(574, 247);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(47, 23);
+            this.button6.TabIndex = 21;
+            this.button6.Text = "Open";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(-2, 251);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(157, 15);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "Angular Component Output";
+            // 
+            // edtAngularCompFolder
+            // 
+            this.edtAngularCompFolder.Location = new System.Drawing.Point(156, 247);
+            this.edtAngularCompFolder.Name = "edtAngularCompFolder";
+            this.edtAngularCompFolder.Size = new System.Drawing.Size(418, 23);
+            this.edtAngularCompFolder.TabIndex = 19;
+            this.edtAngularCompFolder.Text = "C:\\Users\\inadir\\source\\repos\\MyWebApp\\FormDesignerApp\\Result";
             // 
             // button5
             // 
@@ -217,7 +249,7 @@ namespace FormDesignerApp
             this.edtTemplateFolder.Name = "edtTemplateFolder";
             this.edtTemplateFolder.Size = new System.Drawing.Size(418, 23);
             this.edtTemplateFolder.TabIndex = 6;
-            this.edtTemplateFolder.Text = "C:\\Users\\inadir\\source\\repos\\MyWebApp\\FormDesignerApp\\Generators";
+            this.edtTemplateFolder.Text = "C:\\Users\\inadir\\source\\repos\\MyWebApp\\FormDesignerApp\\Templates";
             // 
             // button2
             // 
@@ -243,7 +275,7 @@ namespace FormDesignerApp
             this.edtAPIControllerFolder.Name = "edtAPIControllerFolder";
             this.edtAPIControllerFolder.Size = new System.Drawing.Size(418, 23);
             this.edtAPIControllerFolder.TabIndex = 3;
-            this.edtAPIControllerFolder.Text = "C:\\Users\\inadir\\source\\repos\\MyWebApp\\WebAPI\\Controllers";
+            this.edtAPIControllerFolder.Text = "C:\\Users\\inadir\\source\\repos\\MyWebApp\\FormDesignerApp\\Result";
             // 
             // button1
             // 
@@ -365,6 +397,9 @@ namespace FormDesignerApp
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tbAttributesFolder;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox edtAngularCompFolder;
     }
 }
 
