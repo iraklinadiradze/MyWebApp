@@ -1,0 +1,3 @@
+﻿
+          <kendo-grid-column field="[###entityVariableName###].[###entityColumnName###]" title="[###entityColumnTitle###]" width="[###entityColumnWidth###]" format="[###entityColumnFormat###]">
+          </kendo-grid-column>

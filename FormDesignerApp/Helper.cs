@@ -72,6 +72,36 @@ namespace FormDesignerApp
                 }
 
          */
+
+        public static string Replace(string template, string tag, string value)
+        {
+            var result= "";
+
+            string[] lines = template.Split(Environment.NewLine);
+
+            foreach (var _line in lines)
+            {
+                var _index = _line.IndexOf(tag);
+
+                var indentString = "";
+
+                if (_index >= 0)
+                {
+                    indentString = _line.Substring(0, _index + 1);
+
+                    foreach( var _value in value.Split(Environment.NewLine))
+                    {
+                        result = result + Environment.NewLine + indentString + _value;
+                    }
+                }
+                else
+                    result = result + Environment.NewLine + _line;
+            }
+
+            return result;
+        }
+
     }
+
 }
 

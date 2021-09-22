@@ -13,7 +13,8 @@ namespace FormDesignerApp.Generators.Angular
             ContextDescriptor contextDescriptor,
             string dbContextName,
             string templateFolder,
-            string outpuPath
+            string outpuPath,
+            string subFolder
         )
         {
             var _result = "";
@@ -42,9 +43,12 @@ namespace FormDesignerApp.Generators.Angular
             templateContext = templateContext.Replace("[###entityWithFilterParamsAndTypes###]",
                 string.Join(Environment.NewLine, _entityWithFilterParamsAndTypes));
 
-            var targetPath = outpuPath + "\\" + _entityDescriptor.CSharpVariableName;
+            if (!Directory.Exists(outpuPath + "\\" + subFolder)) { Directory.CreateDirectory(outpuPath + "\\" + subFolder); };
+
+            var targetPath = outpuPath + "\\" + subFolder + "\\" + _entityDescriptor.CSharpVariableName;
             if (!Directory.Exists(targetPath))
                 Directory.CreateDirectory(targetPath);
+
 
             File.WriteAllText(targetPath + "\\" + _entityDescriptor.CSharpVariableName + "-entity.ts", templateContext);
 

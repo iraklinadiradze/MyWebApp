@@ -13,14 +13,15 @@ namespace FormDesignerApp.Generators
         public static string renderController(
             string entityName,
             ContextDescriptor contextDescriptor,
-            string dbContextName, 
-            string templateFolder, 
-            string outpuPath 
+            string dbContextName,
+            string templateFolder,
+            string outpuPath,
+            string subFolder
             )
         {
             var _entityDescriptor = (from p in contextDescriptor.entities
-                                    where (p.Name==entityName)
-                                    select p).First();
+                                     where (p.Name == entityName)
+                                     select p).First();
 
             string templateContext = "";
 
@@ -36,8 +37,8 @@ namespace FormDesignerApp.Generators
                                           from item in prop.CSharpFilterParameters
                                           select prop.CSharpParamType + " " + item;
 
-            templateContext = templateContext.Replace("[###entityFilterParameters###]", 
-                string.Join("," + Environment.NewLine , _entityFilterParameters));
+            templateContext = templateContext.Replace("[###entityFilterParameters###]",
+                string.Join("," + Environment.NewLine, _entityFilterParameters));
 
             var _entityFilterStatements = from prop in _entityDescriptor.properties
                                           from item in prop.CSharpFilterStatements
@@ -64,23 +65,25 @@ namespace FormDesignerApp.Generators
                 string.Join("," + Environment.NewLine, _entityRelations));
 
             var _entityRelationsWithLookups = from e in contextDescriptor.entities
-                                  join f in _entityDescriptor.properties on e.Name equals f.ForeignKeyTable
-                                  from g in e.properties
-                                  where f.IsForeignKey && (g.Name == f.ForeignKeyColumn)
-                                  select e.CSharpVariableName + " = new {" + Environment.NewLine + 
-                                    string.Join("," + Environment.NewLine,
-                                        ( from _e in contextDescriptor.entities
-                                          from _p in _e.properties
-                                          where (_e.Name == e.Name) && (_p.filterParameter!=null) && (_p.filterParameter.useInJoin==true)
-                                          select  "_" + e.CSharpVariableName + "." + _p.Name
-                                        )
-                                     )
-                                  + Environment.NewLine + "}";
+                                              join f in _entityDescriptor.properties on e.Name equals f.ForeignKeyTable
+                                              from g in e.properties
+                                              where f.IsForeignKey && (g.Name == f.ForeignKeyColumn)
+                                              select e.CSharpVariableName + " = new {" + Environment.NewLine +
+                                                string.Join("," + Environment.NewLine,
+                                                    (from _e in contextDescriptor.entities
+                                                     from _p in _e.properties
+                                                     where (_e.Name == e.Name) && (_p.filterParameter != null) && (_p.filterParameter.useInJoin == true)
+                                                     select "_" + e.CSharpVariableName + "." + _p.Name
+                                                    )
+                                                 )
+                                              + Environment.NewLine + "}";
 
             templateContext = templateContext.Replace("[###RelatedentitySelectPropertiesWithPrefix###]",
                 string.Join("," + Environment.NewLine, _entityRelationsWithLookups));
 
-            File.WriteAllText(outpuPath + "\\" + entityName + "Controller1.cs", templateContext);
+            if (!Directory.Exists(outpuPath + "\\" + subFolder)) { Directory.CreateDirectory(outpuPath + "\\" + subFolder); };
+
+            File.WriteAllText(outpuPath + "\\" + subFolder + "\\" + entityName + "Controller.cs", templateContext);
 
             Console.WriteLine(Environment.NewLine);
             Console.WriteLine(templateContext);

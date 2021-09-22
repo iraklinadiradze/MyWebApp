@@ -69,6 +69,7 @@ namespace FormDesignerApp
                 propertyDesciptor.CSharpParamName = _e.Name.Substring(0, 1).ToLower() + _e.Name.Remove(0, 1);
                 propertyDesciptor.TSName = _e.Name.Substring(0, 1).ToLower() + _e.Name.Remove(0, 1);
 
+                if (_e.PropertyInfo!=null)
                 foreach (var _att in _e.PropertyInfo.CustomAttributes)
                 {
                     if (_att.AttributeType.Name== "FilterParamAttribute")

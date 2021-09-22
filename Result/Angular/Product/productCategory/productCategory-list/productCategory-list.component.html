@@ -1,0 +1,120 @@
+<div style="height:100%;width:100%;">
+
+  <div *ngIf="(compState===CompStateEnum.AddItem)||(compState===CompStateEnum.ViewItem)||(compState===CompStateEnum.EditItem)" style="">
+
+    <app-productCategory-cru *ngIf="(compState===CompStateEnum.AddItem)||(compState===CompStateEnum.ViewItem)||(compState===CompStateEnum.EditItem)"
+                    (changeActionEndEvent)='onChangeClientEnd($event)'
+                    [_id]="currentID"
+                    [formActionType]="formCRUActionType">
+    </app-productCategory-cru>
+
+  </div>
+
+  <div *ngIf="compState===CompStateEnum.FetchData">
+    <app-productCategory-fetchdata [clientViewParams]="clientViewParams"
+                          *ngIf="compState===CompStateEnum.FetchData"
+                          (fetchDataEndAction)='onFetchDataEnd($event)'>
+    </app-productCategory-fetchdata>
+  </div>
+
+  <div [hidden]="!(compState===CompStateEnum.ShowData)" style="height:100%;width:100%">
+    <kendo-splitter orientation="vertical" style="height:100%;width:100%">
+
+      <kendo-splitter-pane size="60px" [resizable]="false">
+        <kendo-toolbar>
+
+          <kendo-toolbar-button [text]="'Fetch'"
+                                [showText]="'both'"
+                                [icon]="'filter'"
+                                [showIcon]="'both'"
+                                [primary]="true"
+                                [look]="'outline'"
+                                [disabled]="false"
+                                (click)="btnFetchDataClicked()">
+          </kendo-toolbar-button>
+
+          <kendo-toolbar-button [text]="'Add'"
+                                [showText]="'both'"
+                                [icon]="'plus'"
+                                [showIcon]="'both'"
+                                [primary]="true"
+                                [look]="'outline'"
+                                [disabled]="false"
+                                (click)="btnAddClicked()">
+          </kendo-toolbar-button>
+
+          <kendo-toolbar-button [text]="'Edit'"
+                                [showText]="'both'"
+                                [icon]="'edit'"
+                                [showIcon]="'both'"
+                                [primary]="true"
+                                [look]="'outline'"
+                                [disabled]="false"
+                                (click)="btnEditClicked()">
+          </kendo-toolbar-button>
+
+          <kendo-toolbar-button [text]="'Delete'"
+                                [showText]="'both'"
+                                [icon]="'delete'"
+                                [showIcon]="'both'"
+                                [primary]="true"
+                                [look]="'outline'"
+                                [disabled]="false"
+                                (click)="btnDeleteClicked()">
+          </kendo-toolbar-button>
+
+          <kendo-toolbar-button [text]="'Refresh'"
+                                [showText]="'both'"
+                                [icon]="'refresh'"
+                                [showIcon]="'both'"
+                                [primary]="true"
+                                [look]="'outline'"
+                                [disabled]="false"
+                                (click)="btnRefreshClicked()">
+          </kendo-toolbar-button>
+
+        </kendo-toolbar>
+      </kendo-splitter-pane>
+
+      <kendo-splitter-pane [resizable]="true" style="width:100%;padding: 10px">
+        <kendo-grid #GrientsGrid
+                    [data]="gridData"
+                    [selectable]="true"
+                    [navigable]="true"
+                    [columnMenu]="true"
+                    [filterable]="true"
+                    [sortable]="true"
+                    [pageable]="true"
+                    [reorderable]="true"
+                    [resizable]="true"
+                    [pageSize]="20"
+                    [style]="{'font-size' : '12px'}"
+                    (selectionChange)="onSelect($event)"
+                    style="height:100%;width:100%;">
+<!--
+          <kendo-grid-column field="client.id" title="ID" width="80">
+          </kendo-grid-column>
+          <kendo-grid-column field="clientType.clientTypeName" title="clientType" width="150">
+          </kendo-grid-column>
+          <kendo-grid-column field="client.birthDate" title="birthDate" width="120" format="MM-dd-yyyy">
+          </kendo-grid-column>
+          <kendo-grid-column field="client.firstName" title="firstName" width="120">
+          </kendo-grid-column>
+          <kendo-grid-column field="client.lastName" title="lastName" width="120">
+          </kendo-grid-column>
+          <kendo-grid-column field="client.personalId" title="PersonalID" width="120">
+          </kendo-grid-column>
+          <kendo-grid-column field="client.address" title="address" width="200">
+          </kendo-grid-column>
+          <kendo-grid-column field="client.mobile" title="mobile" width="150">
+          </kendo-grid-column>
+-->
+        [###kendo-grid-columns###]
+        </kendo-grid>
+      </kendo-splitter-pane>
+
+    </kendo-splitter>
+
+  </div>
+
+</div>

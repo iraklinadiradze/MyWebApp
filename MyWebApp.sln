@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormDesignerApp", "FormDesi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{EE0F2000-01DA-44EA-8EE6-4726B594AE09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLib", "SharedLib\SharedLib.csproj", "{D1AB2FE3-A4AD-425F-87E8-E4E5386986CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedLib", "SharedLib\SharedLib.csproj", "{D1AB2FE3-A4AD-425F-87E8-E4E5386986CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Result", "Result\Result.csproj", "{6786AA3F-DD45-426E-94F5-701BC9EBEE4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OldModel", "OldModel\OldModel.csproj", "{58F10E25-4F6A-4106-BC42-8B5FFAE51BF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{D1AB2FE3-A4AD-425F-87E8-E4E5386986CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1AB2FE3-A4AD-425F-87E8-E4E5386986CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1AB2FE3-A4AD-425F-87E8-E4E5386986CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6786AA3F-DD45-426E-94F5-701BC9EBEE4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6786AA3F-DD45-426E-94F5-701BC9EBEE4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6786AA3F-DD45-426E-94F5-701BC9EBEE4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6786AA3F-DD45-426E-94F5-701BC9EBEE4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58F10E25-4F6A-4106-BC42-8B5FFAE51BF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58F10E25-4F6A-4106-BC42-8B5FFAE51BF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58F10E25-4F6A-4106-BC42-8B5FFAE51BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58F10E25-4F6A-4106-BC42-8B5FFAE51BF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

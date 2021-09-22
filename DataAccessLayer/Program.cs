@@ -8,12 +8,15 @@ namespace DataAccessLayer
         {
             Console.WriteLine("Hello World!");
 
-//          using (var context = new CoreDBContext())
-//            {
+        /*
+          using (var context = new CoreDBContext())
+            {
 
-//                context.Database.EnsureCreated();
-//                context.SaveChanges();
-//            }
+                context.Database.EnsureCreated();
+                context.SaveChanges();
+            }
+        */
+
         }
     }
 }

@@ -10,6 +10,7 @@ namespace SharedLib.Attributes
         public bool range = false;
         public bool equals = false;
         public bool startsWith = false;
+        public bool contains = false;
         public bool useInJoin = false;
     }
 

@@ -35,162 +35,181 @@ namespace FormDesignerApp
         public FmDesigner()
         {
             InitializeComponent();
-
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
+            // Initialize Entity Framework Model Using Classess
 
-            this.initDbContext();
+            if (lbEntities.SelectedIndex < 0) return;
 
-            var entityName = "Client";
-            var nameSpace = edtEFSpaceName.Text; // "WebAPI.Models";
+            foreach (int i in lbEntities.SelectedIndices)
+            {
+                //                var entityName = lbEntities.SelectedItem.ToString(); // "Client";
+                var entityName = lbEntities.Items[i].ToString();
+                var nameSpace = edtEFSpaceName.Text; // "WebAPI.Models";
 
-            var dbModel = this.dbContext.Model;
-            var entity = dbModel.FindEntityType(nameSpace + "." + entityName);
+                var dbModel = this.dbContext.Model;
+                //            lbEntities.Items.Clear();
 
-            var entityDescriptor = new EntityDescriptor(entity);
+                var entity = dbModel.FindEntityType(entityName);
+                var entityNameSplited = entityName.Split(".");
+                var subFolder = entityNameSplited[entityNameSplited.Length - 2];
+                entityName = entity.ShortName();
 
-            ContextDescriptor contextDescriptor = new ContextDescriptor(this.dbContext);
-//            contextDescriptor.entities.Add(entityDescriptor);
+                var entityDescriptor = new EntityDescriptor(entity);
 
+                ContextDescriptor contextDescriptor = new ContextDescriptor(this.dbContext);
 
-            var _result = "GetProperties:" + Environment.NewLine;
-            _result = _result + entityDescriptor.ToString() + Environment.NewLine;
+                var _result = "GetProperties:" + Environment.NewLine;
+                _result = _result + entityDescriptor.ToString() + Environment.NewLine;
 
-            rtbCompiledFiles.AppendText(_result);
+                rtbCompiledFiles.AppendText(_result);
 
-            rtbOutput.Clear();
+                rtbOutput.Clear();
 
-            var resultController = FormDesignerApp.Generators.ControllerGenerator.renderController(
-                                                                                    entityName, 
-                                                                                    contextDescriptor, 
-                                                                                    edtDBContextName.Text,
-                                                                                    edtTemplateFolder.Text, 
-                                                                                    edtAngularCompFolder.Text
-                                                                                    );
-            rtbOutput.AppendText(resultController);
-            rtbOutput.AppendText(Environment.NewLine);
+                if (chbGenerateController.Checked)
+                {
+                    var resultController = FormDesignerApp.Generators.ControllerGenerator.renderController(
+                                                                                            entityName,
+                                                                                            contextDescriptor,
+                                                                                            edtDBContextName.Text,
+                                                                                            edtTemplateFolder.Text,
+                                                                                            edtAPIControllerFolder.Text,
+                                                                                            subFolder
+                                                                                            );
+                    rtbOutput.AppendText(resultController);
+                    rtbOutput.AppendText(Environment.NewLine);
+                }
 
-            _result = FormDesignerApp.Generators.Angular.Component_entity.renderComponentEntityTS(
-                                                                                    entityName,
-                                                                                    contextDescriptor,
-                                                                                    edtDBContextName.Text,
-                                                                                    edtTemplateFolder.Text,
-                                                                                    edtAngularCompFolder.Text
-                                                                                    );
+                if (chbGenerateAngular.Checked)
+                {
+                    _result = FormDesignerApp.Generators.Angular.Component_entity.renderComponentEntityTS(
+                                                                                            entityName,
+                                                                                            contextDescriptor,
+                                                                                            edtDBContextName.Text,
+                                                                                            edtTemplateFolder.Text,
+                                                                                            edtAngularCompFolder.Text,
+                                                                                            subFolder
+                                                                                            );
 
-            rtbOutput.AppendText(_result);
-            rtbOutput.AppendText(Environment.NewLine);
-            rtbOutput.AppendText(Environment.NewLine);
-            rtbOutput.AppendText(Environment.NewLine);
-
-
-            _result = FormDesignerApp.Generators.Angular.Component_service.renderComponentServiceTS(
-                                                                                    entityName,
-                                                                                    contextDescriptor,
-                                                                                    edtDBContextName.Text,
-                                                                                    edtTemplateFolder.Text,
-                                                                                    edtAngularCompFolder.Text
-                                                                                    );
-            rtbOutput.AppendText(_result);
-            rtbOutput.AppendText(Environment.NewLine);
-            rtbOutput.AppendText(Environment.NewLine);
-            rtbOutput.AppendText(Environment.NewLine);
-
-
-            _result = FormDesignerApp.Generators.Angular.Component_list.renderComponentListHTML(
-                                                                                    entityName,
-                                                                                    contextDescriptor,
-                                                                                    edtDBContextName.Text,
-                                                                                    edtTemplateFolder.Text,
-                                                                                    edtAngularCompFolder.Text
-                                                                                    );
-            rtbOutput.AppendText(_result);
-            rtbOutput.AppendText(Environment.NewLine);
-            rtbOutput.AppendText(Environment.NewLine);
-            rtbOutput.AppendText(Environment.NewLine);
-
-            _result = FormDesignerApp.Generators.Angular.Component_list.renderComponentListTS(
-                                                                                    entityName,
-                                                                                    contextDescriptor,
-                                                                                    edtDBContextName.Text,
-                                                                                    edtTemplateFolder.Text,
-                                                                                    edtAngularCompFolder.Text
-                                                                                    );
-            rtbOutput.AppendText(_result);
-            rtbOutput.AppendText(Environment.NewLine);
-            rtbOutput.AppendText(Environment.NewLine);
-            rtbOutput.AppendText(Environment.NewLine);
-
-            /*
-            // Controller View Params
-            var _resultTemp = from item in entityDescriptor.properties
-                              where item.filterParameter != null
-                              select item.CSharpParamType + " " + item.CSharpParamName;
-
-            rtbOutput.AppendText(string.Join("," + Environment.NewLine, _resultTemp) );
-            rtbOutput.AppendText(Environment.NewLine);
-
-            // Controller Primary table Select Params
-            _resultTemp = from item in entityDescriptor.properties
-                              where item.filterParameter != null
-                              select  "a." + item.Name;
-
-            rtbOutput.AppendText(string.Join("," + Environment.NewLine, _resultTemp));
-            rtbOutput.AppendText(Environment.NewLine);
-
-            var _whereStatements = from item in entityDescriptor.properties
-                                   where (item.filterParameter != null) && (item.filterParameter.startsWith)
-                                             select // "a." + item.Name;
-                                    " if (" + item.CSharpParamName + "!= null)" + Environment.NewLine + 
-                                        "result = result.Where(r => r."+ entityDescriptor.CSharpVariableName 
-                                        + "." + item.Name + ".StartsWith(" + item.CSharpParamName + ") );";
-
-            rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, _whereStatements));
-            rtbOutput.AppendText(Environment.NewLine);
-
-            _whereStatements = from item in entityDescriptor.properties
-                               where (item.filterParameter != null) && (item.filterParameter.@equals)
-                               select // "a." + item.Name;
-                      " if (" + item.CSharpParamName + "!= null)" + Environment.NewLine +
-                          "result = result.Where(r => r." + entityDescriptor.CSharpVariableName
-                          + "." + item.Name + "==" + item.CSharpParamName + " );";
-
-            rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, _whereStatements));
-
-            _whereStatements = from item in entityDescriptor.properties
-                               where (item.filterParameter != null) && (item.filterParameter.range)
-                               select // "a." + item.Name;
-                      " if (" + item.CSharpParamName + "!= null)" + Environment.NewLine +
-                          "result = result.Where(r => r." + entityDescriptor.CSharpVariableName
-                          + "." + item.Name + ">=" + item.CSharpParamName + " );"
-                          + Environment.NewLine + Environment.NewLine +
-                      " if (" + item.CSharpParamName + "!= null)" + Environment.NewLine +
-                          "result = result.Where(r => r." + entityDescriptor.CSharpVariableName
-                          + "." + item.Name + "<=" + item.CSharpParamName + " );";
+                    rtbOutput.AppendText(_result);
+                    rtbOutput.AppendText(Environment.NewLine);
+                    rtbOutput.AppendText(Environment.NewLine);
+                    rtbOutput.AppendText(Environment.NewLine);
 
 
-            rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, _whereStatements));
+                    _result = FormDesignerApp.Generators.Angular.Component_service.renderComponentServiceTS(
+                                                                                            entityName,
+                                                                                            contextDescriptor,
+                                                                                            edtDBContextName.Text,
+                                                                                            edtTemplateFolder.Text,
+                                                                                            edtAngularCompFolder.Text,
+                                                                                            subFolder
+                                                                                            );
+                    rtbOutput.AppendText(_result);
+                    rtbOutput.AppendText(Environment.NewLine);
+                    rtbOutput.AppendText(Environment.NewLine);
+                    rtbOutput.AppendText(Environment.NewLine);
 
-            rtbOutput.AppendText(Environment.NewLine);
-            rtbOutput.AppendText(Environment.NewLine);
 
-            var a = from prop in entityDescriptor.properties 
-                    from item in prop.CSharpFilterParameters 
-                    select prop.CSharpParamType + " " + item;
+                    _result = FormDesignerApp.Generators.Angular.Component_list.renderComponentListHTML(
+                                                                                            entityName,
+                                                                                            contextDescriptor,
+                                                                                            edtDBContextName.Text,
+                                                                                            edtTemplateFolder.Text,
+                                                                                            edtAngularCompFolder.Text,
+                                                                                            subFolder
+                                                                                            );
+                    rtbOutput.AppendText(_result);
+                    rtbOutput.AppendText(Environment.NewLine);
+                    rtbOutput.AppendText(Environment.NewLine);
+                    rtbOutput.AppendText(Environment.NewLine);
 
-            rtbOutput.AppendText(string.Join("," + Environment.NewLine , a));
+                    _result = FormDesignerApp.Generators.Angular.Component_list.renderComponentListTS(
+                                                                                            entityName,
+                                                                                            contextDescriptor,
+                                                                                            edtDBContextName.Text,
+                                                                                            edtTemplateFolder.Text,
+                                                                                            edtAngularCompFolder.Text,
+                                                                                            subFolder
+                                                                                            );
+                    rtbOutput.AppendText(_result);
+                    rtbOutput.AppendText(Environment.NewLine);
+                    rtbOutput.AppendText(Environment.NewLine);
+                    rtbOutput.AppendText(Environment.NewLine);
 
-            rtbOutput.AppendText(Environment.NewLine);
-            rtbOutput.AppendText(Environment.NewLine);
+                }
 
-            var b = from prop in entityDescriptor.properties
-                    from item in prop.CSharpFilterStatements
-                    select item;
+                /*
+                // Controller View Params
+                var _resultTemp = from item in entityDescriptor.properties
+                                  where item.filterParameter != null
+                                  select item.CSharpParamType + " " + item.CSharpParamName;
 
-            rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, b));
-            */
+                rtbOutput.AppendText(string.Join("," + Environment.NewLine, _resultTemp) );
+                rtbOutput.AppendText(Environment.NewLine);
+
+                // Controller Primary table Select Params
+                _resultTemp = from item in entityDescriptor.properties
+                                  where item.filterParameter != null
+                                  select  "a." + item.Name;
+
+                rtbOutput.AppendText(string.Join("," + Environment.NewLine, _resultTemp));
+                rtbOutput.AppendText(Environment.NewLine);
+
+                var _whereStatements = from item in entityDescriptor.properties
+                                       where (item.filterParameter != null) && (item.filterParameter.startsWith)
+                                                 select // "a." + item.Name;
+                                        " if (" + item.CSharpParamName + "!= null)" + Environment.NewLine + 
+                                            "result = result.Where(r => r."+ entityDescriptor.CSharpVariableName 
+                                            + "." + item.Name + ".StartsWith(" + item.CSharpParamName + ") );";
+
+                rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, _whereStatements));
+                rtbOutput.AppendText(Environment.NewLine);
+
+                _whereStatements = from item in entityDescriptor.properties
+                                   where (item.filterParameter != null) && (item.filterParameter.@equals)
+                                   select // "a." + item.Name;
+                          " if (" + item.CSharpParamName + "!= null)" + Environment.NewLine +
+                              "result = result.Where(r => r." + entityDescriptor.CSharpVariableName
+                              + "." + item.Name + "==" + item.CSharpParamName + " );";
+
+                rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, _whereStatements));
+
+                _whereStatements = from item in entityDescriptor.properties
+                                   where (item.filterParameter != null) && (item.filterParameter.range)
+                                   select // "a." + item.Name;
+                          " if (" + item.CSharpParamName + "!= null)" + Environment.NewLine +
+                              "result = result.Where(r => r." + entityDescriptor.CSharpVariableName
+                              + "." + item.Name + ">=" + item.CSharpParamName + " );"
+                              + Environment.NewLine + Environment.NewLine +
+                          " if (" + item.CSharpParamName + "!= null)" + Environment.NewLine +
+                              "result = result.Where(r => r." + entityDescriptor.CSharpVariableName
+                              + "." + item.Name + "<=" + item.CSharpParamName + " );";
+
+
+                rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, _whereStatements));
+
+                rtbOutput.AppendText(Environment.NewLine);
+                rtbOutput.AppendText(Environment.NewLine);
+
+                var a = from prop in entityDescriptor.properties 
+                        from item in prop.CSharpFilterParameters 
+                        select prop.CSharpParamType + " " + item;
+
+                rtbOutput.AppendText(string.Join("," + Environment.NewLine , a));
+
+                rtbOutput.AppendText(Environment.NewLine);
+                rtbOutput.AppendText(Environment.NewLine);
+
+                var b = from prop in entityDescriptor.properties
+                        from item in prop.CSharpFilterStatements
+                        select item;
+
+                rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, b));
+                */
+            }
 
         }
 
@@ -205,7 +224,13 @@ namespace FormDesignerApp
 
             string[] fileNames = Directory.GetFiles(path, "*.cs");
             string[] _fileNames = Directory.GetFiles(_path + "\\Attributes", "*.cs");
+
             fileNames = fileNames.Union(_fileNames).ToArray();
+
+            foreach (var dir in Directory.GetDirectories(path) )
+            {
+                fileNames = fileNames.Union( Directory.GetFiles(dir, "*.cs") ).ToArray();
+            }
 
             List<SyntaxTree> syntaxTrees = new List<SyntaxTree> { };
 
@@ -276,18 +301,22 @@ namespace FormDesignerApp
 
         }
 
-
-        private void GenerateController(string entityName)
+        private void btnInitModel_Click(object sender, EventArgs e)
         {
+            lbEntities.Items.Clear();
+
+            this.initDbContext();
+            var dbModel = this.dbContext.Model;
+
+            foreach (var _entityType in dbModel.GetEntityTypes())
+            {
+//                lbEntities.Items.Add(_entityType.ShortName());
+                lbEntities.Items.Add(_entityType.Name);
+            }
 
         }
 
-        private void designerTabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
 
         }
