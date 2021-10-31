@@ -8,6 +8,10 @@ using DataAccessLayer.Model.Client;
 using DataAccessLayer.Model.Core;
 using DataAccessLayer.Model.Inventory;
 using DataAccessLayer.Model.Product;
+using DataAccessLayer.Model.Procurment;
+using DataAccessLayer.Model.Sale;
+using DataAccessLayer.Model.Account;
+using DataAccessLayer.Model.GeneralLedger;
 
 
 
@@ -63,6 +67,40 @@ namespace DataAccessLayer
         public virtual DbSet<Movement> Movement { get; set; }
         public virtual DbSet<MovementDetail> MovementDetail { get; set; }
 
+        // Procurement Schema
+        public virtual DbSet<Purchase> Purchase { get; set; }
+        public virtual DbSet<PurchaseDetail> PurchaseDetail { get; set; }
+        public virtual DbSet<PurchaseAllocationSource> PurchaseAllocationSource { get; set; }
+        public virtual DbSet<PurchaseAllocationSourceType> PurchaseAllocationSourceType { get; set; }
+        public virtual DbSet<PurchaseAllocationSchema> PurchaseAllocationSchema { get; set; }
+        public virtual DbSet<PurchaseAllocationResult> PurchaseAllocationResult { get; set; }
+        public virtual DbSet<PurchaseDetailPostType> PurchaseDetailPostType { get; set; }
+
+        // POS         
+        public virtual DbSet<Sale> Sale { get; set; }
+        public virtual DbSet<SalePayment> SalePayment { get; set; }
+        public virtual DbSet<SalePaymentType> SalePaymentType { get; set; }
+        public virtual DbSet<SaleProduct> SaleProduct { get; set; }
+        public virtual DbSet<ReturnProduct> ReturnProduct { get; set; }
+        public virtual DbSet<SaleSchema> SaleSchema { get; set; }
+        public virtual DbSet<SaleSchemaDetail> SaleSchemaDetail { get; set; }
+
+
+        // Account
+        public virtual DbSet<Account> Account { get; set; }
+        public virtual DbSet<AccountDimension> AccountDimension { get; set; }
+        public virtual DbSet<AccountBalance> AccountBalance { get; set; }
+        public virtual DbSet<Transaction> Transaction { get; set; }
+        public virtual DbSet<TransactionOrder> TransactionOrder { get; set; }
+
+
+        // General Ledger
+        public virtual DbSet<GlAccount> GlAccount { get; set; }
+        public virtual DbSet<GlTransaction> GlTransaction { get; set; }
+        public virtual DbSet<GlTransactionDetail> GlTransactionDetail { get; set; }
+        public virtual DbSet<FinAccount> FinAccount { get; set; }
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -83,6 +121,7 @@ namespace DataAccessLayer
             modelBuilder.Entity<Country>().ToTable("Country", "cor");
             modelBuilder.Entity<Currency>().ToTable("Currency", "cor");
             modelBuilder.Entity<User>().ToTable("User", "cor");
+            modelBuilder.Entity<Entity>().ToTable("Entity", "cor");
 
 
             // Clients Schema
@@ -114,6 +153,40 @@ namespace DataAccessLayer
             modelBuilder.Entity<Inventory>().ToTable("Inventory", "inv");
             modelBuilder.Entity<Movement>().ToTable("Movement", "inv");
             modelBuilder.Entity<MovementDetail>().ToTable("MovementDetail", "inv");
+
+            // Purchase Schema
+            modelBuilder.Entity<Purchase>().ToTable("Purchase", "prc");
+            modelBuilder.Entity<PurchaseDetail>().ToTable("PurchaseDetail", "prc");
+            modelBuilder.Entity<PurchaseAllocationSource>().ToTable("PurchaseAllocationSource", "prc");
+            modelBuilder.Entity<PurchaseAllocationSourceType>().ToTable("PurchaseAllocationSourceType", "prc");
+            modelBuilder.Entity<PurchaseAllocationSchema>().ToTable("PurchaseAllocationSchema", "prc");
+            modelBuilder.Entity<PurchaseAllocationResult>().ToTable("PurchaseAllocationResult", "prc");
+            modelBuilder.Entity<PurchaseDetailPostType>().ToTable("PurchaseDetailPostType", "prc");
+
+
+            // Pos Schema
+            modelBuilder.Entity<Sale>().ToTable("Sale", "pos");
+            modelBuilder.Entity<SalePayment>().ToTable("SalePayment", "pos");
+            modelBuilder.Entity<SalePaymentType>().ToTable("SalePaymentType", "pos");
+            modelBuilder.Entity<SaleProduct>().ToTable("SaleProduct", "pos");
+            modelBuilder.Entity<SaleSchema>().ToTable("SaleSchema", "pos");
+            modelBuilder.Entity<SaleSchemaDetail>().ToTable("SaleSchemaDetail", "pos");
+            modelBuilder.Entity<ReturnProduct>().ToTable("ReturnProduct", "pos");
+
+
+            // Account Schema
+            modelBuilder.Entity<Account>().ToTable("Account ", "acc");
+            modelBuilder.Entity<AccountDimension>().ToTable("AccountDimension", "acc");
+            modelBuilder.Entity<AccountBalance>().ToTable("AccountBalance", "acc");
+            modelBuilder.Entity<Transaction>().ToTable("Transaction", "acc");
+            modelBuilder.Entity<TransactionOrder>().ToTable("TransactionOrder", "acc");
+
+            // General Ledger Schema
+            modelBuilder.Entity<GlAccount>().ToTable("GlAccount", "gl");
+            modelBuilder.Entity<GlTransaction>().ToTable("GlTransaction", "gl");
+            modelBuilder.Entity<GlTransactionDetail>().ToTable("GlTransactionDetail", "gl");
+            modelBuilder.Entity<FinAccount>().ToTable("FinAccount", "gl");
+
 
             foreach (var e in modelBuilder.Model.GetEntityTypes() )
             {

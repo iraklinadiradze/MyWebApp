@@ -21,11 +21,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\Purchase\" />
+    <ProjectReference Include="..\SharedLib\SharedLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SharedLib\SharedLib.csproj" />
+    <Folder Include="Model\Loyality\" />
+    <Folder Include="Model\CashDesk\" />
+    <Folder Include="Model\GiftCard\" />
+    <Folder Include="Model\Transfer\" />
+    <Folder Include="Model\Production\" />
   </ItemGroup>
 
 </Project>

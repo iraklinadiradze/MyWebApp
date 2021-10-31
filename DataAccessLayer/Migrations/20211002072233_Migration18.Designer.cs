@@ -4,14 +4,16 @@ using DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(CoreDBContext))]
-    partial class CoreDBContextModelSnapshot : ModelSnapshot
+    [Migration("20211002072233_Migration18")]
+    partial class Migration18
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -493,121 +495,6 @@ namespace DataAccessLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User", "cor");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.GeneralLedger.FinAccount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FinAccountCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FinAccount", "gl");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.GeneralLedger.GlAccount", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AccountCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FinAccountId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FinAccountId");
-
-                    b.ToTable("GlAccount", "gl");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.GeneralLedger.GlTransaction", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TransDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GlTransaction", "gl");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.GeneralLedger.GlTransactionDetail", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("GlAccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDebit")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("TransactionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GlAccountId");
-
-                    b.HasIndex("TransactionId");
-
-                    b.ToTable("GlTransactionDetail", "gl");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.Inventory.Inventory", b =>
@@ -2064,36 +1951,6 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Client");
 
                     b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.GeneralLedger.GlAccount", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.GeneralLedger.FinAccount", "FinAccount")
-                        .WithMany()
-                        .HasForeignKey("FinAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("FinAccount");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.GeneralLedger.GlTransactionDetail", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.GeneralLedger.GlAccount", "GlAccount")
-                        .WithMany()
-                        .HasForeignKey("GlAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Model.GeneralLedger.GlTransaction", "GlTransaction")
-                        .WithMany()
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("GlAccount");
-
-                    b.Navigation("GlTransaction");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.Inventory.Inventory", b =>

@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedLib", "SharedLib\Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Result", "Result\Result.csproj", "{6786AA3F-DD45-426E-94F5-701BC9EBEE4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OldModel", "OldModel\OldModel.csproj", "{58F10E25-4F6A-4106-BC42-8B5FFAE51BF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OldModel", "OldModel\OldModel.csproj", "{58F10E25-4F6A-4106-BC42-8B5FFAE51BF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

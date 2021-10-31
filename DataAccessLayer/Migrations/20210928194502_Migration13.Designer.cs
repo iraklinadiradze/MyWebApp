@@ -4,257 +4,22 @@ using DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(CoreDBContext))]
-    partial class CoreDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210928194502_Migration13")]
+    partial class Migration13
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("DataAccessLayer.Model.Account.Account", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AccountDimensionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EntityForeignId1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EntityForeignId2")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EntityForeignId3")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EntityForeignId4")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EntityForeignId5")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EntityForeignId6")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountDimensionId");
-
-                    b.ToTable("Account ", "acc");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Account.AccountBalance", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AccountBalanceCount")
-                        .HasColumnType("int");
-
-                    b.Property<long>("AccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("BalanceTransactionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("MaxPostTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("TransDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("balance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("decrease")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("increase")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("AccountBalance", "acc");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Account.AccountDimension", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("EntityId1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EntityId2")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EntityId3")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EntityId4")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EntityId5")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EntityId6")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EntityId1");
-
-                    b.HasIndex("EntityId2");
-
-                    b.HasIndex("EntityId3");
-
-                    b.HasIndex("EntityId4");
-
-                    b.HasIndex("EntityId5");
-
-                    b.HasIndex("EntityId6");
-
-                    b.ToTable("AccountDimension", "acc");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Account.Transaction", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("AccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("AccountTranSeq")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Eod")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("PostOrderRefId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("PostTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("RefVersion")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ReferenceEntityId")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("ReferenceId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("SubReferenceEntityId")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("SubReferenceId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("TransDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("balance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("decrease")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("increase")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("PostOrderRefId");
-
-                    b.HasIndex("ReferenceEntityId");
-
-                    b.HasIndex("SubReferenceEntityId");
-
-                    b.ToTable("Transaction", "acc");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Account.TransactionOrder", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("PostTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ReferenceEntityId")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("ReferenceId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("SubReferenceEntityId")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("SubReferenceId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("TransDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReferenceEntityId");
-
-                    b.HasIndex("SubReferenceEntityId");
-
-                    b.ToTable("TransactionOrder", "acc");
-                });
 
             modelBuilder.Entity("DataAccessLayer.Model.Client.Client", b =>
                 {
@@ -437,31 +202,6 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Currency", "cor");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Model.Core.Entity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EntityCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EntityDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EntityName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Entity", "cor");
-                });
-
             modelBuilder.Entity("DataAccessLayer.Model.Core.User", b =>
                 {
                     b.Property<int>("Id")
@@ -493,121 +233,6 @@ namespace DataAccessLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User", "cor");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.GeneralLedger.FinAccount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FinAccountCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FinAccount", "gl");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.GeneralLedger.GlAccount", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AccountCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FinAccountId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FinAccountId");
-
-                    b.ToTable("GlAccount", "gl");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.GeneralLedger.GlTransaction", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TransDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GlTransaction", "gl");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.GeneralLedger.GlTransactionDetail", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("GlAccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDebit")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("TransactionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GlAccountId");
-
-                    b.HasIndex("TransactionId");
-
-                    b.ToTable("GlTransactionDetail", "gl");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.Inventory.Inventory", b =>
@@ -885,113 +510,34 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Purchase", "prc");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Model.Procurment.PurchaseAllocationResult", b =>
+            modelBuilder.Entity("DataAccessLayer.Model.Procurment.PurchaseAllocation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<bool>("PostStarted")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("PurchaseAllocationSourceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PurchaseDetailId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PurchaseAllocationSourceId");
-
-                    b.HasIndex("PurchaseDetailId");
-
-                    b.ToTable("PurchaseAllocationResult", "prc");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Procurment.PurchaseAllocationSchema", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PurchaseAllocationSchema", "prc");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Procurment.PurchaseAllocationSource", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AllocPurchaseDetailId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GlAccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PurchaseAllocSchemaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PurchaseAllocationSchemaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PurchaseAllocationSourceTypeId")
-                        .HasColumnType("int");
+                    b.Property<bool>("Posted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PurchaseId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("TransDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Version")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AllocPurchaseDetailId");
-
-                    b.HasIndex("PurchaseAllocationSchemaId");
-
-                    b.HasIndex("PurchaseAllocationSourceTypeId");
 
                     b.HasIndex("PurchaseId");
 
-                    b.ToTable("PurchaseAllocationSource", "prc");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Procurment.PurchaseAllocationSourceType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PurchaseAllocationSourceType", "prc");
+                    b.ToTable("PurchaseAllocation", "prc");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.Procurment.PurchaseDetail", b =>
@@ -1050,8 +596,8 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PurchaseDetailPostTypeId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("PurchaseDetailPostTypeId")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("PurchaseDraftId")
                         .HasColumnType("int");
@@ -1087,30 +633,9 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("PurchaseDetailPostTypeId");
-
                     b.HasIndex("PurchaseId");
 
                     b.ToTable("PurchaseDetail", "prc");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Procurment.PurchaseDetailPostType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PurchaseDetailPostType", "prc");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.Product.Brand", b =>
@@ -1583,451 +1108,6 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("ProductUnit", "pro");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Model.Sale.ReturnProduct", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Cogs")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ConsultantId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("FinPostStarted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("FinPosted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("InventoryId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("NominalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("NominalPriceDiscount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Posted")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Qty")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("QtyPostStarted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("QtyPosted")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Revenue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SaleId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("SalePrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("SchemaPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("VatAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("VatRate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InventoryId");
-
-                    b.HasIndex("SaleId");
-
-                    b.ToTable("ReturnProduct", "pos");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Sale.Sale", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ConsultantId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("FinPostStarted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("FinPosted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("PaymentPosted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Posted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("QtyPostStarted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("QtyPosted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ShopId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TransDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConsultantId");
-
-                    b.HasIndex("OwnerId");
-
-                    b.HasIndex("ShopId");
-
-                    b.ToTable("Sale", "pos");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Sale.SalePayment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("AmountIn")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("AmountOut")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PaymentTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Posted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("SaleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PaymentTypeId");
-
-                    b.HasIndex("SaleId");
-
-                    b.ToTable("SalePayment", "pos");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Sale.SalePaymentType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SalePaymentType", "pos");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Sale.SaleProduct", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Cogs")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ConsultantId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("FinPostStarted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("FinPosted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("InventoryId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("NominalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("NominalPriceDiscount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Posted")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Qty")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("QtyPostStarted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("QtyPosted")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Revenue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SaleId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("SalePrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("SchemaPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("VatAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("VatRate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InventoryId");
-
-                    b.HasIndex("SaleId");
-
-                    b.ToTable("SaleProduct", "pos");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Sale.SaleSchema", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SaleSchema", "pos");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Sale.SaleSchemaDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SaleSchemaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Version")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("SaleSchemaId");
-
-                    b.ToTable("SaleSchemaDetail", "pos");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Account.Account", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.Account.AccountDimension", "AccountDimension")
-                        .WithMany()
-                        .HasForeignKey("AccountDimensionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("AccountDimension");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Account.AccountBalance", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.Account.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Account.AccountDimension", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.Core.Entity", "Entity1")
-                        .WithMany()
-                        .HasForeignKey("EntityId1")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("DataAccessLayer.Model.Core.Entity", "Entity2")
-                        .WithMany()
-                        .HasForeignKey("EntityId2")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("DataAccessLayer.Model.Core.Entity", "Entity3")
-                        .WithMany()
-                        .HasForeignKey("EntityId3")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("DataAccessLayer.Model.Core.Entity", "Entity4")
-                        .WithMany()
-                        .HasForeignKey("EntityId4")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("DataAccessLayer.Model.Core.Entity", "Entity5")
-                        .WithMany()
-                        .HasForeignKey("EntityId5")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("DataAccessLayer.Model.Core.Entity", "Entity6")
-                        .WithMany()
-                        .HasForeignKey("EntityId6")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Entity1");
-
-                    b.Navigation("Entity2");
-
-                    b.Navigation("Entity3");
-
-                    b.Navigation("Entity4");
-
-                    b.Navigation("Entity5");
-
-                    b.Navigation("Entity6");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Account.Transaction", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.Account.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Model.Account.TransactionOrder", "TransactionOrder")
-                        .WithMany()
-                        .HasForeignKey("PostOrderRefId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("DataAccessLayer.Model.Core.Entity", "ReferenceEntity")
-                        .WithMany()
-                        .HasForeignKey("ReferenceEntityId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("DataAccessLayer.Model.Core.Entity", "SubReferenceEntity")
-                        .WithMany()
-                        .HasForeignKey("SubReferenceEntityId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Account");
-
-                    b.Navigation("ReferenceEntity");
-
-                    b.Navigation("SubReferenceEntity");
-
-                    b.Navigation("TransactionOrder");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Account.TransactionOrder", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.Core.Entity", "ReferenceEntity")
-                        .WithMany()
-                        .HasForeignKey("ReferenceEntityId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("DataAccessLayer.Model.Core.Entity", "SubReferenceEntity")
-                        .WithMany()
-                        .HasForeignKey("SubReferenceEntityId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("ReferenceEntity");
-
-                    b.Navigation("SubReferenceEntity");
-                });
-
             modelBuilder.Entity("DataAccessLayer.Model.Client.LegalEntity", b =>
                 {
                     b.HasOne("DataAccessLayer.Model.Client.Client", "Client")
@@ -2064,36 +1144,6 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Client");
 
                     b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.GeneralLedger.GlAccount", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.GeneralLedger.FinAccount", "FinAccount")
-                        .WithMany()
-                        .HasForeignKey("FinAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("FinAccount");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.GeneralLedger.GlTransactionDetail", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.GeneralLedger.GlAccount", "GlAccount")
-                        .WithMany()
-                        .HasForeignKey("GlAccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Model.GeneralLedger.GlTransaction", "GlTransaction")
-                        .WithMany()
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("GlAccount");
-
-                    b.Navigation("GlTransaction");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.Inventory.Inventory", b =>
@@ -2171,44 +1221,8 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Currency");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Model.Procurment.PurchaseAllocationResult", b =>
+            modelBuilder.Entity("DataAccessLayer.Model.Procurment.PurchaseAllocation", b =>
                 {
-                    b.HasOne("DataAccessLayer.Model.Procurment.PurchaseAllocationSource", "PurchaseAllocationSource")
-                        .WithMany()
-                        .HasForeignKey("PurchaseAllocationSourceId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Model.Procurment.PurchaseDetail", "PurchaseDetail")
-                        .WithMany()
-                        .HasForeignKey("PurchaseDetailId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("PurchaseAllocationSource");
-
-                    b.Navigation("PurchaseDetail");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Procurment.PurchaseAllocationSource", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.Procurment.PurchaseDetail", "PurchaseDetail")
-                        .WithMany()
-                        .HasForeignKey("AllocPurchaseDetailId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Model.Procurment.PurchaseAllocationSchema", "PurchaseAllocationSchema")
-                        .WithMany()
-                        .HasForeignKey("PurchaseAllocationSchemaId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("DataAccessLayer.Model.Procurment.PurchaseAllocationSourceType", "PurchaseAllocationSourceType")
-                        .WithMany()
-                        .HasForeignKey("PurchaseAllocationSourceTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("DataAccessLayer.Model.Procurment.Purchase", "Purchase")
                         .WithMany()
                         .HasForeignKey("PurchaseId")
@@ -2216,12 +1230,6 @@ namespace DataAccessLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Purchase");
-
-                    b.Navigation("PurchaseAllocationSchema");
-
-                    b.Navigation("PurchaseAllocationSourceType");
-
-                    b.Navigation("PurchaseDetail");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.Procurment.PurchaseDetail", b =>
@@ -2244,12 +1252,6 @@ namespace DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("DataAccessLayer.Model.Procurment.PurchaseDetailPostType", "PurchaseDetailPostType")
-                        .WithMany()
-                        .HasForeignKey("PurchaseDetailPostTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("DataAccessLayer.Model.Procurment.Purchase", "Purchase")
                         .WithMany()
                         .HasForeignKey("PurchaseId")
@@ -2263,8 +1265,6 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Purchase");
-
-                    b.Navigation("PurchaseDetailPostType");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.Product.FeatureValue", b =>
@@ -2415,109 +1415,6 @@ namespace DataAccessLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("ProductProcessorDetail");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Sale.ReturnProduct", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.Inventory.Inventory", "SaleInventory")
-                        .WithMany()
-                        .HasForeignKey("InventoryId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Model.Sale.Sale", "Sale")
-                        .WithMany()
-                        .HasForeignKey("SaleId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Sale");
-
-                    b.Navigation("SaleInventory");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Sale.Sale", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.Core.User", "ConsultantUser")
-                        .WithMany()
-                        .HasForeignKey("ConsultantId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Model.Core.User", "OwnerUser")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Model.Inventory.Location", "Shop")
-                        .WithMany()
-                        .HasForeignKey("ShopId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ConsultantUser");
-
-                    b.Navigation("OwnerUser");
-
-                    b.Navigation("Shop");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Sale.SalePayment", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.Sale.SalePaymentType", "SalePaymentType")
-                        .WithMany()
-                        .HasForeignKey("PaymentTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Model.Sale.Sale", "Sale")
-                        .WithMany()
-                        .HasForeignKey("SaleId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Sale");
-
-                    b.Navigation("SalePaymentType");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Sale.SaleProduct", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.Inventory.Inventory", "SaleInventory")
-                        .WithMany()
-                        .HasForeignKey("InventoryId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Model.Sale.Sale", "Sale")
-                        .WithMany()
-                        .HasForeignKey("SaleId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Sale");
-
-                    b.Navigation("SaleInventory");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Model.Sale.SaleSchemaDetail", b =>
-                {
-                    b.HasOne("DataAccessLayer.Model.Product.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.Model.Sale.SaleSchema", "SaleSchema")
-                        .WithMany()
-                        .HasForeignKey("SaleSchemaId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("SaleSchema");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Model.Client.Client", b =>
