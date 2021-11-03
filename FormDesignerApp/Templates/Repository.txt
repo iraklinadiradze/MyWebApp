@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+using DataAccessLayer.SeedWork;
+using DataAccessLayer.Model.[###moduleName###];
+using DataAccessLayer;
+
+namespace WebAPI.Domains.[###moduleName###].Data
+{
+    public class [###entityName###]Repository : Repository<[###entityName###]>, I[###entityName###]Repository
+    {
+        public [###entityName###]Repository(CoreDBContext _coreDbContext) : base(_coreDbContext)
+        {
+
+        }
+
+    }
+}

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,9 +9,9 @@ using DataAccessLayer;
 
 namespace WebAPI.Domains.Client.Data
 {
-    public class PersonRepository : Repository<Person>, IPersonRepository
+    public class ClientRepository : Repository<Client>, IClientRepository
     {
-        public PersonRepository(CoreDBContext _coreDbContext) : base(_coreDbContext)
+        public ClientRepository(CoreDBContext _coreDbContext) : base(_coreDbContext)
         {
 
         }

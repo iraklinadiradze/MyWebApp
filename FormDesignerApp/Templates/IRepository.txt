@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+using DataAccessLayer.SeedWork;
+using DataAccessLayer.Model.[###moduleName###];
+
+
+namespace WebAPI.Domains.[###moduleName###].Data
+{
+    public interface I[###entityName###]Repository: IRepository<[###entityName###]>
+    {
+    
+    }
+}

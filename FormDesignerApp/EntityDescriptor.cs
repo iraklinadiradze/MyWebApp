@@ -51,6 +51,7 @@ namespace FormDesignerApp
         public string Name;
         public string CSharpVariableName;
         public string CSharpTypeName;
+        public string ModuleName;
 
         public List<PropertyDesciptor> properties = new List<PropertyDesciptor>();
 
@@ -59,8 +60,8 @@ namespace FormDesignerApp
             Name = entity.ClrType.Name;
             CSharpVariableName = Name.Substring(0, 1).ToLower() + Name.Remove(0, 1);
             CSharpTypeName = Name.Substring(0, 1).ToUpper() + Name.Remove(0, 1);
-
-
+            ModuleName = entity.ClrType.Namespace.Substring(entity.ClrType.Namespace.LastIndexOf(".") + 1 );
+            
             foreach (var _e in entity.GetProperties())
             {
                 PropertyDesciptor propertyDesciptor = new PropertyDesciptor();

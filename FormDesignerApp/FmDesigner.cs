@@ -141,74 +141,34 @@ namespace FormDesignerApp
 
                 }
 
-                /*
-                // Controller View Params
-                var _resultTemp = from item in entityDescriptor.properties
-                                  where item.filterParameter != null
-                                  select item.CSharpParamType + " " + item.CSharpParamName;
+                if (chbGenerateRepository.Checked)
+                {
 
-                rtbOutput.AppendText(string.Join("," + Environment.NewLine, _resultTemp) );
-                rtbOutput.AppendText(Environment.NewLine);
+                    subFolder = entityDescriptor.ModuleName;
 
-                // Controller Primary table Select Params
-                _resultTemp = from item in entityDescriptor.properties
-                                  where item.filterParameter != null
-                                  select  "a." + item.Name;
+                    var resultRepository = FormDesignerApp.Generators.RepositoryGenerator.renderRepository(
+                                                                                            entityName,
+                                                                                            contextDescriptor,
+                                                                                            edtDBContextName.Text,
+                                                                                            edtTemplateFolder.Text,
+                                                                                            edtRepositoryFolder.Text,
+                                                                                            subFolder
+                                                                                            );
+                    rtbOutput.AppendText(resultRepository);
+                    rtbOutput.AppendText(Environment.NewLine);
 
-                rtbOutput.AppendText(string.Join("," + Environment.NewLine, _resultTemp));
-                rtbOutput.AppendText(Environment.NewLine);
+                    resultRepository = FormDesignerApp.Generators.RepositoryGenerator.renderIRepository(
+                                                                                            entityName,
+                                                                                            contextDescriptor,
+                                                                                            edtDBContextName.Text,
+                                                                                            edtTemplateFolder.Text,
+                                                                                            edtRepositoryFolder.Text,
+                                                                                            subFolder
+                                                                                            );
+                    rtbOutput.AppendText(resultRepository);
+                    rtbOutput.AppendText(Environment.NewLine);
 
-                var _whereStatements = from item in entityDescriptor.properties
-                                       where (item.filterParameter != null) && (item.filterParameter.startsWith)
-                                                 select // "a." + item.Name;
-                                        " if (" + item.CSharpParamName + "!= null)" + Environment.NewLine + 
-                                            "result = result.Where(r => r."+ entityDescriptor.CSharpVariableName 
-                                            + "." + item.Name + ".StartsWith(" + item.CSharpParamName + ") );";
-
-                rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, _whereStatements));
-                rtbOutput.AppendText(Environment.NewLine);
-
-                _whereStatements = from item in entityDescriptor.properties
-                                   where (item.filterParameter != null) && (item.filterParameter.@equals)
-                                   select // "a." + item.Name;
-                          " if (" + item.CSharpParamName + "!= null)" + Environment.NewLine +
-                              "result = result.Where(r => r." + entityDescriptor.CSharpVariableName
-                              + "." + item.Name + "==" + item.CSharpParamName + " );";
-
-                rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, _whereStatements));
-
-                _whereStatements = from item in entityDescriptor.properties
-                                   where (item.filterParameter != null) && (item.filterParameter.range)
-                                   select // "a." + item.Name;
-                          " if (" + item.CSharpParamName + "!= null)" + Environment.NewLine +
-                              "result = result.Where(r => r." + entityDescriptor.CSharpVariableName
-                              + "." + item.Name + ">=" + item.CSharpParamName + " );"
-                              + Environment.NewLine + Environment.NewLine +
-                          " if (" + item.CSharpParamName + "!= null)" + Environment.NewLine +
-                              "result = result.Where(r => r." + entityDescriptor.CSharpVariableName
-                              + "." + item.Name + "<=" + item.CSharpParamName + " );";
-
-
-                rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, _whereStatements));
-
-                rtbOutput.AppendText(Environment.NewLine);
-                rtbOutput.AppendText(Environment.NewLine);
-
-                var a = from prop in entityDescriptor.properties 
-                        from item in prop.CSharpFilterParameters 
-                        select prop.CSharpParamType + " " + item;
-
-                rtbOutput.AppendText(string.Join("," + Environment.NewLine , a));
-
-                rtbOutput.AppendText(Environment.NewLine);
-                rtbOutput.AppendText(Environment.NewLine);
-
-                var b = from prop in entityDescriptor.properties
-                        from item in prop.CSharpFilterStatements
-                        select item;
-
-                rtbOutput.AppendText(string.Join(Environment.NewLine + Environment.NewLine, b));
-                */
+                }
             }
 
         }
@@ -317,6 +277,11 @@ namespace FormDesignerApp
         }
 
         private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
         }

@@ -65,6 +65,10 @@ namespace FormDesignerApp
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.rtbOutput = new System.Windows.Forms.RichTextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.chbGenerateRepository = new System.Windows.Forms.CheckBox();
+            this.button7 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.edtRepositoryFolder = new System.Windows.Forms.TextBox();
             this.designerTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -87,6 +91,9 @@ namespace FormDesignerApp
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button7);
+            this.tabPage1.Controls.Add(this.label10);
+            this.tabPage1.Controls.Add(this.edtRepositoryFolder);
             this.tabPage1.Controls.Add(this.label11);
             this.tabPage1.Controls.Add(this.label9);
             this.tabPage1.Controls.Add(this.button6);
@@ -335,6 +342,7 @@ namespace FormDesignerApp
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.chbGenerateRepository);
             this.tabPage2.Controls.Add(this.chbGenerateAngular);
             this.tabPage2.Controls.Add(this.chbGenerateController);
             this.tabPage2.Controls.Add(this.s);
@@ -430,6 +438,45 @@ namespace FormDesignerApp
             this.rtbOutput.TabIndex = 2;
             this.rtbOutput.Text = "";
             // 
+            // chbGenerateRepository
+            // 
+            this.chbGenerateRepository.AutoSize = true;
+            this.chbGenerateRepository.Checked = true;
+            this.chbGenerateRepository.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbGenerateRepository.Location = new System.Drawing.Point(479, 108);
+            this.chbGenerateRepository.Name = "chbGenerateRepository";
+            this.chbGenerateRepository.Size = new System.Drawing.Size(132, 19);
+            this.chbGenerateRepository.TabIndex = 6;
+            this.chbGenerateRepository.Text = "Generate Repository";
+            this.chbGenerateRepository.UseVisualStyleBackColor = true;
+            this.chbGenerateRepository.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(574, 342);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(47, 27);
+            this.button7.TabIndex = 27;
+            this.button7.Text = "Open";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(20, 347);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(99, 15);
+            this.label10.TabIndex = 26;
+            this.label10.Text = "Repository Folder";
+            // 
+            // edtRepositoryFolder
+            // 
+            this.edtRepositoryFolder.Location = new System.Drawing.Point(156, 342);
+            this.edtRepositoryFolder.Name = "edtRepositoryFolder";
+            this.edtRepositoryFolder.Size = new System.Drawing.Size(418, 23);
+            this.edtRepositoryFolder.TabIndex = 25;
+            this.edtRepositoryFolder.Text = "C:\\Users\\inadir\\source\\repos\\MyWebApp\\Result\\Repository";
+            // 
             // FmDesigner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -486,6 +533,10 @@ namespace FormDesignerApp
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.CheckBox chbGenerateAngular;
         private System.Windows.Forms.CheckBox chbGenerateController;
+        private System.Windows.Forms.CheckBox chbGenerateRepository;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox edtRepositoryFolder;
     }
 }
 
