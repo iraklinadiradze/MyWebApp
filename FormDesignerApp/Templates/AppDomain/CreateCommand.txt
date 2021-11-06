@@ -1,0 +1,45 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using DataAccessLayer.Model.[###moduleName###];
+using DataAccessLayer;
+using Application.Common.Interfaces;
+
+namespace Application.Domains.[###moduleName###].[###entityName###].Commands.Create[###entityName###]
+{
+    public class Create[###entityName###]Command : IRequest<DataAccessLayer.Model.[###moduleName###].[###entityName###]>
+    {
+        public int senderId { get; set; }  = 0;
+        public DataAccessLayer.Model.[###moduleName###].[###entityName###] [###entityVariableName###] { get; set; }
+    }
+
+    public class Create[###entityName###]CommandHandler : IRequestHandler<Create[###entityName###]Command, DataAccessLayer.Model.[###moduleName###].[###entityName###]>
+    {
+        private readonly IMediator _mediator;
+        private readonly ICoreDBContext _context;
+
+        public Create[###entityName###]CommandHandler(IMediator mediator, ICoreDBContext context)
+        {
+           _mediator = mediator;
+           _context = context;
+        }
+
+        public async Task<DataAccessLayer.Model.[###moduleName###].[###entityName###]> Handle(Create[###entityName###]Command request, CancellationToken cancellationToken)
+        {
+            var entity = request.[###entityVariableName###];
+
+            _context.[###entityName###].Add(entity);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            //await _mediator.Publish(new CustomerCreated { CustomerId = entity.CustomerId }, cancellationToken);
+
+            return entity;
+         }
+
+    }
+
+}

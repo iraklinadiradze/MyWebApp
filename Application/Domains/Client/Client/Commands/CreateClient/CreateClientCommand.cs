@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,7 +25,6 @@ namespace Application.Domains.Client.Client.Commands.CreateClient
         {
            _mediator = mediator;
            _context = context;
-
         }
 
         public async Task<DataAccessLayer.Model.Client.Client> Handle(CreateClientCommand request, CancellationToken cancellationToken)

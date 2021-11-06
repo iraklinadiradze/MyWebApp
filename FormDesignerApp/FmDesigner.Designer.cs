@@ -31,6 +31,12 @@ namespace FormDesignerApp
         {
             this.designerTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button8 = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.edtAppDomainsFolder = new System.Windows.Forms.TextBox();
+            this.button7 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.edtRepositoryFolder = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
@@ -56,23 +62,24 @@ namespace FormDesignerApp
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.chbGenerateAngular = new System.Windows.Forms.CheckBox();
-            this.chbGenerateController = new System.Windows.Forms.CheckBox();
+            this.button9 = new System.Windows.Forms.Button();
             this.s = new System.Windows.Forms.Button();
             this.lbEntities = new System.Windows.Forms.ListBox();
-            this.rtbCompiledFiles = new System.Windows.Forms.RichTextBox();
-            this.btnGenerate = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.rtbOutput = new System.Windows.Forms.RichTextBox();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.chbGenerateAppDomain = new System.Windows.Forms.CheckBox();
             this.chbGenerateRepository = new System.Windows.Forms.CheckBox();
-            this.button7 = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.edtRepositoryFolder = new System.Windows.Forms.TextBox();
+            this.chbGenerateAngular = new System.Windows.Forms.CheckBox();
+            this.chbGenerateController = new System.Windows.Forms.CheckBox();
+            this.rtbCompiledFiles = new System.Windows.Forms.RichTextBox();
+            this.btnGenerate = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.designerTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // designerTabControl
@@ -83,14 +90,18 @@ namespace FormDesignerApp
             this.designerTabControl.Controls.Add(this.tabPage1);
             this.designerTabControl.Controls.Add(this.tabPage2);
             this.designerTabControl.Controls.Add(this.tabPage3);
+            this.designerTabControl.Controls.Add(this.tabPage4);
             this.designerTabControl.Location = new System.Drawing.Point(2, 12);
             this.designerTabControl.Name = "designerTabControl";
             this.designerTabControl.SelectedIndex = 0;
-            this.designerTabControl.Size = new System.Drawing.Size(786, 426);
+            this.designerTabControl.Size = new System.Drawing.Size(786, 461);
             this.designerTabControl.TabIndex = 0;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button8);
+            this.tabPage1.Controls.Add(this.label12);
+            this.tabPage1.Controls.Add(this.edtAppDomainsFolder);
             this.tabPage1.Controls.Add(this.button7);
             this.tabPage1.Controls.Add(this.label10);
             this.tabPage1.Controls.Add(this.edtRepositoryFolder);
@@ -121,10 +132,62 @@ namespace FormDesignerApp
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(778, 398);
+            this.tabPage1.Size = new System.Drawing.Size(778, 433);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Settings";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(574, 371);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(47, 27);
+            this.button8.TabIndex = 30;
+            this.button8.Text = "Open";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(20, 376);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(118, 15);
+            this.label12.TabIndex = 29;
+            this.label12.Text = "Application Domains";
+            // 
+            // edtAppDomainsFolder
+            // 
+            this.edtAppDomainsFolder.Location = new System.Drawing.Point(156, 371);
+            this.edtAppDomainsFolder.Name = "edtAppDomainsFolder";
+            this.edtAppDomainsFolder.Size = new System.Drawing.Size(418, 23);
+            this.edtAppDomainsFolder.TabIndex = 28;
+            this.edtAppDomainsFolder.Text = "C:\\Users\\inadir\\source\\repos\\MyWebApp\\Result\\AppDomains";
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(574, 342);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(47, 27);
+            this.button7.TabIndex = 27;
+            this.button7.Text = "Open";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(20, 347);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(99, 15);
+            this.label10.TabIndex = 26;
+            this.label10.Text = "Repository Folder";
+            // 
+            // edtRepositoryFolder
+            // 
+            this.edtRepositoryFolder.Location = new System.Drawing.Point(156, 342);
+            this.edtRepositoryFolder.Name = "edtRepositoryFolder";
+            this.edtRepositoryFolder.Size = new System.Drawing.Size(418, 23);
+            this.edtRepositoryFolder.TabIndex = 25;
+            this.edtRepositoryFolder.Text = "C:\\Users\\inadir\\source\\repos\\MyWebApp\\Result\\Repository";
             // 
             // label11
             // 
@@ -342,44 +405,26 @@ namespace FormDesignerApp
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.chbGenerateRepository);
-            this.tabPage2.Controls.Add(this.chbGenerateAngular);
-            this.tabPage2.Controls.Add(this.chbGenerateController);
+            this.tabPage2.Controls.Add(this.button9);
             this.tabPage2.Controls.Add(this.s);
             this.tabPage2.Controls.Add(this.lbEntities);
-            this.tabPage2.Controls.Add(this.rtbCompiledFiles);
-            this.tabPage2.Controls.Add(this.btnGenerate);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(778, 398);
+            this.tabPage2.Size = new System.Drawing.Size(778, 433);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Generator";
+            this.tabPage2.Text = "Init Model";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // chbGenerateAngular
+            // button9
             // 
-            this.chbGenerateAngular.AutoSize = true;
-            this.chbGenerateAngular.Checked = true;
-            this.chbGenerateAngular.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbGenerateAngular.Location = new System.Drawing.Point(333, 109);
-            this.chbGenerateAngular.Name = "chbGenerateAngular";
-            this.chbGenerateAngular.Size = new System.Drawing.Size(118, 19);
-            this.chbGenerateAngular.TabIndex = 5;
-            this.chbGenerateAngular.Text = "Generate Angular";
-            this.chbGenerateAngular.UseVisualStyleBackColor = true;
-            // 
-            // chbGenerateController
-            // 
-            this.chbGenerateController.AutoSize = true;
-            this.chbGenerateController.Checked = true;
-            this.chbGenerateController.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbGenerateController.Location = new System.Drawing.Point(161, 109);
-            this.chbGenerateController.Name = "chbGenerateController";
-            this.chbGenerateController.Size = new System.Drawing.Size(129, 19);
-            this.chbGenerateController.TabIndex = 4;
-            this.chbGenerateController.Text = "Generate Controller";
-            this.chbGenerateController.UseVisualStyleBackColor = true;
+            this.button9.Location = new System.Drawing.Point(21, 69);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(91, 45);
+            this.button9.TabIndex = 4;
+            this.button9.Text = "select All";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // s
             // 
@@ -398,26 +443,8 @@ namespace FormDesignerApp
             this.lbEntities.Location = new System.Drawing.Point(161, 0);
             this.lbEntities.Name = "lbEntities";
             this.lbEntities.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lbEntities.Size = new System.Drawing.Size(572, 79);
+            this.lbEntities.Size = new System.Drawing.Size(572, 409);
             this.lbEntities.TabIndex = 2;
-            // 
-            // rtbCompiledFiles
-            // 
-            this.rtbCompiledFiles.Location = new System.Drawing.Point(21, 142);
-            this.rtbCompiledFiles.Name = "rtbCompiledFiles";
-            this.rtbCompiledFiles.Size = new System.Drawing.Size(712, 226);
-            this.rtbCompiledFiles.TabIndex = 1;
-            this.rtbCompiledFiles.Text = "";
-            // 
-            // btnGenerate
-            // 
-            this.btnGenerate.Location = new System.Drawing.Point(21, 97);
-            this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(91, 39);
-            this.btnGenerate.TabIndex = 0;
-            this.btnGenerate.Text = "Generate";
-            this.btnGenerate.UseVisualStyleBackColor = true;
-            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
             // tabPage3
             // 
@@ -425,7 +452,7 @@ namespace FormDesignerApp
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(778, 398);
+            this.tabPage3.Size = new System.Drawing.Size(778, 433);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Result";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -438,50 +465,93 @@ namespace FormDesignerApp
             this.rtbOutput.TabIndex = 2;
             this.rtbOutput.Text = "";
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.chbGenerateAppDomain);
+            this.tabPage4.Controls.Add(this.chbGenerateRepository);
+            this.tabPage4.Controls.Add(this.chbGenerateAngular);
+            this.tabPage4.Controls.Add(this.chbGenerateController);
+            this.tabPage4.Controls.Add(this.rtbCompiledFiles);
+            this.tabPage4.Controls.Add(this.btnGenerate);
+            this.tabPage4.Location = new System.Drawing.Point(4, 24);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(778, 433);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Generator";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // chbGenerateAppDomain
+            // 
+            this.chbGenerateAppDomain.AutoSize = true;
+            this.chbGenerateAppDomain.Checked = true;
+            this.chbGenerateAppDomain.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbGenerateAppDomain.Location = new System.Drawing.Point(536, 17);
+            this.chbGenerateAppDomain.Name = "chbGenerateAppDomain";
+            this.chbGenerateAppDomain.Size = new System.Drawing.Size(148, 19);
+            this.chbGenerateAppDomain.TabIndex = 13;
+            this.chbGenerateAppDomain.Text = "Generate App Domains";
+            this.chbGenerateAppDomain.UseVisualStyleBackColor = true;
+            // 
             // chbGenerateRepository
             // 
             this.chbGenerateRepository.AutoSize = true;
             this.chbGenerateRepository.Checked = true;
             this.chbGenerateRepository.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chbGenerateRepository.Location = new System.Drawing.Point(479, 108);
+            this.chbGenerateRepository.Location = new System.Drawing.Point(399, 17);
             this.chbGenerateRepository.Name = "chbGenerateRepository";
             this.chbGenerateRepository.Size = new System.Drawing.Size(132, 19);
-            this.chbGenerateRepository.TabIndex = 6;
+            this.chbGenerateRepository.TabIndex = 12;
             this.chbGenerateRepository.Text = "Generate Repository";
             this.chbGenerateRepository.UseVisualStyleBackColor = true;
-            this.chbGenerateRepository.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // button7
+            // chbGenerateAngular
             // 
-            this.button7.Location = new System.Drawing.Point(574, 342);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(47, 27);
-            this.button7.TabIndex = 27;
-            this.button7.Text = "Open";
-            this.button7.UseVisualStyleBackColor = true;
+            this.chbGenerateAngular.AutoSize = true;
+            this.chbGenerateAngular.Checked = true;
+            this.chbGenerateAngular.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbGenerateAngular.Location = new System.Drawing.Point(268, 18);
+            this.chbGenerateAngular.Name = "chbGenerateAngular";
+            this.chbGenerateAngular.Size = new System.Drawing.Size(118, 19);
+            this.chbGenerateAngular.TabIndex = 11;
+            this.chbGenerateAngular.Text = "Generate Angular";
+            this.chbGenerateAngular.UseVisualStyleBackColor = true;
             // 
-            // label10
+            // chbGenerateController
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(20, 347);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(99, 15);
-            this.label10.TabIndex = 26;
-            this.label10.Text = "Repository Folder";
+            this.chbGenerateController.AutoSize = true;
+            this.chbGenerateController.Checked = true;
+            this.chbGenerateController.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbGenerateController.Location = new System.Drawing.Point(127, 18);
+            this.chbGenerateController.Name = "chbGenerateController";
+            this.chbGenerateController.Size = new System.Drawing.Size(129, 19);
+            this.chbGenerateController.TabIndex = 10;
+            this.chbGenerateController.Text = "Generate Controller";
+            this.chbGenerateController.UseVisualStyleBackColor = true;
             // 
-            // edtRepositoryFolder
+            // rtbCompiledFiles
             // 
-            this.edtRepositoryFolder.Location = new System.Drawing.Point(156, 342);
-            this.edtRepositoryFolder.Name = "edtRepositoryFolder";
-            this.edtRepositoryFolder.Size = new System.Drawing.Size(418, 23);
-            this.edtRepositoryFolder.TabIndex = 25;
-            this.edtRepositoryFolder.Text = "C:\\Users\\inadir\\source\\repos\\MyWebApp\\Result\\Repository";
+            this.rtbCompiledFiles.Location = new System.Drawing.Point(19, 51);
+            this.rtbCompiledFiles.Name = "rtbCompiledFiles";
+            this.rtbCompiledFiles.Size = new System.Drawing.Size(712, 353);
+            this.rtbCompiledFiles.TabIndex = 9;
+            this.rtbCompiledFiles.Text = "";
+            // 
+            // btnGenerate
+            // 
+            this.btnGenerate.Location = new System.Drawing.Point(19, 6);
+            this.btnGenerate.Name = "btnGenerate";
+            this.btnGenerate.Size = new System.Drawing.Size(91, 39);
+            this.btnGenerate.TabIndex = 8;
+            this.btnGenerate.Text = "Generate";
+            this.btnGenerate.UseVisualStyleBackColor = true;
+            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
             // FmDesigner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 485);
             this.Controls.Add(this.designerTabControl);
             this.Name = "FmDesigner";
             this.Text = "Form Designer";
@@ -489,8 +559,9 @@ namespace FormDesignerApp
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -513,8 +584,6 @@ namespace FormDesignerApp
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbEntityFrameworkFolder;
-        private System.Windows.Forms.Button btnGenerate;
-        private System.Windows.Forms.RichTextBox rtbCompiledFiles;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox edtEFSpaceName;
         private System.Windows.Forms.Label label6;
@@ -531,12 +600,20 @@ namespace FormDesignerApp
         private System.Windows.Forms.Button s;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.CheckBox chbGenerateAngular;
-        private System.Windows.Forms.CheckBox chbGenerateController;
-        private System.Windows.Forms.CheckBox chbGenerateRepository;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox edtRepositoryFolder;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox edtAppDomainsFolder;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.CheckBox chbGenerateAppDomain;
+        private System.Windows.Forms.CheckBox chbGenerateRepository;
+        private System.Windows.Forms.CheckBox chbGenerateAngular;
+        private System.Windows.Forms.CheckBox chbGenerateController;
+        private System.Windows.Forms.RichTextBox rtbCompiledFiles;
+        private System.Windows.Forms.Button btnGenerate;
+        private System.Windows.Forms.Button button9;
     }
 }
 

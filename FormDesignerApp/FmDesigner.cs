@@ -169,6 +169,46 @@ namespace FormDesignerApp
                     rtbOutput.AppendText(Environment.NewLine);
 
                 }
+
+                if (chbGenerateAppDomain.Checked)
+                {
+
+                    subFolder = entityDescriptor.ModuleName;
+
+                    var resultDomain = FormDesignerApp.Generators.AppDomain.AppDomainGenerator.renderCreateCommand(
+                                                                                            entityName,
+                                                                                            contextDescriptor,
+                                                                                            edtDBContextName.Text,
+                                                                                            edtTemplateFolder.Text,
+                                                                                            edtAppDomainsFolder.Text,
+                                                                                            subFolder
+                                                                                            );
+                    rtbOutput.AppendText(resultDomain);
+                    rtbOutput.AppendText(Environment.NewLine);
+
+                    resultDomain = FormDesignerApp.Generators.AppDomain.AppDomainGenerator.renderUpdateCommand(
+                                                                                            entityName,
+                                                                                            contextDescriptor,
+                                                                                            edtDBContextName.Text,
+                                                                                            edtTemplateFolder.Text,
+                                                                                            edtAppDomainsFolder.Text,
+                                                                                            subFolder
+                                                                                            );
+                    rtbOutput.AppendText(resultDomain);
+                    rtbOutput.AppendText(Environment.NewLine);
+
+                    resultDomain = FormDesignerApp.Generators.AppDomain.AppDomainGenerator.renderDeleteCommand(
+                                                                                            entityName,
+                                                                                            contextDescriptor,
+                                                                                            edtDBContextName.Text,
+                                                                                            edtTemplateFolder.Text,
+                                                                                            edtAppDomainsFolder.Text,
+                                                                                            subFolder
+                                                                                            );
+                    rtbOutput.AppendText(resultDomain);
+                    rtbOutput.AppendText(Environment.NewLine);
+
+                }
             }
 
         }
@@ -283,7 +323,26 @@ namespace FormDesignerApp
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
+           
+        }
+
+        private void chbGenerateAngular_CheckedChanged(object sender, EventArgs e)
+        {
 
         }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+
+            lbEntities.SelectedItems.Clear();
+
+            for (var i=0; i< lbEntities.Items.Count;i++)
+            {
+                //                lbEntities.Items.Add(_entityType.ShortName());
+                lbEntities.SelectedItems.Add(lbEntities.Items[i]);
+            }
+
+        }
+
     }
 }

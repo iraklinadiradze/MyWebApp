@@ -11,15 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domains\Client\Client\Commands\DeleteClient\" />
-    <Folder Include="Domains\Client\Client\Commands\UpdateClient\" />
-    <Folder Include="Domains\Client\Client\Queries\" />
-    <Folder Include="Domains\Inventory\" />
-    <Folder Include="Domains\Product\" />
-    <Folder Include="Domains\Procurement\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
   </ItemGroup>
 
