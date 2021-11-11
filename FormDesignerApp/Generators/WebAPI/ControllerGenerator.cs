@@ -37,8 +37,8 @@ namespace FormDesignerApp.Generators
                                           from item in prop.CSharpFilterParameters
                                           select prop.CSharpParamType + " " + item;
 
-            templateContext = templateContext.Replace("[###entityFilterParameters###]",
-                string.Join("," + Environment.NewLine, _entityFilterParameters));
+            templateContext = templateContext.Replace("public [###entityFilterParameters###]",
+                string.Join(" {get;set;}" + Environment.NewLine, _entityFilterParameters));
 
             var _entityFilterStatements = from prop in _entityDescriptor.properties
                                           from item in prop.CSharpFilterStatements

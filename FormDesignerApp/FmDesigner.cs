@@ -208,6 +208,17 @@ namespace FormDesignerApp
                     rtbOutput.AppendText(resultDomain);
                     rtbOutput.AppendText(Environment.NewLine);
 
+                    resultDomain = FormDesignerApp.Generators.AppDomain.AppDomainGenerator.renderViewClass(
+                                                                                            entityName,
+                                                                                            contextDescriptor,
+                                                                                            edtDBContextName.Text,
+                                                                                            edtTemplateFolder.Text,
+                                                                                            edtAppDomainsFolder.Text,
+                                                                                            subFolder
+                                                                                            );
+                    rtbOutput.AppendText(resultDomain);
+                    rtbOutput.AppendText(Environment.NewLine);
+
                 }
             }
 

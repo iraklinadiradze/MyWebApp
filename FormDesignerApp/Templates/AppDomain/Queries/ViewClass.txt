@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using DataAccessLayer.Model.[###moduleName###];
+
+
+namespace Application.Domains.[###moduleName###].[###entityName###].Queries.Get[###entityName###]List
+{
+    public class ClientView: DataAccessLayer.Model.[###moduleName###].[###entityName###]
+    {
+
+          [###enityproperties###]
+
+          [###RelatedentityClasses###]
+
+          [###RelatedentityClassProperties###]
+
+    }
+}
