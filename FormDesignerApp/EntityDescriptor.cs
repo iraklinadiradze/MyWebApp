@@ -158,18 +158,18 @@ namespace FormDesignerApp
 
                     if (propertyDesciptor.filterParameter.equals)
                         propertyDesciptor.CSharpFilterStatements.Add(
-                            "                if (" + propertyDesciptor.CSharpParamName + "!= null) " + Environment.NewLine +
-                                        " result = result.Where(r => r." + CSharpVariableName + "." + propertyDesciptor.Name + "== " + propertyDesciptor.CSharpParamName + ");"
+                            "                if (" + "[###prefix###]" + propertyDesciptor.CSharpParamName + "!= null) " + Environment.NewLine +
+                                        " result = result.Where(r => r." + propertyDesciptor.Name + "== [###prefix###]" + propertyDesciptor.CSharpParamName + ");"
                             );
 
                     if (propertyDesciptor.filterParameter.startsWith)
                         propertyDesciptor.CSharpFilterStatements.Add(
-                            "                if (" + propertyDesciptor.CSharpParamName + "!= null) " + Environment.NewLine +
-                                        " result = result.Where(r => r." + CSharpVariableName + "." + propertyDesciptor.Name + ".StartsWith(" + propertyDesciptor.CSharpParamName + "));"
+                            "                if (" + "[###prefix###]" + propertyDesciptor.CSharpParamName + "!= null) " + Environment.NewLine +
+                                        " result = result.Where(r => r." + propertyDesciptor.Name + ".StartsWith([###prefix###]" + propertyDesciptor.CSharpParamName + "));"
                             );
 
                     if (propertyDesciptor.filterParameter.range)
-                        {
+                        {   
                             var fieldNameFrom = propertyDesciptor.CSharpParamName + "_from";
                             var fieldNameTo = propertyDesciptor.CSharpParamName + "_to";
 
@@ -180,13 +180,13 @@ namespace FormDesignerApp
                             propertyDesciptor.TSFilterParameters.Add(fieldNameTo);
 
                         propertyDesciptor.CSharpFilterStatements.Add(
-                                "                if (" + fieldNameFrom + "!= null) " + Environment.NewLine +
-                                            " result = result.Where(r => r." + CSharpVariableName + "." + propertyDesciptor.Name + ">= " + fieldNameFrom + ");"
+                                "                if (" + "[###prefix###]" + fieldNameFrom + "!= null) " + Environment.NewLine +
+                                            " result = result.Where(r => r." + propertyDesciptor.Name + ">= [###prefix###]" + fieldNameFrom + ");"
                                 );
 
                             propertyDesciptor.CSharpFilterStatements.Add(
-                                "                if (" + fieldNameTo + "!= null) " + Environment.NewLine +
-                                            " result = result.Where(r => r." + CSharpVariableName + "." + propertyDesciptor.Name + "<= " + fieldNameTo + ");"
+                                "                if (" + "[###prefix###]" + fieldNameTo + "!= null) " + Environment.NewLine +
+                                            " result = result.Where(r => r." + propertyDesciptor.Name + "<= [###prefix###]" + fieldNameTo + ");"
                                 );
 
                         }

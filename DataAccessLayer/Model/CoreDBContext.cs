@@ -195,9 +195,8 @@ namespace DataAccessLayer
                     r.DeleteBehavior = DeleteBehavior.NoAction;
                 }
 
-                var p = e.AddProperty("Version", typeof(int));
-                p.ValueGenerated = ValueGenerated.OnAddOrUpdate;
-//                p.SetDefaultValue(0);
+//                var p = e.AddProperty("Version", typeof(int));
+//                p.ValueGenerated = ValueGenerated.OnAddOrUpdate;
 
             }
 

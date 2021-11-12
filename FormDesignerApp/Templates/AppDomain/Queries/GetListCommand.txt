@@ -17,14 +17,16 @@ using System.Linq;
 namespace Application.Domains.[###moduleName###].[###entityName###].Queries.Get[###entityName###]List
 {
 
-    public class Get[###entityName###]ListQuery : IRequest<[###entityName###]View>
+    public class Get[###entityName###]ListQuery : IRequest<List<[###entityName###]View>>
     {
-        public int? id { get; set; }
-        public int? topRecords { get; set; }
-        public string? name { get; set; }
+//        public int? id { get; set; }
+//        public int? topRecords { get; set; }
+//        public string? name { get; set; }
+
+          [###entityFilterParameters###]
     }
 
-    public class Get[###entityName###]ListQueryHandler : IRequestHandler<Get[###entityName###]ListQuery, [###entityName###]View>
+    public class Get[###entityName###]ListQueryHandler : IRequestHandler<Get[###entityName###]ListQuery, List<[###entityName###]View>>
     {
 
         private readonly IMediator _mediator;
@@ -37,21 +39,21 @@ namespace Application.Domains.[###moduleName###].[###entityName###].Queries.Get[
             _context = context;
         }
 
-        public async Task<[###entityName###]View> Handle(Get[###entityName###]ListQuery request, CancellationToken cancellationToken)
+
+        public async Task<List<[###entityName###]View>> Handle(Get[###entityName###]ListQuery request, CancellationToken cancellationToken)
         {
 
-            var result = from a in _context.[###entityName###] select a;
-                
-            if (request.id != null)
-                result = result.Where(r => r.Id == request.id);
+           var result = from e in _context.[###entityName###]
+                        [###RelatedentitySelect###]
+                        select new [###entityName###]View
+                           {
+                             [###EntityProperties###]
+                           };
 
-            if (request.topRecords != null)
-                result = result.Take((int)request.topRecords);
 
-            if (request.firstName != null)
-                result = result.Where(r => r.Name.StartsWith(request.name));
+            [###entityFilterStatements###]
 
-            return ([###entityName###]View)await result.ToListAsync(cancellationToken);
+            return (List<[###entityName###]View>)await result.ToListAsync(cancellationToken);
         }
 
     }

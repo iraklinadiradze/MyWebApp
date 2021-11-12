@@ -42,7 +42,7 @@ namespace FormDesignerApp.Generators
 
             var _entityFilterStatements = from prop in _entityDescriptor.properties
                                           from item in prop.CSharpFilterStatements
-                                          select item;
+                                          select item.Replace("[###prefix###]", "");
 
             templateContext = templateContext.Replace("[###entityFilterStatements###]",
                 string.Join(Environment.NewLine + Environment.NewLine, _entityFilterStatements));
@@ -96,7 +96,7 @@ namespace FormDesignerApp.Generators
 
         static string renderViewParameters()
         {
-            var resut="";
+            var resut = "";
 
 
             return resut;

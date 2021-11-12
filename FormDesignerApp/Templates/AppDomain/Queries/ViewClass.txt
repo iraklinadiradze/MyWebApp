@@ -7,10 +7,8 @@ using DataAccessLayer.Model.[###moduleName###];
 
 namespace Application.Domains.[###moduleName###].[###entityName###].Queries.Get[###entityName###]List
 {
-    public class ClientView: DataAccessLayer.Model.[###moduleName###].[###entityName###]
+    public class [###entityName###]View: DataAccessLayer.Model.[###moduleName###].[###entityName###]
     {
-
-          [###enityproperties###]
 
           [###RelatedentityClasses###]
 
