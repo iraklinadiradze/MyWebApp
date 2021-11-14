@@ -23,10 +23,10 @@ namespace Application.Domains.Client.LegalEntity.Queries.GetLegalEntityList
         //        public int? topRecords { get; set; }
         //        public string? name { get; set; }
 
-        public Int32? id { get; set; }
-        public String legalEntityName { get; set; }
-        public Int32? registrationCountryID { get; set; }
-        public String taxCode { get; set; }
+        public Int32? Id { get; set; }
+        public String LegalEntityName { get; set; }
+        public Int32? RegistrationCountryID { get; set; }
+        public String TaxCode { get; set; }
     }
 
     public class GetLegalEntityListQueryHandler : IRequestHandler<GetLegalEntityListQuery, List<LegalEntityView>>
@@ -76,17 +76,17 @@ namespace Application.Domains.Client.LegalEntity.Queries.GetLegalEntityList
                          };
 
 
-            if (request.id != null)
-                result = result.Where(r => r.Id == request.id);
+            if (request.Id != null)
+                result = result.Where(r => r.Id == request.Id);
 
-            if (request.legalEntityName != null)
-                result = result.Where(r => r.LegalEntityName.StartsWith(request.legalEntityName));
+            if (request.LegalEntityName != null)
+                result = result.Where(r => r.LegalEntityName.StartsWith(request.LegalEntityName));
 
-            if (request.registrationCountryID != null)
-                result = result.Where(r => r.RegistrationCountryID == request.registrationCountryID);
+            if (request.RegistrationCountryID != null)
+                result = result.Where(r => r.RegistrationCountryID == request.RegistrationCountryID);
 
-            if (request.taxCode != null)
-                result = result.Where(r => r.TaxCode == request.taxCode);
+            if (request.TaxCode != null)
+                result = result.Where(r => r.TaxCode == request.TaxCode);
 
             return (List<LegalEntityView>)await result.ToListAsync(cancellationToken);
         }

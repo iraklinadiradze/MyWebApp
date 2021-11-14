@@ -19,12 +19,12 @@ namespace Application.Domains.Client.Client.Queries.GetClientList
 
     public class GetClientListQuery : IRequest<List<ClientView>>
     {
-        //        public int? id { get; set; }
-        //        public int? topRecords { get; set; }
-        //        public string? name { get; set; }
+//        public int? id { get; set; }
+//        public int? topRecords { get; set; }
+//        public string? name { get; set; }
 
-        public Int32? id { get; set; }
-        public String name { get; set; }
+          public Int32? Id {get;set;}
+public String Name {get;set;}
     }
 
     public class GetClientListQueryHandler : IRequestHandler<GetClientListQuery, List<ClientView>>
@@ -44,25 +44,25 @@ namespace Application.Domains.Client.Client.Queries.GetClientList
         public async Task<List<ClientView>> Handle(GetClientListQuery request, CancellationToken cancellationToken)
         {
 
-            var result = from e in _context.Client
+           var result = from e in _context.Client
+                        
+                        select new ClientView
+                           {
+                             Id= e.Id,
+IsBank= e.IsBank,
+IsCustomer= e.IsCustomer,
+IsEmployee= e.IsEmployee,
+IsPerson= e.IsPerson,
+IsSupplier= e.IsSupplier,
+Name= e.Name
+                           };
 
-                         select new ClientView
-                         {
-                             Id = e.Id,
-                             IsBank = e.IsBank,
-                             IsCustomer = e.IsCustomer,
-                             IsEmployee = e.IsEmployee,
-                             IsPerson = e.IsPerson,
-                             IsSupplier = e.IsSupplier,
-                             Name = e.Name
-                         };
 
+                            if (request.Id!= null) 
+ result = result.Where(r => r.Id== request.Id);
 
-            if (request.id != null)
-                result = result.Where(r => r.Id == request.id);
-
-            if (request.name != null)
-                result = result.Where(r => r.Name.StartsWith(request.name));
+                if (request.Name!= null) 
+ result = result.Where(r => r.Name.StartsWith(request.Name));
 
             return (List<ClientView>)await result.ToListAsync(cancellationToken);
         }

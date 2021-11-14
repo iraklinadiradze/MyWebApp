@@ -15,7 +15,7 @@ namespace Application.Domains.[###moduleName###].[###entityName###].Commands.Upd
 {
     public class Update[###entityName###]Command : IRequest<DataAccessLayer.Model.[###moduleName###].[###entityName###]>
     {
-        public int senderId { get; set; }  = 0;
+        public int SenderId { get; set; }  = 0;
         public DataAccessLayer.Model.[###moduleName###].[###entityName###] [###entityVariableName###] { get; set; }
     }
 

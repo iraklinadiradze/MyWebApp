@@ -162,11 +162,11 @@ namespace FormDesignerApp.Generators.AppDomain
             templateContext = templateContext.Replace("[###entityVariableName###]", _entityDescriptor.CSharpVariableName);
             templateContext = templateContext.Replace("[###moduleName###]", _entityDescriptor.ModuleName);
 
-//            var _entityProperties = from prop in _entityDescriptor.properties
-//                                    select " public " + prop.CSharpType + " " + prop.Name + " {get; set;} ";
+            //            var _entityProperties = from prop in _entityDescriptor.properties
+            //                                    select " public " + prop.CSharpType + " " + prop.Name + " {get; set;} ";
 
-//            templateContext = templateContext.Replace("[###enityproperties###]",
-//                string.Join(Environment.NewLine, _entityProperties));
+            //            templateContext = templateContext.Replace("[###enityproperties###]",
+            //                string.Join(Environment.NewLine, _entityProperties));
 
             var _RelatedentityClasses = from e in contextDescriptor.entities
                                         join f in _entityDescriptor.properties on e.Name equals f.ForeignKeyTable
@@ -239,10 +239,10 @@ namespace FormDesignerApp.Generators.AppDomain
 
             var _entityFilterParameters = from prop in _entityDescriptor.properties
                                           from item in prop.CSharpFilterParameters
-                                          select "public " + prop.CSharpParamType + " " + prop.CSharpParamName + " {get;set;}";
+                                          select "public " + ((prop.CSharpParamType.ToLower()== "string")? prop.CSharpParamType : prop.CSharpParamType.Replace("?","") + "?") + " " + item + " {get;set;}";
 
             templateContext = templateContext.Replace("[###entityFilterParameters###]",
-                string.Join( Environment.NewLine, _entityFilterParameters));
+                string.Join(Environment.NewLine, _entityFilterParameters));
 
             var _entityRelations = from e in contextDescriptor.entities
                                    join f in _entityDescriptor.properties on e.Name equals f.ForeignKeyTable
@@ -262,7 +262,7 @@ namespace FormDesignerApp.Generators.AppDomain
                                               join f in _entityDescriptor.properties on e.Name equals f.ForeignKeyTable
                                               from g in e.properties
                                               where f.IsForeignKey && (g.Name == f.ForeignKeyColumn)
-                                              select e.CSharpVariableName + " = new " + _entityDescriptor.CSharpTypeName + "View._" + e.CSharpTypeName + "{" +  Environment.NewLine +
+                                              select e.CSharpVariableName + " = new " + _entityDescriptor.CSharpTypeName + "View._" + e.CSharpTypeName + "{" + Environment.NewLine +
                                                 string.Join("," + Environment.NewLine,
                                                     (from _e in contextDescriptor.entities
                                                      from _p in _e.properties
@@ -276,7 +276,7 @@ namespace FormDesignerApp.Generators.AppDomain
             var _EntityProperties = _entitySelectPropertiesWithPrefix.Union(_entityRelationsWithLookups);
 
             templateContext = templateContext.Replace("[###EntityProperties###]",
-                string.Join("," + Environment.NewLine, _EntityProperties ));
+                string.Join("," + Environment.NewLine, _EntityProperties));
 
 
             var _entityFilterStatements = from prop in _entityDescriptor.properties
@@ -307,7 +307,49 @@ namespace FormDesignerApp.Generators.AppDomain
             return templateContext;
         }
 
-    }
 
+        public static string renderGetQuery(
+                    string entityName,
+                    ContextDescriptor contextDescriptor,
+                    string dbContextName,
+                    string templateFolder,
+                    string outpuPath,
+                    string subFolder
+                    )
+        {
+
+            var _entityDescriptor = (from p in contextDescriptor.entities
+                                     where (p.Name == entityName)
+                                     select p).First();
+
+            string templateContext = "";
+
+            templateContext = File.ReadAllText(templateFolder + "\\AppDomain\\Queries\\" + "GetCommand.txt");
+
+            templateContext = templateContext.Replace("[###entityName###]", _entityDescriptor.CSharpTypeName);
+            templateContext = templateContext.Replace("[###entityVariableName###]", _entityDescriptor.CSharpVariableName);
+            templateContext = templateContext.Replace("[###moduleName###]", _entityDescriptor.ModuleName);
+
+            var _path = outpuPath + "\\" + subFolder;
+            if (!Directory.Exists(_path)) { Directory.CreateDirectory(_path); };
+
+            _path = _path + "\\" + _entityDescriptor.CSharpTypeName;
+            if (!Directory.Exists(_path)) { Directory.CreateDirectory(_path); };
+
+            _path = _path + "\\" + "Queries";
+            if (!Directory.Exists(_path)) { Directory.CreateDirectory(_path); };
+
+            _path = _path + "\\" + "Get" + _entityDescriptor.CSharpTypeName + "";
+            if (!Directory.Exists(_path)) { Directory.CreateDirectory(_path); };
+
+            File.WriteAllText(_path + "\\Get" + _entityDescriptor.CSharpTypeName + ".cs", templateContext);
+
+            Console.WriteLine(Environment.NewLine);
+            Console.WriteLine(templateContext);
+
+            return templateContext;
+        }
+
+    }
 
 }

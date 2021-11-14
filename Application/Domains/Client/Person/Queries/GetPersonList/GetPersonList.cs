@@ -23,13 +23,13 @@ namespace Application.Domains.Client.Person.Queries.GetPersonList
 //        public int? topRecords { get; set; }
 //        public string? name { get; set; }
 
-          public Int32? id {get;set;}
-public DateTime? birthDate {get;set;}
-public DateTime? birthDate {get;set;}
-public Int32? citizenShipId {get;set;}
-public String firstName {get;set;}
-public String lastName {get;set;}
-public String personalId {get;set;}
+          public Int32? Id {get;set;}
+public DateTime? BirthDate_from {get;set;}
+public DateTime? BirthDate_to {get;set;}
+public Int32? CitizenShipId {get;set;}
+public String FirstName {get;set;}
+public String LastName {get;set;}
+public String PersonalId {get;set;}
     }
 
     public class GetPersonListQueryHandler : IRequestHandler<GetPersonListQuery, List<PersonView>>
@@ -77,26 +77,26 @@ Name= _country.Name
                            };
 
 
-                            if (request.id!= null) 
- result = result.Where(r => r.Id== request.id);
+                            if (request.Id!= null) 
+ result = result.Where(r => r.Id== request.Id);
 
-                if (request.birthDate_from!= null) 
- result = result.Where(r => r.BirthDate>= request.birthDate_from);
+                if (request.BirthDate_from!= null) 
+ result = result.Where(r => r.BirthDate>= request.BirthDate_from);
 
-                if (request.birthDate_to!= null) 
- result = result.Where(r => r.BirthDate<= request.birthDate_to);
+                if (request.BirthDate_to!= null) 
+ result = result.Where(r => r.BirthDate<= request.BirthDate_to);
 
-                if (request.citizenShipId!= null) 
- result = result.Where(r => r.CitizenShipId== request.citizenShipId);
+                if (request.CitizenShipId!= null) 
+ result = result.Where(r => r.CitizenShipId== request.CitizenShipId);
 
-                if (request.firstName!= null) 
- result = result.Where(r => r.FirstName.StartsWith(request.firstName));
+                if (request.FirstName!= null) 
+ result = result.Where(r => r.FirstName.StartsWith(request.FirstName));
 
-                if (request.lastName!= null) 
- result = result.Where(r => r.LastName.StartsWith(request.lastName));
+                if (request.LastName!= null) 
+ result = result.Where(r => r.LastName.StartsWith(request.LastName));
 
-                if (request.personalId!= null) 
- result = result.Where(r => r.PersonalId== request.personalId);
+                if (request.PersonalId!= null) 
+ result = result.Where(r => r.PersonalId== request.PersonalId);
 
             return (List<PersonView>)await result.ToListAsync(cancellationToken);
         }

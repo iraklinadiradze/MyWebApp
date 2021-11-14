@@ -12,7 +12,7 @@ namespace Application.Domains.Core.User.Commands.CreateUser
 {
     public class CreateUserCommand : IRequest<DataAccessLayer.Model.Core.User>
     {
-        public int senderId { get; set; }  = 0;
+        public int SenderId { get; set; }  = 0;
         public DataAccessLayer.Model.Core.User user { get; set; }
     }
 

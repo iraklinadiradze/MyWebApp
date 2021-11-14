@@ -23,7 +23,7 @@ namespace Application.Domains.Core.Entity.Queries.GetEntityList
 //        public int? topRecords { get; set; }
 //        public string? name { get; set; }
 
-          public Int32? id {get;set;}
+          public Int32? Id {get;set;}
     }
 
     public class GetEntityListQueryHandler : IRequestHandler<GetEntityListQuery, List<EntityView>>
@@ -54,8 +54,8 @@ EntityName= e.EntityName
                            };
 
 
-                            if (request.id!= null) 
- result = result.Where(r => r.Id== request.id);
+                            if (request.Id!= null) 
+ result = result.Where(r => r.Id== request.Id);
 
             return (List<EntityView>)await result.ToListAsync(cancellationToken);
         }

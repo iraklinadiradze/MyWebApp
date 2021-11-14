@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
+
+using DataAccessLayer.Model.[###moduleName###];
+using DataAccessLayer;
+
+using Application.Common.Interfaces;
+using Application.Common.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+
+namespace Application.Domains.[###moduleName###].[###entityName###].Queries.Get[###entityName###]
+{
+
+    public class Get[###entityName###]Query : IRequest<DataAccessLayer.Model.[###moduleName###].[###entityName###]>
+    {
+        public int? Id { get; set; }
+    }
+
+    public class Get[###entityName###]QueryHandler : IRequestHandler<Get[###entityName###]Query, DataAccessLayer.Model.[###moduleName###].[###entityName###]>
+    {
+
+        private readonly IMediator _mediator;
+        private readonly ICoreDBContext _context;
+
+
+        public Get[###entityName###]QueryHandler(IMediator mediator, ICoreDBContext context)
+        {
+            _mediator = mediator;
+            _context = context;
+        }
+
+
+        public async Task<DataAccessLayer.Model.[###moduleName###].[###entityName###]> Handle(Get[###entityName###]Query request, CancellationToken cancellationToken)
+        {
+
+            var entity = await _context.[###entityName###]
+                .FindAsync(request.Id);
+
+            if (entity == null)
+            {
+                throw new NotFoundException(nameof([###entityName###]), request.Id);
+            }
+
+            return entity;
+
+        }
+
+    }
+}

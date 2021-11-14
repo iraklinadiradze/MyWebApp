@@ -67,7 +67,7 @@ namespace FormDesignerApp
                 PropertyDesciptor propertyDesciptor = new PropertyDesciptor();
 
                 propertyDesciptor.Name = _e.Name;
-                propertyDesciptor.CSharpParamName = _e.Name.Substring(0, 1).ToLower() + _e.Name.Remove(0, 1);
+                propertyDesciptor.CSharpParamName = _e.Name.Substring(0, 1).ToUpper() + _e.Name.Remove(0, 1);
                 propertyDesciptor.TSName = _e.Name.Substring(0, 1).ToLower() + _e.Name.Remove(0, 1);
 
                 if (_e.PropertyInfo!=null)
@@ -77,7 +77,7 @@ namespace FormDesignerApp
                     {
                         propertyDesciptor.filterParameter = new FilterParamAttribute();
 
-                          var   r= (from item in _att.NamedArguments
+                          var   r = (from item in _att.NamedArguments
                                 where item.MemberName == "equals"
                                 select item.TypedValue.Value);
 
@@ -139,8 +139,6 @@ namespace FormDesignerApp
                 {
                     propertyDesciptor.ForeignKeyTable = _e.GetContainingForeignKeys().First().DependentToPrincipal.Name;
                     propertyDesciptor.ForeignKeyColumn = _e.GetContainingForeignKeys().First().PrincipalKey.Properties.First().Name;//  DependentToPrincipal.ForeignKey.PrincipalKey.Properties.First().Name;
-
-                
                 }
 
                 propertyDesciptor.CSharpFilterParameters = new List<string>();
@@ -153,7 +151,7 @@ namespace FormDesignerApp
                     if (propertyDesciptor.filterParameter.startsWith || propertyDesciptor.filterParameter.equals)
                     {
                         propertyDesciptor.CSharpFilterParameters.Add(propertyDesciptor.CSharpParamName);
-                        propertyDesciptor.TSFilterParameters.Add(propertyDesciptor.CSharpParamName);
+                        propertyDesciptor.TSFilterParameters.Add(propertyDesciptor.TSName);
                     }
 
                     if (propertyDesciptor.filterParameter.equals)
@@ -176,8 +174,11 @@ namespace FormDesignerApp
                             propertyDesciptor.CSharpFilterParameters.Add(fieldNameFrom);
                             propertyDesciptor.CSharpFilterParameters.Add(fieldNameTo);
 
-                            propertyDesciptor.TSFilterParameters.Add(fieldNameFrom);
-                            propertyDesciptor.TSFilterParameters.Add(fieldNameTo);
+                            var fieldNameFromTS = propertyDesciptor.TSName + "_from";
+                            var fieldNameToTS = propertyDesciptor.TSName + "_to";
+
+                            propertyDesciptor.TSFilterParameters.Add(fieldNameFromTS);
+                            propertyDesciptor.TSFilterParameters.Add(fieldNameToTS);
 
                         propertyDesciptor.CSharpFilterStatements.Add(
                                 "                if (" + "[###prefix###]" + fieldNameFrom + "!= null) " + Environment.NewLine +

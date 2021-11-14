@@ -42,7 +42,7 @@ namespace DataAccessLayer.Model.Procurment
         [ForeignKey("PurchaseAllocationSourceTypeId")]
         public virtual PurchaseAllocationSourceType PurchaseAllocationSourceType { get; set; }
 
-        [ForeignKey("PurchaseAllocationSchemaId")]
+        [ForeignKey("PurchaseAllocSchemaId")]
         public virtual PurchaseAllocationSchema PurchaseAllocationSchema { get; set; }
 
         [ForeignKey("AllocPurchaseDetailId")]

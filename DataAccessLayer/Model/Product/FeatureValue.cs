@@ -25,7 +25,7 @@ namespace DataAccessLayer.Model.Product
         [MaxLength(50)]
         [LookupDisplayAttribute]
         [FilterParam(startsWith = true, useInJoin = true)]
-        public int FeatureValueName { get; set; }
+        public string FeatureValueName { get; set; }
 
         public virtual Feature Feature { get; set; }
 

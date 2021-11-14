@@ -23,8 +23,8 @@ namespace Application.Domains.Client.Client.Queries.GetClientList
 //        public int? topRecords { get; set; }
 //        public string? name { get; set; }
 
-          public Int32? id {get;set;}
-public String name {get;set;}
+          public Int32? Id {get;set;}
+public String Name {get;set;}
     }
 
     public class GetClientListQueryHandler : IRequestHandler<GetClientListQuery, List<ClientView>>
@@ -58,11 +58,11 @@ Name= e.Name
                            };
 
 
-                            if (request.id!= null) 
- result = result.Where(r => r.Id== request.id);
+                            if (request.Id!= null) 
+ result = result.Where(r => r.Id== request.Id);
 
-                if (request.name!= null) 
- result = result.Where(r => r.Name.StartsWith(request.name));
+                if (request.Name!= null) 
+ result = result.Where(r => r.Name.StartsWith(request.Name));
 
             return (List<ClientView>)await result.ToListAsync(cancellationToken);
         }
