@@ -68,7 +68,6 @@ namespace DataAccessLayer.Model.Procurment
         public decimal FinalCost { get; set; }
         public bool Allocated{ get; set; }
 
-
         [ForeignKey("PurchaseId")]
         public virtual Purchase Purchase { get; set; }
 

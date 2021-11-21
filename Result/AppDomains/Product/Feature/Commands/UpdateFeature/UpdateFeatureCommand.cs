@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Product.Feature.Commands.UpdateFeature
 {
     public class UpdateFeatureCommand : IRequest<DataAccessLayer.Model.Product.Feature>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Product.Feature feature { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Product.Feature Feature { get; set; }
     }
 
     public class UpdateFeatureCommandHandler : IRequestHandler<UpdateFeatureCommand, DataAccessLayer.Model.Product.Feature>
@@ -33,9 +34,9 @@ namespace Application.Domains.Product.Feature.Commands.UpdateFeature
         public async Task<DataAccessLayer.Model.Product.Feature> Handle(UpdateFeatureCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.feature;
+            var entity = request.Feature;
 
-            var _entity = await _context.Feature.FindAsync(request.feature.Id);
+            var _entity = await _context.Feature.FindAsync(request.Feature.Id);
 
             if (_entity == null)
             {

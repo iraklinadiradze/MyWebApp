@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Core;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Core.User.Commands.CreateUser
 {
     public class CreateUserCommand : IRequest<DataAccessLayer.Model.Core.User>
     {
-        public int SenderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Core.User user { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Core.User User { get; set; }
     }
 
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, DataAccessLayer.Model.Core.User>
@@ -29,7 +30,7 @@ namespace Application.Domains.Core.User.Commands.CreateUser
 
         public async Task<DataAccessLayer.Model.Core.User> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.user;
+            var entity = request.User;
 
             _context.User.Add(entity);
 

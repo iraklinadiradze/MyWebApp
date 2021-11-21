@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Product;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Product.Feature.Commands.CreateFeature
 {
     public class CreateFeatureCommand : IRequest<DataAccessLayer.Model.Product.Feature>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Product.Feature feature { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Product.Feature Feature { get; set; }
     }
 
     public class CreateFeatureCommandHandler : IRequestHandler<CreateFeatureCommand, DataAccessLayer.Model.Product.Feature>
@@ -29,7 +30,7 @@ namespace Application.Domains.Product.Feature.Commands.CreateFeature
 
         public async Task<DataAccessLayer.Model.Product.Feature> Handle(CreateFeatureCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.feature;
+            var entity = request.Feature;
 
             _context.Feature.Add(entity);
 

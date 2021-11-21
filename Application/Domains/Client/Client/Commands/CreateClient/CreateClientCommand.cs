@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Client;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Client.Client.Commands.CreateClient
 {
     public class CreateClientCommand : IRequest<DataAccessLayer.Model.Client.Client>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Client.Client client { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Client.Client Client { get; set; }
     }
 
     public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, DataAccessLayer.Model.Client.Client>
@@ -29,7 +30,7 @@ namespace Application.Domains.Client.Client.Commands.CreateClient
 
         public async Task<DataAccessLayer.Model.Client.Client> Handle(CreateClientCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.client;
+            var entity = request.Client;
 
             _context.Client.Add(entity);
 

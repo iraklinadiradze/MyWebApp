@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Product;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Product.ProductLabel.Commands.CreateProductLabel
 {
     public class CreateProductLabelCommand : IRequest<DataAccessLayer.Model.Product.ProductLabel>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Product.ProductLabel productLabel { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Product.ProductLabel ProductLabel { get; set; }
     }
 
     public class CreateProductLabelCommandHandler : IRequestHandler<CreateProductLabelCommand, DataAccessLayer.Model.Product.ProductLabel>
@@ -29,7 +30,7 @@ namespace Application.Domains.Product.ProductLabel.Commands.CreateProductLabel
 
         public async Task<DataAccessLayer.Model.Product.ProductLabel> Handle(CreateProductLabelCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.productLabel;
+            var entity = request.ProductLabel;
 
             _context.ProductLabel.Add(entity);
 

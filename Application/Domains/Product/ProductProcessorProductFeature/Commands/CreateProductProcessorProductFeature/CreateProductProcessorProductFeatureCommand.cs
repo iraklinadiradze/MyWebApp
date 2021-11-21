@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Product;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Product.ProductProcessorProductFeature.Commands.CreateProductProcessorProductFeature
 {
     public class CreateProductProcessorProductFeatureCommand : IRequest<DataAccessLayer.Model.Product.ProductProcessorProductFeature>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Product.ProductProcessorProductFeature productProcessorProductFeature { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Product.ProductProcessorProductFeature ProductProcessorProductFeature { get; set; }
     }
 
     public class CreateProductProcessorProductFeatureCommandHandler : IRequestHandler<CreateProductProcessorProductFeatureCommand, DataAccessLayer.Model.Product.ProductProcessorProductFeature>
@@ -29,7 +30,7 @@ namespace Application.Domains.Product.ProductProcessorProductFeature.Commands.Cr
 
         public async Task<DataAccessLayer.Model.Product.ProductProcessorProductFeature> Handle(CreateProductProcessorProductFeatureCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.productProcessorProductFeature;
+            var entity = request.ProductProcessorProductFeature;
 
             _context.ProductProcessorProductFeature.Add(entity);
 

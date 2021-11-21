@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.[###moduleName###].[###entityName###].Commands.Update[###entityName###]
 {
     public class Update[###entityName###]Command : IRequest<DataAccessLayer.Model.[###moduleName###].[###entityName###]>
     {
-        public int SenderId { get; set; }  = 0;
-        public DataAccessLayer.Model.[###moduleName###].[###entityName###] [###entityVariableName###] { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.[###moduleName###].[###entityName###] [###entityName###] { get; set; }
     }
 
     public class Update[###entityName###]CommandHandler : IRequestHandler<Update[###entityName###]Command, DataAccessLayer.Model.[###moduleName###].[###entityName###]>
@@ -33,9 +34,9 @@ namespace Application.Domains.[###moduleName###].[###entityName###].Commands.Upd
         public async Task<DataAccessLayer.Model.[###moduleName###].[###entityName###]> Handle(Update[###entityName###]Command request, CancellationToken cancellationToken)
         {
 
-            var entity = request.[###entityVariableName###];
+            var entity = request.[###entityName###];
 
-            var _entity = await _context.[###entityName###].FindAsync(request.[###entityVariableName###].Id);
+            var _entity = await _context.[###entityName###].FindAsync(request.[###entityName###].Id);
 
             if (_entity == null)
             {

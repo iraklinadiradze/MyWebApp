@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Procurment;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Procurment.PurchaseAllocationSource.Commands.CreatePurchaseAllocationSource
 {
     public class CreatePurchaseAllocationSourceCommand : IRequest<DataAccessLayer.Model.Procurment.PurchaseAllocationSource>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Procurment.PurchaseAllocationSource purchaseAllocationSource { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Procurment.PurchaseAllocationSource PurchaseAllocationSource { get; set; }
     }
 
     public class CreatePurchaseAllocationSourceCommandHandler : IRequestHandler<CreatePurchaseAllocationSourceCommand, DataAccessLayer.Model.Procurment.PurchaseAllocationSource>
@@ -29,7 +30,7 @@ namespace Application.Domains.Procurment.PurchaseAllocationSource.Commands.Creat
 
         public async Task<DataAccessLayer.Model.Procurment.PurchaseAllocationSource> Handle(CreatePurchaseAllocationSourceCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.purchaseAllocationSource;
+            var entity = request.PurchaseAllocationSource;
 
             _context.PurchaseAllocationSource.Add(entity);
 

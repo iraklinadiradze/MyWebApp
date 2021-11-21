@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Account;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Account.Account.Commands.CreateAccount
 {
     public class CreateAccountCommand : IRequest<DataAccessLayer.Model.Account.Account>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Account.Account account { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Account.Account Account { get; set; }
     }
 
     public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, DataAccessLayer.Model.Account.Account>
@@ -29,7 +30,7 @@ namespace Application.Domains.Account.Account.Commands.CreateAccount
 
         public async Task<DataAccessLayer.Model.Account.Account> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.account;
+            var entity = request.Account;
 
             _context.Account.Add(entity);
 

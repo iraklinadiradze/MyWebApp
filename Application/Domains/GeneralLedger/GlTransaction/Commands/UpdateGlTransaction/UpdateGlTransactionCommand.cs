@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.GeneralLedger.GlTransaction.Commands.UpdateGlTransaction
 {
     public class UpdateGlTransactionCommand : IRequest<DataAccessLayer.Model.GeneralLedger.GlTransaction>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.GeneralLedger.GlTransaction glTransaction { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.GeneralLedger.GlTransaction GlTransaction { get; set; }
     }
 
     public class UpdateGlTransactionCommandHandler : IRequestHandler<UpdateGlTransactionCommand, DataAccessLayer.Model.GeneralLedger.GlTransaction>
@@ -33,9 +34,9 @@ namespace Application.Domains.GeneralLedger.GlTransaction.Commands.UpdateGlTrans
         public async Task<DataAccessLayer.Model.GeneralLedger.GlTransaction> Handle(UpdateGlTransactionCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.glTransaction;
+            var entity = request.GlTransaction;
 
-            var _entity = await _context.GlTransaction.FindAsync(request.glTransaction.Id);
+            var _entity = await _context.GlTransaction.FindAsync(request.GlTransaction.Id);
 
             if (_entity == null)
             {

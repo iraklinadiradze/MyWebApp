@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Account;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Account.AccountBalance.Commands.CreateAccountBalance
 {
     public class CreateAccountBalanceCommand : IRequest<DataAccessLayer.Model.Account.AccountBalance>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Account.AccountBalance accountBalance { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Account.AccountBalance AccountBalance { get; set; }
     }
 
     public class CreateAccountBalanceCommandHandler : IRequestHandler<CreateAccountBalanceCommand, DataAccessLayer.Model.Account.AccountBalance>
@@ -29,7 +30,7 @@ namespace Application.Domains.Account.AccountBalance.Commands.CreateAccountBalan
 
         public async Task<DataAccessLayer.Model.Account.AccountBalance> Handle(CreateAccountBalanceCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.accountBalance;
+            var entity = request.AccountBalance;
 
             _context.AccountBalance.Add(entity);
 

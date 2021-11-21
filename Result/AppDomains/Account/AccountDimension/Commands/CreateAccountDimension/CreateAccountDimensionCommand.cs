@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Account;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Account.AccountDimension.Commands.CreateAccountDimension
 {
     public class CreateAccountDimensionCommand : IRequest<DataAccessLayer.Model.Account.AccountDimension>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Account.AccountDimension accountDimension { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Account.AccountDimension AccountDimension { get; set; }
     }
 
     public class CreateAccountDimensionCommandHandler : IRequestHandler<CreateAccountDimensionCommand, DataAccessLayer.Model.Account.AccountDimension>
@@ -29,7 +30,7 @@ namespace Application.Domains.Account.AccountDimension.Commands.CreateAccountDim
 
         public async Task<DataAccessLayer.Model.Account.AccountDimension> Handle(CreateAccountDimensionCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.accountDimension;
+            var entity = request.AccountDimension;
 
             _context.AccountDimension.Add(entity);
 

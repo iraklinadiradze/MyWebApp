@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Product;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Product.ProductGroupTemplateFeature.Commands.CreateProductGroupTemplateFeature
 {
     public class CreateProductGroupTemplateFeatureCommand : IRequest<DataAccessLayer.Model.Product.ProductGroupTemplateFeature>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Product.ProductGroupTemplateFeature productGroupTemplateFeature { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Product.ProductGroupTemplateFeature ProductGroupTemplateFeature { get; set; }
     }
 
     public class CreateProductGroupTemplateFeatureCommandHandler : IRequestHandler<CreateProductGroupTemplateFeatureCommand, DataAccessLayer.Model.Product.ProductGroupTemplateFeature>
@@ -29,7 +30,7 @@ namespace Application.Domains.Product.ProductGroupTemplateFeature.Commands.Creat
 
         public async Task<DataAccessLayer.Model.Product.ProductGroupTemplateFeature> Handle(CreateProductGroupTemplateFeatureCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.productGroupTemplateFeature;
+            var entity = request.ProductGroupTemplateFeature;
 
             _context.ProductGroupTemplateFeature.Add(entity);
 

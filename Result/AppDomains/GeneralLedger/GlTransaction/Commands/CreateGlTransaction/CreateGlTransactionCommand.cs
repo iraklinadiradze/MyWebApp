@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.GeneralLedger;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.GeneralLedger.GlTransaction.Commands.CreateGlTransaction
 {
     public class CreateGlTransactionCommand : IRequest<DataAccessLayer.Model.GeneralLedger.GlTransaction>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.GeneralLedger.GlTransaction glTransaction { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.GeneralLedger.GlTransaction GlTransaction { get; set; }
     }
 
     public class CreateGlTransactionCommandHandler : IRequestHandler<CreateGlTransactionCommand, DataAccessLayer.Model.GeneralLedger.GlTransaction>
@@ -29,7 +30,7 @@ namespace Application.Domains.GeneralLedger.GlTransaction.Commands.CreateGlTrans
 
         public async Task<DataAccessLayer.Model.GeneralLedger.GlTransaction> Handle(CreateGlTransactionCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.glTransaction;
+            var entity = request.GlTransaction;
 
             _context.GlTransaction.Add(entity);
 

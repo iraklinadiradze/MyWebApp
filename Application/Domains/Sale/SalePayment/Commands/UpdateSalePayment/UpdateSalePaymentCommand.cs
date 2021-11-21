@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Sale.SalePayment.Commands.UpdateSalePayment
 {
     public class UpdateSalePaymentCommand : IRequest<DataAccessLayer.Model.Sale.SalePayment>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Sale.SalePayment salePayment { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Sale.SalePayment SalePayment { get; set; }
     }
 
     public class UpdateSalePaymentCommandHandler : IRequestHandler<UpdateSalePaymentCommand, DataAccessLayer.Model.Sale.SalePayment>
@@ -33,9 +34,9 @@ namespace Application.Domains.Sale.SalePayment.Commands.UpdateSalePayment
         public async Task<DataAccessLayer.Model.Sale.SalePayment> Handle(UpdateSalePaymentCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.salePayment;
+            var entity = request.SalePayment;
 
-            var _entity = await _context.SalePayment.FindAsync(request.salePayment.Id);
+            var _entity = await _context.SalePayment.FindAsync(request.SalePayment.Id);
 
             if (_entity == null)
             {

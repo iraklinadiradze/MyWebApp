@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Inventory.Location.Commands.UpdateLocation
 {
     public class UpdateLocationCommand : IRequest<DataAccessLayer.Model.Inventory.Location>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Inventory.Location location { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Inventory.Location Location { get; set; }
     }
 
     public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationCommand, DataAccessLayer.Model.Inventory.Location>
@@ -33,9 +34,9 @@ namespace Application.Domains.Inventory.Location.Commands.UpdateLocation
         public async Task<DataAccessLayer.Model.Inventory.Location> Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.location;
+            var entity = request.Location;
 
-            var _entity = await _context.Location.FindAsync(request.location.Id);
+            var _entity = await _context.Location.FindAsync(request.Location.Id);
 
             if (_entity == null)
             {

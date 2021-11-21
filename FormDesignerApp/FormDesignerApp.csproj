@@ -14,7 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Generators\WebAPI\ControllerGenerator.bak" />
     <None Remove="Templates\component-entity-ts.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Generators\WebAPI\ControllerGenerator.bak" />
   </ItemGroup>
 
   <ItemGroup>

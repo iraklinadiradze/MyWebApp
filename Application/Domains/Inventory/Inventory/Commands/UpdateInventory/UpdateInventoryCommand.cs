@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Inventory.Inventory.Commands.UpdateInventory
 {
     public class UpdateInventoryCommand : IRequest<DataAccessLayer.Model.Inventory.Inventory>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Inventory.Inventory inventory { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Inventory.Inventory Inventory { get; set; }
     }
 
     public class UpdateInventoryCommandHandler : IRequestHandler<UpdateInventoryCommand, DataAccessLayer.Model.Inventory.Inventory>
@@ -33,9 +34,9 @@ namespace Application.Domains.Inventory.Inventory.Commands.UpdateInventory
         public async Task<DataAccessLayer.Model.Inventory.Inventory> Handle(UpdateInventoryCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.inventory;
+            var entity = request.Inventory;
 
-            var _entity = await _context.Inventory.FindAsync(request.inventory.Id);
+            var _entity = await _context.Inventory.FindAsync(request.Inventory.Id);
 
             if (_entity == null)
             {

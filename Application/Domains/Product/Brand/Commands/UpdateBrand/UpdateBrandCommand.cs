@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Product.Brand.Commands.UpdateBrand
 {
     public class UpdateBrandCommand : IRequest<DataAccessLayer.Model.Product.Brand>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Product.Brand brand { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Product.Brand Brand { get; set; }
     }
 
     public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, DataAccessLayer.Model.Product.Brand>
@@ -33,9 +34,9 @@ namespace Application.Domains.Product.Brand.Commands.UpdateBrand
         public async Task<DataAccessLayer.Model.Product.Brand> Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.brand;
+            var entity = request.Brand;
 
-            var _entity = await _context.Brand.FindAsync(request.brand.Id);
+            var _entity = await _context.Brand.FindAsync(request.Brand.Id);
 
             if (_entity == null)
             {

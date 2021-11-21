@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Product;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Product.ProductCategory.Commands.CreateProductCategory
 {
     public class CreateProductCategoryCommand : IRequest<DataAccessLayer.Model.Product.ProductCategory>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Product.ProductCategory productCategory { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Product.ProductCategory ProductCategory { get; set; }
     }
 
     public class CreateProductCategoryCommandHandler : IRequestHandler<CreateProductCategoryCommand, DataAccessLayer.Model.Product.ProductCategory>
@@ -29,7 +30,7 @@ namespace Application.Domains.Product.ProductCategory.Commands.CreateProductCate
 
         public async Task<DataAccessLayer.Model.Product.ProductCategory> Handle(CreateProductCategoryCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.productCategory;
+            var entity = request.ProductCategory;
 
             _context.ProductCategory.Add(entity);
 

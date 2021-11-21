@@ -10,12 +10,13 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.GeneralLedger.FinAccount.Commands.DeleteFinAccount
 {
     public class DeleteFinAccountCommand : IRequest<int>
     {
-        public int senderId { get; set; }  = 0;
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public int Id { get; set; }
     }
 

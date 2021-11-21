@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Client.Person.Commands.UpdatePerson
 {
     public class UpdatePersonCommand : IRequest<DataAccessLayer.Model.Client.Person>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Client.Person person { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Client.Person Person { get; set; }
     }
 
     public class UpdatePersonCommandHandler : IRequestHandler<UpdatePersonCommand, DataAccessLayer.Model.Client.Person>
@@ -33,9 +34,9 @@ namespace Application.Domains.Client.Person.Commands.UpdatePerson
         public async Task<DataAccessLayer.Model.Client.Person> Handle(UpdatePersonCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.person;
+            var entity = request.Person;
 
-            var _entity = await _context.Person.FindAsync(request.person.Id);
+            var _entity = await _context.Person.FindAsync(request.Person.Id);
 
             if (_entity == null)
             {

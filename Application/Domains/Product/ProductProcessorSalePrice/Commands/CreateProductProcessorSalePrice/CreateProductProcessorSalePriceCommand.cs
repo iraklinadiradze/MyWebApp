@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Product;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Product.ProductProcessorSalePrice.Commands.CreateProductProcessorSalePrice
 {
     public class CreateProductProcessorSalePriceCommand : IRequest<DataAccessLayer.Model.Product.ProductProcessorSalePrice>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Product.ProductProcessorSalePrice productProcessorSalePrice { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Product.ProductProcessorSalePrice ProductProcessorSalePrice { get; set; }
     }
 
     public class CreateProductProcessorSalePriceCommandHandler : IRequestHandler<CreateProductProcessorSalePriceCommand, DataAccessLayer.Model.Product.ProductProcessorSalePrice>
@@ -29,7 +30,7 @@ namespace Application.Domains.Product.ProductProcessorSalePrice.Commands.CreateP
 
         public async Task<DataAccessLayer.Model.Product.ProductProcessorSalePrice> Handle(CreateProductProcessorSalePriceCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.productProcessorSalePrice;
+            var entity = request.ProductProcessorSalePrice;
 
             _context.ProductProcessorSalePrice.Add(entity);
 

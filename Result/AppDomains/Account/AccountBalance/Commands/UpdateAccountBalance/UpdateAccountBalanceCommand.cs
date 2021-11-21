@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Account.AccountBalance.Commands.UpdateAccountBalance
 {
     public class UpdateAccountBalanceCommand : IRequest<DataAccessLayer.Model.Account.AccountBalance>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Account.AccountBalance accountBalance { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Account.AccountBalance AccountBalance { get; set; }
     }
 
     public class UpdateAccountBalanceCommandHandler : IRequestHandler<UpdateAccountBalanceCommand, DataAccessLayer.Model.Account.AccountBalance>
@@ -33,9 +34,9 @@ namespace Application.Domains.Account.AccountBalance.Commands.UpdateAccountBalan
         public async Task<DataAccessLayer.Model.Account.AccountBalance> Handle(UpdateAccountBalanceCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.accountBalance;
+            var entity = request.AccountBalance;
 
-            var _entity = await _context.AccountBalance.FindAsync(request.accountBalance.Id);
+            var _entity = await _context.AccountBalance.FindAsync(request.AccountBalance.Id);
 
             if (_entity == null)
             {

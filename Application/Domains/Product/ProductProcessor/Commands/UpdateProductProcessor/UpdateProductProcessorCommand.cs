@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Product.ProductProcessor.Commands.UpdateProductProcessor
 {
     public class UpdateProductProcessorCommand : IRequest<DataAccessLayer.Model.Product.ProductProcessor>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Product.ProductProcessor productProcessor { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Product.ProductProcessor ProductProcessor { get; set; }
     }
 
     public class UpdateProductProcessorCommandHandler : IRequestHandler<UpdateProductProcessorCommand, DataAccessLayer.Model.Product.ProductProcessor>
@@ -33,9 +34,9 @@ namespace Application.Domains.Product.ProductProcessor.Commands.UpdateProductPro
         public async Task<DataAccessLayer.Model.Product.ProductProcessor> Handle(UpdateProductProcessorCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.productProcessor;
+            var entity = request.ProductProcessor;
 
-            var _entity = await _context.ProductProcessor.FindAsync(request.productProcessor.Id);
+            var _entity = await _context.ProductProcessor.FindAsync(request.ProductProcessor.Id);
 
             if (_entity == null)
             {

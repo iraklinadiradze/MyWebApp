@@ -239,7 +239,7 @@ namespace FormDesignerApp.Generators.AppDomain
 
             var _entityFilterParameters = from prop in _entityDescriptor.properties
                                           from item in prop.CSharpFilterParameters
-                                          select "public " + ((prop.CSharpParamType.ToLower()== "string")? prop.CSharpParamType : prop.CSharpParamType.Replace("?","") + "?") + " " + item + " {get;set;}";
+                                          select "public " + ((prop.CSharpParamType.ToLower() == "string") ? prop.CSharpParamType : prop.CSharpParamType.Replace("?", "") + "?") + " " + item + " {get;set;}";
 
             templateContext = templateContext.Replace("[###entityFilterParameters###]",
                 string.Join(Environment.NewLine, _entityFilterParameters));
@@ -305,6 +305,7 @@ namespace FormDesignerApp.Generators.AppDomain
             Console.WriteLine(templateContext);
 
             return templateContext;
+
         }
 
 
@@ -352,4 +353,5 @@ namespace FormDesignerApp.Generators.AppDomain
 
     }
 
+  
 }

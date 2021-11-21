@@ -10,12 +10,13 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Product.Feature.Commands.DeleteFeature
 {
     public class DeleteFeatureCommand : IRequest<int>
     {
-        public int senderId { get; set; }  = 0;
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public int Id { get; set; }
     }
 

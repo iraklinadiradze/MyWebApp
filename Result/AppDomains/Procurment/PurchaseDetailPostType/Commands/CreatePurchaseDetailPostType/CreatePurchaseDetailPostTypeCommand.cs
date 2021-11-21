@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Procurment;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Procurment.PurchaseDetailPostType.Commands.CreatePurchaseDetailPostType
 {
     public class CreatePurchaseDetailPostTypeCommand : IRequest<DataAccessLayer.Model.Procurment.PurchaseDetailPostType>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Procurment.PurchaseDetailPostType purchaseDetailPostType { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Procurment.PurchaseDetailPostType PurchaseDetailPostType { get; set; }
     }
 
     public class CreatePurchaseDetailPostTypeCommandHandler : IRequestHandler<CreatePurchaseDetailPostTypeCommand, DataAccessLayer.Model.Procurment.PurchaseDetailPostType>
@@ -29,7 +30,7 @@ namespace Application.Domains.Procurment.PurchaseDetailPostType.Commands.CreateP
 
         public async Task<DataAccessLayer.Model.Procurment.PurchaseDetailPostType> Handle(CreatePurchaseDetailPostTypeCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.purchaseDetailPostType;
+            var entity = request.PurchaseDetailPostType;
 
             _context.PurchaseDetailPostType.Add(entity);
 

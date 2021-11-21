@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.[###moduleName###];
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.[###moduleName###].[###entityName###].Commands.Create[###entityName###]
 {
     public class Create[###entityName###]Command : IRequest<DataAccessLayer.Model.[###moduleName###].[###entityName###]>
     {
-        public int SenderId { get; set; }  = 0;
-        public DataAccessLayer.Model.[###moduleName###].[###entityName###] [###entityVariableName###] { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.[###moduleName###].[###entityName###] [###entityName###] { get; set; }
     }
 
     public class Create[###entityName###]CommandHandler : IRequestHandler<Create[###entityName###]Command, DataAccessLayer.Model.[###moduleName###].[###entityName###]>
@@ -29,7 +30,7 @@ namespace Application.Domains.[###moduleName###].[###entityName###].Commands.Cre
 
         public async Task<DataAccessLayer.Model.[###moduleName###].[###entityName###]> Handle(Create[###entityName###]Command request, CancellationToken cancellationToken)
         {
-            var entity = request.[###entityVariableName###];
+            var entity = request.[###entityName###];
 
             _context.[###entityName###].Add(entity);
 

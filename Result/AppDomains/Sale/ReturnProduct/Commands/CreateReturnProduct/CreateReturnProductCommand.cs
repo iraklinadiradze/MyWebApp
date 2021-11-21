@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Sale;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Sale.ReturnProduct.Commands.CreateReturnProduct
 {
     public class CreateReturnProductCommand : IRequest<DataAccessLayer.Model.Sale.ReturnProduct>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Sale.ReturnProduct returnProduct { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Sale.ReturnProduct ReturnProduct { get; set; }
     }
 
     public class CreateReturnProductCommandHandler : IRequestHandler<CreateReturnProductCommand, DataAccessLayer.Model.Sale.ReturnProduct>
@@ -29,7 +30,7 @@ namespace Application.Domains.Sale.ReturnProduct.Commands.CreateReturnProduct
 
         public async Task<DataAccessLayer.Model.Sale.ReturnProduct> Handle(CreateReturnProductCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.returnProduct;
+            var entity = request.ReturnProduct;
 
             _context.ReturnProduct.Add(entity);
 

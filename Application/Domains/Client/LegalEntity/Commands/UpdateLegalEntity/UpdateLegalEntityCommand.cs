@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Client.LegalEntity.Commands.UpdateLegalEntity
 {
     public class UpdateLegalEntityCommand : IRequest<DataAccessLayer.Model.Client.LegalEntity>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Client.LegalEntity legalEntity { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Client.LegalEntity LegalEntity { get; set; }
     }
 
     public class UpdateLegalEntityCommandHandler : IRequestHandler<UpdateLegalEntityCommand, DataAccessLayer.Model.Client.LegalEntity>
@@ -33,9 +34,9 @@ namespace Application.Domains.Client.LegalEntity.Commands.UpdateLegalEntity
         public async Task<DataAccessLayer.Model.Client.LegalEntity> Handle(UpdateLegalEntityCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.legalEntity;
+            var entity = request.LegalEntity;
 
-            var _entity = await _context.LegalEntity.FindAsync(request.legalEntity.Id);
+            var _entity = await _context.LegalEntity.FindAsync(request.LegalEntity.Id);
 
             if (_entity == null)
             {

@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Client;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Client.LegalEntity.Commands.CreateLegalEntity
 {
     public class CreateLegalEntityCommand : IRequest<DataAccessLayer.Model.Client.LegalEntity>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Client.LegalEntity legalEntity { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Client.LegalEntity LegalEntity { get; set; }
     }
 
     public class CreateLegalEntityCommandHandler : IRequestHandler<CreateLegalEntityCommand, DataAccessLayer.Model.Client.LegalEntity>
@@ -29,7 +30,7 @@ namespace Application.Domains.Client.LegalEntity.Commands.CreateLegalEntity
 
         public async Task<DataAccessLayer.Model.Client.LegalEntity> Handle(CreateLegalEntityCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.legalEntity;
+            var entity = request.LegalEntity;
 
             _context.LegalEntity.Add(entity);
 

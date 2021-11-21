@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Core.Country.Commands.UpdateCountry
 {
     public class UpdateCountryCommand : IRequest<DataAccessLayer.Model.Core.Country>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Core.Country country { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Core.Country Country { get; set; }
     }
 
     public class UpdateCountryCommandHandler : IRequestHandler<UpdateCountryCommand, DataAccessLayer.Model.Core.Country>
@@ -33,9 +34,9 @@ namespace Application.Domains.Core.Country.Commands.UpdateCountry
         public async Task<DataAccessLayer.Model.Core.Country> Handle(UpdateCountryCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.country;
+            var entity = request.Country;
 
-            var _entity = await _context.Country.FindAsync(request.country.Id);
+            var _entity = await _context.Country.FindAsync(request.Country.Id);
 
             if (_entity == null)
             {

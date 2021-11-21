@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Procurment.PurchaseAllocationSource.Commands.UpdatePurchaseAllocationSource
 {
     public class UpdatePurchaseAllocationSourceCommand : IRequest<DataAccessLayer.Model.Procurment.PurchaseAllocationSource>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Procurment.PurchaseAllocationSource purchaseAllocationSource { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Procurment.PurchaseAllocationSource PurchaseAllocationSource { get; set; }
     }
 
     public class UpdatePurchaseAllocationSourceCommandHandler : IRequestHandler<UpdatePurchaseAllocationSourceCommand, DataAccessLayer.Model.Procurment.PurchaseAllocationSource>
@@ -33,9 +34,9 @@ namespace Application.Domains.Procurment.PurchaseAllocationSource.Commands.Updat
         public async Task<DataAccessLayer.Model.Procurment.PurchaseAllocationSource> Handle(UpdatePurchaseAllocationSourceCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.purchaseAllocationSource;
+            var entity = request.PurchaseAllocationSource;
 
-            var _entity = await _context.PurchaseAllocationSource.FindAsync(request.purchaseAllocationSource.Id);
+            var _entity = await _context.PurchaseAllocationSource.FindAsync(request.PurchaseAllocationSource.Id);
 
             if (_entity == null)
             {

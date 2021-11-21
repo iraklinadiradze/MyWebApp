@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.GeneralLedger;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.GeneralLedger.FinAccount.Commands.CreateFinAccount
 {
     public class CreateFinAccountCommand : IRequest<DataAccessLayer.Model.GeneralLedger.FinAccount>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.GeneralLedger.FinAccount finAccount { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.GeneralLedger.FinAccount FinAccount { get; set; }
     }
 
     public class CreateFinAccountCommandHandler : IRequestHandler<CreateFinAccountCommand, DataAccessLayer.Model.GeneralLedger.FinAccount>
@@ -29,7 +30,7 @@ namespace Application.Domains.GeneralLedger.FinAccount.Commands.CreateFinAccount
 
         public async Task<DataAccessLayer.Model.GeneralLedger.FinAccount> Handle(CreateFinAccountCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.finAccount;
+            var entity = request.FinAccount;
 
             _context.FinAccount.Add(entity);
 

@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Inventory.MovementDetail.Commands.UpdateMovementDetail
 {
     public class UpdateMovementDetailCommand : IRequest<DataAccessLayer.Model.Inventory.MovementDetail>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Inventory.MovementDetail movementDetail { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Inventory.MovementDetail MovementDetail { get; set; }
     }
 
     public class UpdateMovementDetailCommandHandler : IRequestHandler<UpdateMovementDetailCommand, DataAccessLayer.Model.Inventory.MovementDetail>
@@ -33,9 +34,9 @@ namespace Application.Domains.Inventory.MovementDetail.Commands.UpdateMovementDe
         public async Task<DataAccessLayer.Model.Inventory.MovementDetail> Handle(UpdateMovementDetailCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.movementDetail;
+            var entity = request.MovementDetail;
 
-            var _entity = await _context.MovementDetail.FindAsync(request.movementDetail.Id);
+            var _entity = await _context.MovementDetail.FindAsync(request.MovementDetail.Id);
 
             if (_entity == null)
             {

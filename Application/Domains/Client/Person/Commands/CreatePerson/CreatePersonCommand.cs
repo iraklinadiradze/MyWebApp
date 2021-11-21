@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Client;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Client.Person.Commands.CreatePerson
 {
     public class CreatePersonCommand : IRequest<DataAccessLayer.Model.Client.Person>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Client.Person person { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Client.Person Person { get; set; }
     }
 
     public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, DataAccessLayer.Model.Client.Person>
@@ -29,7 +30,7 @@ namespace Application.Domains.Client.Person.Commands.CreatePerson
 
         public async Task<DataAccessLayer.Model.Client.Person> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.person;
+            var entity = request.Person;
 
             _context.Person.Add(entity);
 

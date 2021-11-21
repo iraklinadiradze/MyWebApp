@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Core.Currency.Commands.UpdateCurrency
 {
     public class UpdateCurrencyCommand : IRequest<DataAccessLayer.Model.Core.Currency>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Core.Currency currency { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Core.Currency Currency { get; set; }
     }
 
     public class UpdateCurrencyCommandHandler : IRequestHandler<UpdateCurrencyCommand, DataAccessLayer.Model.Core.Currency>
@@ -33,9 +34,9 @@ namespace Application.Domains.Core.Currency.Commands.UpdateCurrency
         public async Task<DataAccessLayer.Model.Core.Currency> Handle(UpdateCurrencyCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.currency;
+            var entity = request.Currency;
 
-            var _entity = await _context.Currency.FindAsync(request.currency.Id);
+            var _entity = await _context.Currency.FindAsync(request.Currency.Id);
 
             if (_entity == null)
             {

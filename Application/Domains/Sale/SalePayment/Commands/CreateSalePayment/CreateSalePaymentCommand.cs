@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Sale;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Sale.SalePayment.Commands.CreateSalePayment
 {
     public class CreateSalePaymentCommand : IRequest<DataAccessLayer.Model.Sale.SalePayment>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Sale.SalePayment salePayment { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Sale.SalePayment SalePayment { get; set; }
     }
 
     public class CreateSalePaymentCommandHandler : IRequestHandler<CreateSalePaymentCommand, DataAccessLayer.Model.Sale.SalePayment>
@@ -29,7 +30,7 @@ namespace Application.Domains.Sale.SalePayment.Commands.CreateSalePayment
 
         public async Task<DataAccessLayer.Model.Sale.SalePayment> Handle(CreateSalePaymentCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.salePayment;
+            var entity = request.SalePayment;
 
             _context.SalePayment.Add(entity);
 

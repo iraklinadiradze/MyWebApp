@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Account.Transaction.Commands.UpdateTransaction
 {
     public class UpdateTransactionCommand : IRequest<DataAccessLayer.Model.Account.Transaction>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Account.Transaction transaction { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Account.Transaction Transaction { get; set; }
     }
 
     public class UpdateTransactionCommandHandler : IRequestHandler<UpdateTransactionCommand, DataAccessLayer.Model.Account.Transaction>
@@ -33,9 +34,9 @@ namespace Application.Domains.Account.Transaction.Commands.UpdateTransaction
         public async Task<DataAccessLayer.Model.Account.Transaction> Handle(UpdateTransactionCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.transaction;
+            var entity = request.Transaction;
 
-            var _entity = await _context.Transaction.FindAsync(request.transaction.Id);
+            var _entity = await _context.Transaction.FindAsync(request.Transaction.Id);
 
             if (_entity == null)
             {

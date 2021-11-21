@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Core.User.Commands.UpdateUser
 {
     public class UpdateUserCommand : IRequest<DataAccessLayer.Model.Core.User>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Core.User user { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Core.User User { get; set; }
     }
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, DataAccessLayer.Model.Core.User>
@@ -33,9 +34,9 @@ namespace Application.Domains.Core.User.Commands.UpdateUser
         public async Task<DataAccessLayer.Model.Core.User> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.user;
+            var entity = request.User;
 
-            var _entity = await _context.User.FindAsync(request.user.Id);
+            var _entity = await _context.User.FindAsync(request.User.Id);
 
             if (_entity == null)
             {

@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -22,7 +23,8 @@ namespace WebAPI.Controllers
         public IConfiguration _configuration;
         private readonly PilotDBContext _context;
 
-        public TokenController(IConfiguration config, PilotDBContext context)
+        public TokenController(IConfiguration config, PilotDBContext context
+            )
         {
             _configuration = config;
             _context = context;
@@ -46,7 +48,7 @@ namespace WebAPI.Controllers
                     new Claim("Id" , user.Id.ToString()),
                     new Claim("FirstName", user.Firstname),
                     new Claim("LastName", user.Lastname),
-                    new Claim("UserName", user.Username),
+                    new Claim("UserName", user.Username)//,
 //                    new Claim("Email", user.Email)
                    };
 
@@ -78,7 +80,7 @@ namespace WebAPI.Controllers
 
         private async Task<User> GetUser(string username, string password)
         {
-            return await _context.User.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+          return await _context.User.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
         }
     }
 

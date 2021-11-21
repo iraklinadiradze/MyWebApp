@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Product.ProductProcessorProductFeature.Commands.UpdateProductProcessorProductFeature
 {
     public class UpdateProductProcessorProductFeatureCommand : IRequest<DataAccessLayer.Model.Product.ProductProcessorProductFeature>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Product.ProductProcessorProductFeature productProcessorProductFeature { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Product.ProductProcessorProductFeature ProductProcessorProductFeature { get; set; }
     }
 
     public class UpdateProductProcessorProductFeatureCommandHandler : IRequestHandler<UpdateProductProcessorProductFeatureCommand, DataAccessLayer.Model.Product.ProductProcessorProductFeature>
@@ -33,9 +34,9 @@ namespace Application.Domains.Product.ProductProcessorProductFeature.Commands.Up
         public async Task<DataAccessLayer.Model.Product.ProductProcessorProductFeature> Handle(UpdateProductProcessorProductFeatureCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.productProcessorProductFeature;
+            var entity = request.ProductProcessorProductFeature;
 
-            var _entity = await _context.ProductProcessorProductFeature.FindAsync(request.productProcessorProductFeature.Id);
+            var _entity = await _context.ProductProcessorProductFeature.FindAsync(request.ProductProcessorProductFeature.Id);
 
             if (_entity == null)
             {

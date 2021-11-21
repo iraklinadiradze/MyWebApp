@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Procurment.PurchaseAllocationResult.Commands.UpdatePurchaseAllocationResult
 {
     public class UpdatePurchaseAllocationResultCommand : IRequest<DataAccessLayer.Model.Procurment.PurchaseAllocationResult>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Procurment.PurchaseAllocationResult purchaseAllocationResult { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Procurment.PurchaseAllocationResult PurchaseAllocationResult { get; set; }
     }
 
     public class UpdatePurchaseAllocationResultCommandHandler : IRequestHandler<UpdatePurchaseAllocationResultCommand, DataAccessLayer.Model.Procurment.PurchaseAllocationResult>
@@ -33,9 +34,9 @@ namespace Application.Domains.Procurment.PurchaseAllocationResult.Commands.Updat
         public async Task<DataAccessLayer.Model.Procurment.PurchaseAllocationResult> Handle(UpdatePurchaseAllocationResultCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.purchaseAllocationResult;
+            var entity = request.PurchaseAllocationResult;
 
-            var _entity = await _context.PurchaseAllocationResult.FindAsync(request.purchaseAllocationResult.Id);
+            var _entity = await _context.PurchaseAllocationResult.FindAsync(request.PurchaseAllocationResult.Id);
 
             if (_entity == null)
             {

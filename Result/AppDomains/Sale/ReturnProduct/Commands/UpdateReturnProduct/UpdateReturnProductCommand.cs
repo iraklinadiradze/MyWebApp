@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Sale.ReturnProduct.Commands.UpdateReturnProduct
 {
     public class UpdateReturnProductCommand : IRequest<DataAccessLayer.Model.Sale.ReturnProduct>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Sale.ReturnProduct returnProduct { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Sale.ReturnProduct ReturnProduct { get; set; }
     }
 
     public class UpdateReturnProductCommandHandler : IRequestHandler<UpdateReturnProductCommand, DataAccessLayer.Model.Sale.ReturnProduct>
@@ -33,9 +34,9 @@ namespace Application.Domains.Sale.ReturnProduct.Commands.UpdateReturnProduct
         public async Task<DataAccessLayer.Model.Sale.ReturnProduct> Handle(UpdateReturnProductCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.returnProduct;
+            var entity = request.ReturnProduct;
 
-            var _entity = await _context.ReturnProduct.FindAsync(request.returnProduct.Id);
+            var _entity = await _context.ReturnProduct.FindAsync(request.ReturnProduct.Id);
 
             if (_entity == null)
             {

@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Account;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Account.Transaction.Commands.CreateTransaction
 {
     public class CreateTransactionCommand : IRequest<DataAccessLayer.Model.Account.Transaction>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Account.Transaction transaction { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Account.Transaction Transaction { get; set; }
     }
 
     public class CreateTransactionCommandHandler : IRequestHandler<CreateTransactionCommand, DataAccessLayer.Model.Account.Transaction>
@@ -29,7 +30,7 @@ namespace Application.Domains.Account.Transaction.Commands.CreateTransaction
 
         public async Task<DataAccessLayer.Model.Account.Transaction> Handle(CreateTransactionCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.transaction;
+            var entity = request.Transaction;
 
             _context.Transaction.Add(entity);
 

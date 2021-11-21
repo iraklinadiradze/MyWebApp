@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Product;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Product.Brand.Commands.CreateBrand
 {
     public class CreateBrandCommand : IRequest<DataAccessLayer.Model.Product.Brand>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Product.Brand brand { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Product.Brand Brand { get; set; }
     }
 
     public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, DataAccessLayer.Model.Product.Brand>
@@ -29,7 +30,7 @@ namespace Application.Domains.Product.Brand.Commands.CreateBrand
 
         public async Task<DataAccessLayer.Model.Product.Brand> Handle(CreateBrandCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.brand;
+            var entity = request.Brand;
 
             _context.Brand.Add(entity);
 

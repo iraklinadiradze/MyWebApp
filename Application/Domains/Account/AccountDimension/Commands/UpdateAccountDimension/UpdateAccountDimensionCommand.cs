@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.Account.AccountDimension.Commands.UpdateAccountDimension
 {
     public class UpdateAccountDimensionCommand : IRequest<DataAccessLayer.Model.Account.AccountDimension>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Account.AccountDimension accountDimension { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Account.AccountDimension AccountDimension { get; set; }
     }
 
     public class UpdateAccountDimensionCommandHandler : IRequestHandler<UpdateAccountDimensionCommand, DataAccessLayer.Model.Account.AccountDimension>
@@ -33,9 +34,9 @@ namespace Application.Domains.Account.AccountDimension.Commands.UpdateAccountDim
         public async Task<DataAccessLayer.Model.Account.AccountDimension> Handle(UpdateAccountDimensionCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.accountDimension;
+            var entity = request.AccountDimension;
 
-            var _entity = await _context.AccountDimension.FindAsync(request.accountDimension.Id);
+            var _entity = await _context.AccountDimension.FindAsync(request.AccountDimension.Id);
 
             if (_entity == null)
             {

@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Core;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Core.Country.Commands.CreateCountry
 {
     public class CreateCountryCommand : IRequest<DataAccessLayer.Model.Core.Country>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Core.Country country { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Core.Country Country { get; set; }
     }
 
     public class CreateCountryCommandHandler : IRequestHandler<CreateCountryCommand, DataAccessLayer.Model.Core.Country>
@@ -29,7 +30,7 @@ namespace Application.Domains.Core.Country.Commands.CreateCountry
 
         public async Task<DataAccessLayer.Model.Core.Country> Handle(CreateCountryCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.country;
+            var entity = request.Country;
 
             _context.Country.Add(entity);
 

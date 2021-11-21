@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Model.Sale;
 using DataAccessLayer;
 using Application.Common.Interfaces;
+using Application.Common;
 
 namespace Application.Domains.Sale.SaleSchema.Commands.CreateSaleSchema
 {
     public class CreateSaleSchemaCommand : IRequest<DataAccessLayer.Model.Sale.SaleSchema>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.Sale.SaleSchema saleSchema { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.Sale.SaleSchema SaleSchema { get; set; }
     }
 
     public class CreateSaleSchemaCommandHandler : IRequestHandler<CreateSaleSchemaCommand, DataAccessLayer.Model.Sale.SaleSchema>
@@ -29,7 +30,7 @@ namespace Application.Domains.Sale.SaleSchema.Commands.CreateSaleSchema
 
         public async Task<DataAccessLayer.Model.Sale.SaleSchema> Handle(CreateSaleSchemaCommand request, CancellationToken cancellationToken)
         {
-            var entity = request.saleSchema;
+            var entity = request.SaleSchema;
 
             _context.SaleSchema.Add(entity);
 

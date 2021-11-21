@@ -10,13 +10,14 @@ using DataAccessLayer;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
+using Application.Common;
 
 namespace Application.Domains.GeneralLedger.FinAccount.Commands.UpdateFinAccount
 {
     public class UpdateFinAccountCommand : IRequest<DataAccessLayer.Model.GeneralLedger.FinAccount>
     {
-        public int senderId { get; set; }  = 0;
-        public DataAccessLayer.Model.GeneralLedger.FinAccount finAccount { get; set; }
+        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public DataAccessLayer.Model.GeneralLedger.FinAccount FinAccount { get; set; }
     }
 
     public class UpdateFinAccountCommandHandler : IRequestHandler<UpdateFinAccountCommand, DataAccessLayer.Model.GeneralLedger.FinAccount>
@@ -33,9 +34,9 @@ namespace Application.Domains.GeneralLedger.FinAccount.Commands.UpdateFinAccount
         public async Task<DataAccessLayer.Model.GeneralLedger.FinAccount> Handle(UpdateFinAccountCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = request.finAccount;
+            var entity = request.FinAccount;
 
-            var _entity = await _context.FinAccount.FindAsync(request.finAccount.Id);
+            var _entity = await _context.FinAccount.FindAsync(request.FinAccount.Id);
 
             if (_entity == null)
             {
