@@ -13,7 +13,7 @@ using DataAccessLayer.Model.Inventory;
 
 using Application.Domains.Inventory.Inventory.Queries.GetInventory;
 using Application.Domains.Inventory.Inventory.Queries.GetInventoryList;
-using Application.Domains.Inventory.Inventory.Commands.CreateInventory;
+using Application.Domains.Inventory.Inventory.Commands.ChangeInventoryStock;
 using Application.Domains.Inventory.Inventory.Commands.UpdateInventory;
 using Application.Domains.Inventory.Inventory.Commands.DeleteInventory;
 

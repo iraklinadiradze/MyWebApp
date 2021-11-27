@@ -67,6 +67,7 @@ namespace DataAccessLayer.Model.Procurment
         public decimal AddCost { get; set; }
         public decimal FinalCost { get; set; }
         public bool Allocated{ get; set; }
+        public bool StockProductPerProcess { get; set; }
 
         [ForeignKey("PurchaseId")]
         public virtual Purchase Purchase { get; set; }

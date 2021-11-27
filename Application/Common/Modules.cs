@@ -12,7 +12,8 @@ namespace Application.Common
         mdCore ,
         mdGeneralLedger,
         mdInventory,
-        mdProcurement,
+        mdPurchase,
+        mdPurchaseDetail,
         mdProduct,
         mdSale
     }

@@ -64,6 +64,8 @@ namespace DataAccessLayer
         // Inventory Schema
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
+        public virtual DbSet<InventoryChangeType> InventoryChangeType { get; set; }
+        public virtual DbSet<InventoryChange> InventoryChange { get; set; }
         public virtual DbSet<Movement> Movement { get; set; }
         public virtual DbSet<MovementDetail> MovementDetail { get; set; }
 
@@ -151,6 +153,8 @@ namespace DataAccessLayer
             //Inventory Schema
             modelBuilder.Entity<Location>().ToTable("Location", "inv");
             modelBuilder.Entity<Inventory>().ToTable("Inventory", "inv");
+            modelBuilder.Entity<InventoryChangeType>().ToTable("InventoryChangeType", "inv");
+            modelBuilder.Entity<InventoryChange>().ToTable("InventoryChange", "inv");
             modelBuilder.Entity<Movement>().ToTable("Movement", "inv");
             modelBuilder.Entity<MovementDetail>().ToTable("MovementDetail", "inv");
 

@@ -80,6 +80,7 @@ PurchaseId= e.PurchaseId,
 QtyCalculated= e.QtyCalculated,
 QtyInvoiced= e.QtyInvoiced,
 QtyPosted= e.QtyPosted,
+StockProductPerProcess= e.StockProductPerProcess,
 VatInvoiced= e.VatInvoiced,
 inventory = new PurchaseDetailView._Inventory{
 Id= _inventory.Id,

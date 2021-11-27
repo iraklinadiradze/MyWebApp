@@ -52,6 +52,8 @@ namespace Application.Common.Interfaces
         // Inventory Schema
         public DbSet<Location> Location { get; set; }
         public DbSet<Inventory> Inventory { get; set; }
+        public DbSet<InventoryChangeType> InventoryChangeType { get; set; }
+        public DbSet<InventoryChange> InventoryChange { get; set; }
         public DbSet<Movement> Movement { get; set; }
         public DbSet<MovementDetail> MovementDetail { get; set; }
 
@@ -87,6 +89,7 @@ namespace Application.Common.Interfaces
         public DbSet<GlTransaction> GlTransaction { get; set; }
         public DbSet<GlTransactionDetail> GlTransactionDetail { get; set; }
         public DbSet<FinAccount> FinAccount { get; set; }
+        object ChangeTracker { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

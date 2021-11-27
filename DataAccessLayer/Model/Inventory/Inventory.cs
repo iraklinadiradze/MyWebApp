@@ -12,11 +12,11 @@ namespace DataAccessLayer.Model.Inventory
     {
         public Inventory()
         {
-//            MovementDetails = new HashSet<MovementDetail>();
-//            PurchaseDetails = new HashSet<PurchaseDetail>();
-//            Sales = new HashSet<Sale>();s
-//            StockCountDetails = new HashSet<StockCountDetail>();
-//            StockWriteoffDetails = new HashSet<StockWriteoffDetail>();
+            //            MovementDetails = new HashSet<MovementDetail>();
+            //            PurchaseDetails = new HashSet<PurchaseDetail>();
+            //            Sales = new HashSet<Sale>();s
+            //            StockCountDetails = new HashSet<StockCountDetail>();
+            //            StockWriteoffDetails = new HashSet<StockWriteoffDetail>();
         }
 
         [Key]
