@@ -66,6 +66,7 @@ namespace DataAccessLayer.Model.Procurment
 
         public decimal AddCost { get; set; }
         public decimal FinalCost { get; set; }
+        public decimal FinalQty { get; set; }
         public bool Allocated{ get; set; }
         public bool StockProductPerProcess { get; set; }
 

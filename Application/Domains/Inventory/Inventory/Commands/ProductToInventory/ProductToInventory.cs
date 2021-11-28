@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
 
-using Application.Domains.Inventory.Inventory.Commands.ChangeInventoryStock;
+using Application.Domains.Inventory.Inventory.Commands.CreateInventory;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory

@@ -7,14 +7,14 @@ namespace Application.Common
     public enum ModuleEnum
     {
         mdUndefined = 0,
-        mdAccount ,
-        mdClient ,
-        mdCore ,
-        mdGeneralLedger,
-        mdInventory,
-        mdPurchase,
-        mdPurchaseDetail,
-        mdProduct,
-        mdSale
+        mdAccount = 1,
+        mdClient = 2,
+        mdCore = 3,
+        mdGeneralLedger = 4,
+        mdInventory = 5,
+        mdPurchase = 6,
+        mdPurchaseDetail = 7,
+        mdProduct = 8,
+        mdSale = 9
     }
 }
