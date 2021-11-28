@@ -20,6 +20,10 @@ namespace DataAccessLayer
     public class CoreDBContext : DbContext
     {
 
+        public InventoryChange[] CostAffectedInventoryChangeList { get; set; } = { };
+        // public List<InventoryChange> CostAffectedInventoryChangeList { get; set; } = new List<InventoryChange>();
+
+
         ///*
         public CoreDBContext() : base()
         {

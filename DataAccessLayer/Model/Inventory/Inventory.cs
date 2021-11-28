@@ -22,7 +22,7 @@ namespace DataAccessLayer.Model.Inventory
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [FilterParam(equals = true, useInJoin = true)]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [ForeignKey("Product")]
         public int ProductId { get; set; }

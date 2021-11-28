@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
 
-// using Application.Domains.Inventory.Inventory.Commands;
 using Microsoft.EntityFrameworkCore;
 using Application.Domains.Inventory.InventoryChangeType.Common;
 
@@ -22,7 +21,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public int SenderReferenceId { get; set; }
-        public long InventoryId { get; set; }
+        public DataAccessLayer.Model.Inventory.Inventory Inventory { get; set; }
         public int LocationId { get; set; }
         public InventoryChangeTypeEnum InventoryChangeTypeId { get; set; }
         public DateTime TransDate { get; set; }
@@ -56,7 +55,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
             {
                 maxInventoryChange = await (from e in _context.InventoryChange
                                             where (
-                                             (e.InventoryId == request.InventoryId)
+                                             (e.InventoryId == request.Inventory.Id)
                                              &&
                                              (e.EntityId == (int)request.SenderId)
                                              &&
@@ -72,9 +71,29 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
             }
             else
             {
+
+                if (
+                    (request.Inventory.IsWholeQuantity == true)
+                    &&
+                    (request.QtyIncrease != Math.Floor(request.QtyIncrease))
+                    &&
+                    (request.QtyDecrease != Math.Floor(request.QtyDecrease))
+                    )
+                    throw new Exception($"Inventory {request.Inventory.Id} is not splitable type and may be changed only by whole Number");
+
+                if (
+                    (request.Inventory.IsSingle == true)
+                    &&
+                    ((request.QtyIncrease != request.QtyIncrease) || (request.QtyIncrease != 0))
+                    &&
+                    ((request.QtyDecrease != 1) || (request.QtyDecrease != 0))
+                    )
+                    throw new Exception($"Inventory {request.Inventory.Id} is single type and may be changed only by 1");
+
+
                 maxInventoryChange = await (from e in _context.InventoryChange
                                             where (
-                                             (e.InventoryId == request.InventoryId)
+                                             (e.InventoryId == request.Inventory.Id)
                                              &&
                                              (e.TransDate == request.TransDate)
                                              &&
@@ -89,7 +108,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                 {
                     maxInventoryChange = await (from e in _context.InventoryChange
                                                 where (
-                                                 (e.InventoryId == request.InventoryId)
+                                                 (e.InventoryId == request.Inventory.Id)
                                                  &&
                                                  (e.TransDate < request.TransDate)
                                                  &&
@@ -125,7 +144,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                     _inventoryChange = new DataAccessLayer.Model.Inventory.InventoryChange
                     {
                         TransDate = request.TransDate,
-                        InventoryId = request.InventoryId,
+                        InventoryId = request.Inventory.Id,
                         LocationId = request.LocationId,
                         EntityId = (int)request.SenderId,
                         EntityForeignId = request.SenderReferenceId,
@@ -146,7 +165,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                     _inventoryChange = new DataAccessLayer.Model.Inventory.InventoryChange
                     {
                         TransDate = request.TransDate,
-                        InventoryId = request.InventoryId,
+                        InventoryId = request.Inventory.Id,
                         LocationId = request.LocationId,
                         EntityId = (int)request.SenderId,
                         EntityForeignId = request.SenderReferenceId,
@@ -162,13 +181,18 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
 
                 }
 
+                if (_inventoryChange.QtyBalance < 0)
+                {
+                    throw new Exception($"Inventory {request.Inventory.Id} Goes below Zero in {request.TransDate} for location {request.LocationId}");
+                }
+
                 _context.InventoryChange.Add(_inventoryChange);
             }
 
 
             var invetoryChangeListToRecalculate = (from z in _context.InventoryChange
                                                    where
-                                                       z.InventoryId == request.InventoryId
+                                                       z.InventoryId == request.Inventory.Id
                                                        &&
                                                        z.LocationId == request.LocationId
                                                        &&
@@ -181,7 +205,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                                                   Union(
                                                   from z in _context.InventoryChange
                                                   where
-                                                      z.InventoryId == request.InventoryId
+                                                      z.InventoryId == request.Inventory.Id
                                                       &&
                                                       z.LocationId == request.LocationId
                                                       &&
@@ -215,10 +239,14 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
 
                 x.CostBalance = x.CostBalance + request.CostIncrease - request.CostDecrease;
 
+//                if (request.CostIncrease != request.CostDecrease)
+                    _context.CostAffectedInventoryChangeList.Add(x.InventoryId, x);
+
                 if (x.QtyBalance < 0)
                 {
-                    throw new Exception($"Inventory {request.InventoryId} Goes below Zero in {x.TransDate} for location {x.LocationId}");
+                    throw new Exception($"Inventory {request.Inventory.Id} Goes below Zero in {x.TransDate} for location {x.LocationId}");
                 }
+
 
                 _context.InventoryChange.Update(x);
             }

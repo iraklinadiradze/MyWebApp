@@ -15,6 +15,7 @@ namespace Application.Common
         mdPurchase = 6,
         mdPurchaseDetail = 7,
         mdProduct = 8,
-        mdSale = 9
+        mdSale = 9 , 
+        mdProduction = 10
     }
 }

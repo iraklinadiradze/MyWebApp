@@ -143,8 +143,8 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                         new UpdatePurchaseDetailStatusCommand
                         {
                             PurchaseDetail = purchaseDetail,
-                            QtyPost = detailQtyPost,
-                            FinPost = detailFinPost
+                            doQtyPost = detailQtyPost,
+                            doCostPost = detailFinPost
                         }
                         );
                 }

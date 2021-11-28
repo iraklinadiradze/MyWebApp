@@ -47,7 +47,8 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
         public async Task<int> Handle(UpdatePurchaseDetailStatusCommand request, CancellationToken cancellationToken)
         {
 
-             DataAccessLayer.Model.Inventory.Inventory inventory;
+            DataAccessLayer.Model.Inventory.Inventory inventory;
+            DataAccessLayer.Model.Inventory.InventoryChange _inventoryChange;
 
             inventory = await _mediator.Send(
                             new ProductToInventoryCommand {
@@ -63,12 +64,12 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
             if (request.doQtyPost || request.doCostPost)
             {
 
-                var _inventoryChange = await _mediator.Send(
+                    _inventoryChange = await _mediator.Send(
                         new ChangeInventoryAddCommand
                         {
                             SenderId = ModuleEnum.mdPurchaseDetail,
                             SenderReferenceId = request.PurchaseDetail.Id,
-                            InventoryId = inventory.Id,
+                            Inventory = inventory,
                             LocationId = request.PurchaseDetail.LocationId,
                             TransDate = request.TransDate,
                             CostDecrease = 0,
@@ -92,7 +93,7 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
             if (request.doQtyUnPost || request.doCostUnPost)
             {
 
-                var _inventoryChange = await _mediator.Send(
+                    _inventoryChange = await _mediator.Send(
                         new ChangeInventoryRemoveCommand
                         {
                             SenderId = ModuleEnum.mdPurchaseDetail,
@@ -102,6 +103,7 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
                             doChangeQty = request.doQtyUnPost
                         }
                     );
+
 
                 if (request.doQtyUnPost)
                     request.PurchaseDetail.QtyPosted = false;
@@ -116,6 +118,9 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
             _context.PurchaseDetail.Update(request.PurchaseDetail);
 
             // Make cascasade update of related inventory changes
+//            List<DataAccessLayer.Model.Inventory.Inventory> costAffectedInventoryList = new List<DataAccessLayer.Model.Inventory.Inventory>();
+//            Dictionary<long, DataAccessLayer.Model.Inventory.Inventory> costAffectedInventoryList = new Dictionary<long, DataAccessLayer.Model.Inventory.Inventory>();
+
 
             await _context.SaveChangesAsync(cancellationToken);
 

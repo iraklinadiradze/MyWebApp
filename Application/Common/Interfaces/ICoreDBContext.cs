@@ -20,6 +20,10 @@ namespace Application.Common.Interfaces
 {
     public interface ICoreDBContext
     {
+
+        public InventoryChange[] CostAffectedInventoryChangeList { get; set; }
+//        public List<InventoryChange> CostAffectedInventoryChangeList { get; set; }
+        
         // General Schema
         public  DbSet<Currency> Currency { get; set; }
         public DbSet<User> User { get; set; }
@@ -89,7 +93,8 @@ namespace Application.Common.Interfaces
         public DbSet<GlTransaction> GlTransaction { get; set; }
         public DbSet<GlTransactionDetail> GlTransactionDetail { get; set; }
         public DbSet<FinAccount> FinAccount { get; set; }
-        object ChangeTracker { get; }
+
+        object ChangeTracker { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
