@@ -44,16 +44,17 @@ namespace Application.Domains.Inventory.Inventory.InventoryRecalcAffectedCosts
                 DataAccessLayer.Model.Inventory.InventoryChange[] _costAffectedInventoryChangeList= { };
 
                 ArrayList a = new ArrayList();
-                a.Clear();
-                a.Add()
+                //a.Clear();
+                //a.Add();
 
                 _costAffectedInventoryChangeList = (DataAccessLayer.Model.Inventory.InventoryChange[])_costAffectedInventoryChangeList.Concat(_context.CostAffectedInventoryChangeList);
 
-                _context.CostAffectedInventoryChangeList.
+//                _context.CostAffectedInventoryChangeList.
 
 
-                Array.Clear(_context.CostAffectedInventoryChangeList);
+//                Array.Clear(_context.CostAffectedInventoryChangeList);
 
+/*
                 foreach (var _inventoryChange in _costAffectedInventoryChangeList.Values)
                 {
                     //                    Dictionary<int, DataAccessLayer.Model.Inventory.InventoryChange> xyz=new Dictionary<int, DataAccessLayer.Model.Inventory.InventoryChange>;
@@ -78,7 +79,7 @@ namespace Application.Domains.Inventory.Inventory.InventoryRecalcAffectedCosts
                     }
 
                 }
-
+*/
 
             }
 

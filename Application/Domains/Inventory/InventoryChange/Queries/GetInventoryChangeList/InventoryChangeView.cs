@@ -12,7 +12,7 @@ namespace Application.Domains.Inventory.InventoryChange.Queries.GetInventoryChan
 
           public class _Inventory
 {
- public Int32 Id {get; set;} 
+ public long Id {get; set;} 
  public String InventoryCode {get; set;} 
 }
 
