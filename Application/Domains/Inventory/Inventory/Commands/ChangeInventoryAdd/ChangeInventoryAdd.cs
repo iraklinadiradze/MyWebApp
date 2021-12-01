@@ -15,6 +15,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Application.Domains.Inventory.InventoryChangeType.Common;
 
+using Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseDetailStatusCommand;
+
+
 namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
 {
     public class ChangeInventoryAddCommand : IRequest<DataAccessLayer.Model.Inventory.InventoryChange>
@@ -46,50 +49,280 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
             _context = context;
         }
 
+        /*
+                public async Task<DataAccessLayer.Model.Inventory.InventoryChange> Handle(ChangeInventoryAddCommand request, CancellationToken cancellationToken)
+                {
+                    DataAccessLayer.Model.Inventory.InventoryChange maxInventoryChange = null;
+                    DataAccessLayer.Model.Inventory.InventoryChange _inventoryChange = null;
+
+                    if (!request.doChangeQty)
+                    {
+                        _inventoryChange = await (from e in _context.InventoryChange
+                                                  where (
+                                                   (e.InventoryId == request.Inventory.Id)
+                                                   &&
+                                                   (e.EntityId == (int)request.SenderId)
+                                                   &&
+                                                   (e.EntityForeignId == request.SenderReferenceId)
+                                                 )
+                                                  select e).FirstOrDefaultAsync();
+
+                        _inventoryChange.CostDecrease = request.CostDecrease;
+                        _inventoryChange.CostIncrease = request.CostIncrease;
+                        _inventoryChange.CostBalance = _inventoryChange.CostBalance + request.CostIncrease - request.CostDecrease;
+
+                        //                maxInventoryChange = _inventoryChange;
+                    }
+                    else
+                    {
+                        // request.doChangeQty == True
+
+                        if (
+                            (request.Inventory.IsWholeQuantity == true)
+                            &&
+                            (request.QtyIncrease != Math.Floor(request.QtyIncrease))
+                            &&
+                            (request.QtyDecrease != Math.Floor(request.QtyDecrease))
+                            )
+                            throw new Exception($"Inventory {request.Inventory.Id} is not splitable type and may be changed only by whole Number");
+
+                        if (
+                            (request.Inventory.IsSingle == true)
+                            &&
+                            ((request.QtyIncrease != request.QtyIncrease) || (request.QtyIncrease != 0))
+                            &&
+                            ((request.QtyDecrease != 1) || (request.QtyDecrease != 0))
+                            )
+                            throw new Exception($"Inventory {request.Inventory.Id} is single type and may be changed only by 1");
+
+
+                        maxInventoryChange = await (from e in _context.InventoryChange
+                                                    where (
+                                                     (e.InventoryId == request.Inventory.Id)
+                                                     &&
+                                                     (e.TransDate == request.TransDate)
+                                                     &&
+                                                     (e.TimeSequence < request.TimeSequence)
+                                                     &&
+                                                     (e.LocationId == request.LocationId)
+                                                   )
+                                                    orderby e.TimeSequence descending
+                                                    select e).FirstOrDefaultAsync();
+
+                        if (maxInventoryChange == null)
+                        {
+                            maxInventoryChange = await (from e in _context.InventoryChange
+                                                        where (
+                                                         (e.InventoryId == request.Inventory.Id)
+                                                         &&
+                                                         (e.TransDate < request.TransDate)
+                                                         &&
+                                                         (e.LocationId == request.LocationId)
+                                                       )
+                                                        orderby e.TransDate descending
+                                                        select e).FirstOrDefaultAsync();
+                        }
+
+
+                        if (maxInventoryChange == null)
+                        {
+
+                            _inventoryChange = new DataAccessLayer.Model.Inventory.InventoryChange
+                            {
+                                TransDate = request.TransDate,
+                                InventoryId = request.Inventory.Id,
+                                LocationId = request.LocationId,
+                                EntityId = (int)request.SenderId,
+                                EntityForeignId = request.SenderReferenceId,
+                                InventoryChangeTypeId = (int)request.InventoryChangeTypeId,
+                                QtyIncrease = request.QtyIncrease,
+                                QtyDecrease = request.QtyDecrease,
+                                CostDecrease = request.CostDecrease,
+                                CostIncrease = request.CostIncrease,
+                                QtyBalance = request.QtyIncrease - request.QtyDecrease,
+                                CostBalance = request.CostIncrease - request.CostDecrease,
+                                TimeSequence = request.TimeSequence,
+                                ParentInventoryChangeId = null
+                            };
+
+                            _context.InventoryChange.Add(_inventoryChange);
+                        }
+                        else
+                        {
+
+                            _inventoryChange = new DataAccessLayer.Model.Inventory.InventoryChange
+                            {
+                                TransDate = request.TransDate,
+                                InventoryId = request.Inventory.Id,
+                                LocationId = request.LocationId,
+                                EntityId = (int)request.SenderId,
+                                EntityForeignId = request.SenderReferenceId,
+                                InventoryChangeTypeId = (int)request.InventoryChangeTypeId,
+                                QtyIncrease = request.QtyIncrease,
+                                QtyDecrease = request.QtyDecrease,
+                                CostDecrease = request.CostDecrease,
+                                CostIncrease = request.CostIncrease,
+                                QtyBalance = maxInventoryChange.QtyBalance + request.QtyIncrease - request.QtyDecrease,
+                                CostBalance = maxInventoryChange.CostBalance + request.CostIncrease - request.CostDecrease,
+                                TimeSequence = request.TimeSequence,
+                                ParentInventoryChangeId = maxInventoryChange.Id
+                            };
+
+                            _context.InventoryChange.Add(_inventoryChange);
+                        }
+
+                        if (_inventoryChange.QtyBalance < 0)
+                        {
+                            throw new Exception($"Inventory {request.Inventory.Id} Goes below Zero in {request.TransDate} for location {request.LocationId}");
+                        }
+
+                    }
+
+                    var parentInventoryChangeId = (maxInventoryChange == null) ? _inventoryChange.Id : maxInventoryChange.Id;
+
+                    var invetoryChangeListToRecalculate = (maxInventoryChange != null) ?
+                                                          (from z in _context.InventoryChange
+                                                               where
+                                                                z.InventoryId==request.Inventory.Id
+                                                                &&
+                                                                z.LocationId==request.LocationId
+                                                                &&
+                                                                z.ParentInventoryChangeId == parentInventoryChangeId
+                                                               orderby z.TransDate ascending, z.TimeSequence ascending
+                                                               select z
+                                                          ):
+                                                          (from z in _context.InventoryChange
+                                                           where
+                                                                z.InventoryId == request.Inventory.Id
+                                                                &&
+                                                                z.LocationId == request.LocationId
+                                                                &&
+                                                                z.ParentInventoryChangeId == null
+                                                           orderby z.TransDate ascending, z.TimeSequence ascending
+                                                           select z
+                                                          );
+
+                        foreach (var x in invetoryChangeListToRecalculate)
+                        {
+                            if (request.doChangeQty)
+                                x.QtyBalance = x.QtyBalance + request.QtyIncrease - request.QtyDecrease;
+
+                            if (x.QtyBalance < 0)
+                            {
+                                throw new Exception($"Inventory {request.Inventory.Id} Goes below Zero in {x.TransDate} for location {x.LocationId}");
+                            }
+
+                            if (request.CostIncrease != request.CostDecrease)
+                                x.CostBalance = x.CostBalance + request.CostIncrease - request.CostDecrease;
+
+                        if (request.CostIncrease != request.CostDecrease)
+                            _context.CostAffectedInventoryChangeList.Append(x);
+
+                        _context.InventoryChange.Update(x);
+
+                        // call affected 
+
+
+
+                    }
+
+                    return _inventoryChange;
+                }
+        */
+
         public async Task<DataAccessLayer.Model.Inventory.InventoryChange> Handle(ChangeInventoryAddCommand request, CancellationToken cancellationToken)
         {
-            DataAccessLayer.Model.Inventory.InventoryChange maxInventoryChange;
-            DataAccessLayer.Model.Inventory.InventoryChange _inventoryChange;
 
-            if (!request.doChangeQty)
+            if (
+                (request.Inventory.IsWholeQuantity == true)
+                &&
+                (request.QtyIncrease != Math.Floor(request.QtyIncrease))
+                &&
+                (request.QtyDecrease != Math.Floor(request.QtyDecrease))
+                )
+                throw new Exception($"Inventory {request.Inventory.Id} is not splitable type and may be changed only by whole Number");
+
+            if (
+                (request.Inventory.IsSingle == true)
+                &&
+                ((request.QtyIncrease != request.QtyIncrease) || (request.QtyIncrease != 0))
+                &&
+                ((request.QtyDecrease != 1) || (request.QtyDecrease != 0))
+                )
+                throw new Exception($"Inventory {request.Inventory.Id} is single type and may be changed only by 1");
+
+
+            DataAccessLayer.Model.Inventory.InventoryChange maxInventoryChange = null;
+            DataAccessLayer.Model.Inventory.InventoryChange _inventoryChange = null;
+
+            _inventoryChange = await (from e in _context.InventoryChange
+                                      where (
+                                       (e.InventoryId == request.Inventory.Id)
+                                       &&
+                                       (e.EntityId == (int)request.SenderId)
+                                       &&
+                                       (e.EntityForeignId == request.SenderReferenceId)
+                                     )
+                                      select e).FirstOrDefaultAsync();
+
+            bool inventoryChangeExists = _inventoryChange != null;
+
+            bool isInventoryChangeDelete = (request.CostDecrease > 0)
+                                            ||
+                                            (request.CostIncrease > 0)
+                                            ||
+                                            (request.QtyDecrease > 0)
+                                            ||
+                                            (request.QtyIncrease > 0);
+
+            if (inventoryChangeExists
+                &&
+               (
+                (request.CostDecrease != _inventoryChange.CostDecrease)
+                ||
+                (request.QtyDecrease != _inventoryChange.QtyDecrease)
+                ||
+                (request.CostIncrease != _inventoryChange.CostIncrease)
+                ||
+                (request.QtyIncrease != _inventoryChange.QtyIncrease)
+               )
+               )
             {
-                maxInventoryChange = await (from e in _context.InventoryChange
-                                            where (
-                                             (e.InventoryId == request.Inventory.Id)
-                                             &&
-                                             (e.EntityId == (int)request.SenderId)
-                                             &&
-                                             (e.EntityForeignId == request.SenderReferenceId)
-                                           )
-                                            select e).FirstOrDefaultAsync();
 
-                _inventoryChange = maxInventoryChange;
+                /*
+                if (_inventoryChange.ParentInventoryChangeId != null)
+                    maxInventoryChange = (from z in _context.InventoryChange
+                                          where z.Id == _inventoryChange.ParentInventoryChangeId).FirstOrDefaultAsync();
+
+                if (maxInventoryChange!=null)
+                {
+
+                }
+                */
+
+                _inventoryChange.CostBalance = _inventoryChange.CostBalance
+                                                + _inventoryChange.CostDecrease
+                                                - _inventoryChange.CostIncrease
+                                                + request.CostIncrease
+                                                - request.CostDecrease;
+
+                _inventoryChange.QtyBalance = _inventoryChange.QtyBalance
+                                                + _inventoryChange.QtyDecrease
+                                                - _inventoryChange.QtyIncrease
+                                                + request.QtyIncrease
+                                                - request.QtyDecrease;
 
                 _inventoryChange.CostDecrease = request.CostDecrease;
                 _inventoryChange.CostIncrease = request.CostIncrease;
-                _inventoryChange.CostBalance = maxInventoryChange.CostBalance + request.CostIncrease - request.CostDecrease;
+                _inventoryChange.QtyDecrease = request.QtyDecrease;
+                _inventoryChange.QtyIncrease = request.QtyIncrease;
+
+                _context.InventoryChange.Update(_inventoryChange);
             }
-            else
+            //            else
+
+            if (!inventoryChangeExists)
             {
-
-                if (
-                    (request.Inventory.IsWholeQuantity == true)
-                    &&
-                    (request.QtyIncrease != Math.Floor(request.QtyIncrease))
-                    &&
-                    (request.QtyDecrease != Math.Floor(request.QtyDecrease))
-                    )
-                    throw new Exception($"Inventory {request.Inventory.Id} is not splitable type and may be changed only by whole Number");
-
-                if (
-                    (request.Inventory.IsSingle == true)
-                    &&
-                    ((request.QtyIncrease != request.QtyIncrease) || (request.QtyIncrease != 0))
-                    &&
-                    ((request.QtyDecrease != 1) || (request.QtyDecrease != 0))
-                    )
-                    throw new Exception($"Inventory {request.Inventory.Id} is single type and may be changed only by 1");
-
 
                 maxInventoryChange = await (from e in _context.InventoryChange
                                             where (
@@ -118,27 +351,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                                                 select e).FirstOrDefaultAsync();
                 }
 
-                /*
-                            var maxInventoryChange = (from e in _context.InventoryChange
-                                                        where (
-                                                         (e.InventoryId == request.InventoryId)
-                                                         &&
-                                                         (e.TransDate <= request.TransDate)
-                                                         &&
-                                                         (
-                                                          (e.TransDate < request.TransDate)
-                                                          ||
-                                                          (e.TimeSequence < request.TimeSequence)
-                                                         )
-                                                         &&
-                                                         (e.LocationId == request.LocationId)
-                                                       )
-                                                        orderby e.TransDate descending, e.TimeSequence descending
-                                                      select e).FirstOrDefault();
-                */
-
-
-                if (maxInventoryChange != null)
+                if (maxInventoryChange == null)
                 {
 
                     _inventoryChange = new DataAccessLayer.Model.Inventory.InventoryChange
@@ -155,9 +368,11 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                         CostIncrease = request.CostIncrease,
                         QtyBalance = request.QtyIncrease - request.QtyDecrease,
                         CostBalance = request.CostIncrease - request.CostDecrease,
-                        TimeSequence = request.TimeSequence
+                        TimeSequence = request.TimeSequence,
+                        ParentInventoryChangeId = null
                     };
 
+                    _context.InventoryChange.Add(_inventoryChange);
                 }
                 else
                 {
@@ -176,9 +391,11 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                         CostIncrease = request.CostIncrease,
                         QtyBalance = maxInventoryChange.QtyBalance + request.QtyIncrease - request.QtyDecrease,
                         CostBalance = maxInventoryChange.CostBalance + request.CostIncrease - request.CostDecrease,
-                        TimeSequence = request.TimeSequence
+                        TimeSequence = request.TimeSequence,
+                        ParentInventoryChangeId = maxInventoryChange.Id
                     };
 
+                    _context.InventoryChange.Add(_inventoryChange);
                 }
 
                 if (_inventoryChange.QtyBalance < 0)
@@ -186,85 +403,105 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                     throw new Exception($"Inventory {request.Inventory.Id} Goes below Zero in {request.TransDate} for location {request.LocationId}");
                 }
 
-                _context.InventoryChange.Add(_inventoryChange);
             }
 
+            var parentInventoryChangeId = (maxInventoryChange == null) ? _inventoryChange.Id : maxInventoryChange.Id;
 
-            var invetoryChangeListToRecalculate = (from z in _context.InventoryChange
-                                                   where
-                                                       z.InventoryId == request.Inventory.Id
-                                                       &&
-                                                       z.LocationId == request.LocationId
-                                                       &&
-                                                       z.TransDate == request.TransDate
-                                                       &&
-                                                       z.TimeSequence > request.TimeSequence
-                                                   orderby z.TimeSequence ascending
-                                                   select z
-                                                   ).
-                                                  Union(
-                                                  from z in _context.InventoryChange
-                                                  where
-                                                      z.InventoryId == request.Inventory.Id
-                                                      &&
-                                                      z.LocationId == request.LocationId
-                                                      &&
-                                                      z.TransDate > request.TransDate
-                                                  orderby z.TransDate ascending, z.TimeSequence ascending
-                                                  select z
-                                                  );
+            var invetoryChangeToRecalculate = (maxInventoryChange != null) ?
+                                                 await (from z in _context.InventoryChange
+                                                        where
+                                                         z.InventoryId == request.Inventory.Id
+                                                         &&
+                                                         z.LocationId == request.LocationId
+                                                         &&
+                                                         z.ParentInventoryChangeId == parentInventoryChangeId
+                                                        orderby z.TransDate ascending, z.TimeSequence ascending
+                                                        select z
+                                                  ).FirstOrDefaultAsync() :
+                                                  await (from z in _context.InventoryChange
+                                                         where
+                                                              z.InventoryId == request.Inventory.Id
+                                                              &&
+                                                              z.LocationId == request.LocationId
+                                                              &&
+                                                              z.ParentInventoryChangeId == null
+                                                         orderby z.TransDate ascending, z.TimeSequence ascending
+                                                         select z
+                                                  ).FirstOrDefaultAsync();
 
-            /*
-            var invetoryChangeListToRecalculate = from z in _context.InventoryChange
-                                                  where
-                                                      z.InventoryId == request.InventoryId
-                                                      &&
-                                                      z.LocationId == request.LocationId
-                                                      &&
-                                                      z.TransDate >= request.TransDate
-                                                      &&
-                                                      (
-                                                        (z.TransDate != request.TransDate)
-                                                        ||
-                                                        (z.TimeSequence > request.TimeSequence)
-                                                       )
-                                                  orderby z.TransDate ascending, z.TimeSequence ascending
-                                                  select z;
-            */
-
-            foreach (var x in invetoryChangeListToRecalculate)
+            if (invetoryChangeToRecalculate != null)
             {
-                if (request.doChangeQty)
-                    x.QtyBalance = x.QtyBalance + request.QtyIncrease - request.QtyDecrease;
+                if (isInventoryChangeDelete && inventoryChangeExists)
+                    invetoryChangeToRecalculate.ParentInventoryChangeId = _inventoryChange.ParentInventoryChangeId;
 
-                x.CostBalance = x.CostBalance + request.CostIncrease - request.CostDecrease;
+                var isBalanceChange = false;
 
-//                if (request.CostIncrease != request.CostDecrease)
-                    _context.CostAffectedInventoryChangeList.Add(x.InventoryId, x);
+                var _newQtyBalance = _inventoryChange.QtyBalance + invetoryChangeToRecalculate.QtyIncrease - invetoryChangeToRecalculate.QtyDecrease;
+                var _newCostBalance = _inventoryChange.CostBalance + invetoryChangeToRecalculate.CostIncrease - invetoryChangeToRecalculate.CostDecrease;
 
-                if (x.QtyBalance < 0)
+                if (_newQtyBalance != invetoryChangeToRecalculate.QtyBalance)
                 {
-                    throw new Exception($"Inventory {request.Inventory.Id} Goes below Zero in {x.TransDate} for location {x.LocationId}");
+                    invetoryChangeToRecalculate.QtyBalance = _newQtyBalance;
+                    isBalanceChange = true;
                 }
 
+                if (_newCostBalance != invetoryChangeToRecalculate.CostBalance)
+                {
+                    invetoryChangeToRecalculate.CostBalance = _newCostBalance;
+                    isBalanceChange = true;
+                }
 
-                _context.InventoryChange.Update(x);
+                _context.InventoryChange.Update(invetoryChangeToRecalculate);
+
+                if (isBalanceChange)
+                {
+                    //                    Send InventoryChangeRepostCommand To Correspoonding Business Operation;
+
+                    if (invetoryChangeToRecalculate.EntityId==(int)ModuleEnum.mdPurchaseDetail)
+                    {
+                        await _mediator.Send(
+                            new UpdatePurchaseDetailStatusCommand
+                            {
+                                TransDate = invetoryChangeToRecalculate.TransDate,
+                                doCostPost = true
+                            }
+                            );
+                    }
+
+                }
+
             }
 
             /*
-            if (request.doChangeQty)
-            {
+                        foreach (var x in invetoryChangeListToRecalculate)
+                        {
+                            if (request.doChangeQty)
+                                x.QtyBalance = x.QtyBalance + request.QtyIncrease - request.QtyDecrease;
 
-            }
+                            if (x.QtyBalance < 0)
+                            {
+                                throw new Exception($"Inventory {request.Inventory.Id} Goes below Zero in {x.TransDate} for location {x.LocationId}");
+                            }
 
-            if (request.doChangeCost)
-            {
+                            if (request.CostIncrease != request.CostDecrease)
+                                x.CostBalance = x.CostBalance + request.CostIncrease - request.CostDecrease;
 
-            }
+                            if (request.CostIncrease != request.CostDecrease)
+                                _context.CostAffectedInventoryChangeList.Append(x);
+
+                            _context.InventoryChange.Update(x);
+
+                            // call affected 
+
+
+                        }
             */
 
-            return _inventoryChange;
+            return null;
         }
+
+
+
     }
 
 }

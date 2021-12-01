@@ -48,6 +48,8 @@ namespace DataAccessLayer.Model.Inventory
         public long? EntityForeignId { get; set; }
         public string EntityProcCode { get; set; }
 
+        public long? ParentInventoryChangeId { get; set; }
+
         public DateTime TimeSequence { get; set; }
         public virtual Inventory Inventory { get; set; }
         public virtual InventoryChangeType InventoryChangeType { get; set; }
