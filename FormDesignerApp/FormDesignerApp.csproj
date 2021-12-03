@@ -19,10 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Generators\WebAPI\ControllerGenerator.bak" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.9.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.4" />

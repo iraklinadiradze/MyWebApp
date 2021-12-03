@@ -2,9 +2,24 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Xunit;
+
 namespace Application.Test.Domains.Procurment.Purchase
 {
-    class PurchaseTest
+    public class PurchaseTest
     {
+
+        [Fact]
+        public void  ddd()
+        {
+            var a = 2;
+            var b = 3;
+
+            Assert.Equal(a, b);
+            
+        }
+        
+
+
     }
 }

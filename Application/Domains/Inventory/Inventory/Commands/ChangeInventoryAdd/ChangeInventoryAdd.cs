@@ -47,6 +47,9 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
         {
             _mediator = mediator;
             _context = context;
+
+            CoreDBContext xxx;
+
         }
 
         /*

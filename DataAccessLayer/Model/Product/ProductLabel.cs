@@ -11,7 +11,7 @@ namespace DataAccessLayer.Model.Product
         public ProductLabel()
         {
             Product = new HashSet<Product>();
-        }
+        }   
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
