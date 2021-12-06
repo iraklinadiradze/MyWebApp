@@ -374,20 +374,21 @@ namespace Application.Test.SeedData
                     ProjectId = 0,
                     AddCost = 0,
                     ProductId = product1.Id,
+
                     QtyInvoiced = 10 ,
                     QtyCalculated = 10,
+                    FinalQty = 10 ,
+
                     CostInvoiced = 2000,
                     CostCalculated = 2000,
-                    
-                    FinalQty = 2000,
                     FinalCost = 2000,
+                    CostCalculatedEqu = 2000,
+                    CostInvoicedEqu = 2000,
+                    CostInvoicedWithoutVat = 2000,
 
                     QtyPosted = false,
                     FinPosted = false,
 
-                    CostCalculatedEqu = 2000,
-                    CostInvoicedEqu = 2000 ,
-                    CostInvoicedWithoutVat = 2000,
                     Allocated = false,
 
                     Posted = false,
@@ -396,6 +397,176 @@ namespace Application.Test.SeedData
                     PurchaseDetailPostTypeId = 1,
                     PurchaseDraftId  = 0
                     
+                };
+
+            DataAccessLayer.Model.Procurment.PurchaseDetail purchaseDetail2 =
+                new DataAccessLayer.Model.Procurment.PurchaseDetail
+                {
+                    PurchaseId = purchase1.Id,
+                    LocationId = location1.Id,
+                    InventoryCode = "",
+                    ProjectId = 0,
+                    AddCost = 0,
+                    ProductId = product2.Id,
+
+                    QtyInvoiced = 21,
+                    QtyCalculated = 21,
+                    FinalQty = 21,
+
+                    CostInvoiced = 3200,
+                    CostCalculated = 3200,
+                    FinalCost = 3200,
+                    CostCalculatedEqu = 3200,
+                    CostInvoicedEqu = 3200,
+                    CostInvoicedWithoutVat = 3200,
+
+                    QtyPosted = false,
+                    FinPosted = false,
+
+                    Allocated = false,
+
+                    Posted = false,
+                    VatInvoiced = 0,
+
+                    PurchaseDetailPostTypeId = 1,
+                    PurchaseDraftId = 0
+
+                };
+
+            DataAccessLayer.Model.Procurment.PurchaseDetail purchaseDetail3 =
+                new DataAccessLayer.Model.Procurment.PurchaseDetail
+                {
+                    PurchaseId = purchase1.Id,
+                    LocationId = location1.Id,
+                    InventoryCode = "",
+                    ProjectId = 0,
+                    AddCost = 0,
+                    ProductId = product3.Id,
+
+                    QtyInvoiced = 15,
+                    QtyCalculated = 15,
+                    FinalQty = 15,
+
+                    CostInvoiced = 2200,
+                    CostCalculated = 2200,
+                    FinalCost = 2200,
+                    CostCalculatedEqu = 2200,
+                    CostInvoicedEqu = 2200,
+                    CostInvoicedWithoutVat = 2200,
+
+                    QtyPosted = false,
+                    FinPosted = false,
+
+                    Allocated = false,
+
+                    Posted = false,
+                    VatInvoiced = 0,
+
+                    PurchaseDetailPostTypeId = 1,
+                    PurchaseDraftId = 0
+
+                };
+
+            DataAccessLayer.Model.Procurment.PurchaseDetail purchaseDetail4 =
+                new DataAccessLayer.Model.Procurment.PurchaseDetail
+                {
+                    PurchaseId = purchase1.Id,
+                    LocationId = location1.Id,
+                    InventoryCode = "",
+                    ProjectId = 0,
+                    AddCost = 0,
+                    ProductId = product4.Id,
+
+                    QtyInvoiced = 33,
+                    QtyCalculated = 33,
+                    FinalQty = 33,
+
+                    CostInvoiced = 6600,
+                    CostCalculated = 6600,
+                    FinalCost = 6600,
+                    CostCalculatedEqu = 6600,
+                    CostInvoicedEqu = 6600,
+                    CostInvoicedWithoutVat = 6600,
+
+                    QtyPosted = false,
+                    FinPosted = false,
+
+                    Allocated = false,
+
+                    Posted = false,
+                    VatInvoiced = 0,
+
+                    PurchaseDetailPostTypeId = 1,
+                    PurchaseDraftId = 0
+
+                };
+
+            DataAccessLayer.Model.Procurment.PurchaseDetail purchaseDetail5 =
+                new DataAccessLayer.Model.Procurment.PurchaseDetail
+                {
+                    PurchaseId = purchase1.Id,
+                    LocationId = location1.Id,
+                    InventoryCode = "",
+                    ProjectId = 0,
+                    AddCost = 0,
+                    ProductId = product5.Id,
+
+                    QtyInvoiced = 14,
+                    QtyCalculated = 14,
+                    FinalQty = 14,
+
+                    CostInvoiced = 28000,
+                    CostCalculated = 28000,
+                    FinalCost = 28000,
+                    CostCalculatedEqu = 28000,
+                    CostInvoicedEqu = 28000,
+                    CostInvoicedWithoutVat = 28000,
+
+                    QtyPosted = false,
+                    FinPosted = false,
+
+                    Allocated = false,
+
+                    Posted = false,
+                    VatInvoiced = 0,
+
+                    PurchaseDetailPostTypeId = 1,
+                    PurchaseDraftId = 0
+
+                };
+
+            DataAccessLayer.Model.Procurment.PurchaseDetail purchaseDetail6 =
+                new DataAccessLayer.Model.Procurment.PurchaseDetail
+                {
+                    PurchaseId = purchase1.Id,
+                    LocationId = location1.Id,
+                    InventoryCode = "",
+                    ProjectId = 0,
+                    AddCost = 0,
+                    ProductId = product5.Id,
+
+                    QtyInvoiced = 25,
+                    QtyCalculated = 25,
+                    FinalQty = 25,
+
+                    CostInvoiced = 13700,
+                    CostCalculated = 13700,
+                    FinalCost = 13700,
+                    CostCalculatedEqu = 13700,
+                    CostInvoicedEqu = 13700,
+                    CostInvoicedWithoutVat = 13700,
+
+                    QtyPosted = false,
+                    FinPosted = false,
+
+                    Allocated = false,
+
+                    Posted = false,
+                    VatInvoiced = 0,
+
+                    PurchaseDetailPostTypeId = 1,
+                    PurchaseDraftId = 0
+
                 };
 
         }

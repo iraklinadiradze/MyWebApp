@@ -52,7 +52,7 @@ namespace DataAccessLayer.Model
             // Clients Schema
 
             // Products Schema
-            _dbContext.ProductUnit.AddRange(
+            _dbContext.ProductUnit.AddRange( 
                 new[]
                 {
                     new Product.ProductUnit{ ProductUnitName ="ცალი" } ,
