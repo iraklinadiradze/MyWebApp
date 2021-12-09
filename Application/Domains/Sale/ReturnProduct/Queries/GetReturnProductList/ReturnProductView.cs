@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Sale;
+using Application.Model.Sale;
 
 
 namespace Application.Domains.Sale.ReturnProduct.Queries.GetReturnProductList
 {
-    public class ReturnProductView: DataAccessLayer.Model.Sale.ReturnProduct
+    public class ReturnProductView: Application.Model.Sale.ReturnProduct
     {
 
           public class _Sale

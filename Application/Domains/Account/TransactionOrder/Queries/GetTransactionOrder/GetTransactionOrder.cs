@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Account;
-using DataAccessLayer;
+using Application.Model.Account;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Account.TransactionOrder.Queries.GetTransactionOrder
 {
 
-    public class GetTransactionOrderQuery : IRequest<DataAccessLayer.Model.Account.TransactionOrder>
+    public class GetTransactionOrderQuery : IRequest<Application.Model.Account.TransactionOrder>
     {
         public int? Id { get; set; }
     }
 
-    public class GetTransactionOrderQueryHandler : IRequestHandler<GetTransactionOrderQuery, DataAccessLayer.Model.Account.TransactionOrder>
+    public class GetTransactionOrderQueryHandler : IRequestHandler<GetTransactionOrderQuery, Application.Model.Account.TransactionOrder>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Account.TransactionOrder.Queries.GetTransactionOrd
         }
 
 
-        public async Task<DataAccessLayer.Model.Account.TransactionOrder> Handle(GetTransactionOrderQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Account.TransactionOrder> Handle(GetTransactionOrderQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.TransactionOrder

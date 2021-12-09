@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Product;
+using Application.Model.Product;
 
 
 namespace Application.Domains.Product.ProductLabel.Queries.GetProductLabelList
 {
-    public class ProductLabelView: DataAccessLayer.Model.Product.ProductLabel
+    public class ProductLabelView: Application.Model.Product.ProductLabel
     {
 
           public class _Brand

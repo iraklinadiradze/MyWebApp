@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Product;
+using Application.Model.Product;
 
 
 namespace Application.Domains.Product.FeatureValue.Queries.GetFeatureValueList
 {
-    public class FeatureValueView: DataAccessLayer.Model.Product.FeatureValue
+    public class FeatureValueView: Application.Model.Product.FeatureValue
     {
 
           public class _Feature

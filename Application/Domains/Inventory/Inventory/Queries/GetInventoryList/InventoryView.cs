@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Inventory;
+using Application.Model.Inventory;
 
 
 namespace Application.Domains.Inventory.Inventory.Queries.GetInventoryList
 {
-    public class InventoryView: DataAccessLayer.Model.Inventory.Inventory
+    public class InventoryView: Application.Model.Inventory.Inventory
     {
 
           public class _Product

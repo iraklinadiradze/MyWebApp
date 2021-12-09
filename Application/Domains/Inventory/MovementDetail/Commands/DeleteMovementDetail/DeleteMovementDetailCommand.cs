@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;

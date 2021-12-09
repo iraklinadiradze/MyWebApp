@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Account;
-using DataAccessLayer;
+using Application.Model.Account;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Account.AccountDimension.Commands.UpdateAccountDimension
 {
-    public class UpdateAccountDimensionCommand : IRequest<DataAccessLayer.Model.Account.AccountDimension>
+    public class UpdateAccountDimensionCommand : IRequest<Application.Model.Account.AccountDimension>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Account.AccountDimension AccountDimension { get; set; }
+        public Application.Model.Account.AccountDimension AccountDimension { get; set; }
     }
 
-    public class UpdateAccountDimensionCommandHandler : IRequestHandler<UpdateAccountDimensionCommand, DataAccessLayer.Model.Account.AccountDimension>
+    public class UpdateAccountDimensionCommandHandler : IRequestHandler<UpdateAccountDimensionCommand, Application.Model.Account.AccountDimension>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Account.AccountDimension.Commands.UpdateAccountDim
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Account.AccountDimension> Handle(UpdateAccountDimensionCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Account.AccountDimension> Handle(UpdateAccountDimensionCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.AccountDimension;

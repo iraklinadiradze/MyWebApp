@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseDetail
 {
-    public class UpdatePurchaseDetailCommand : IRequest<DataAccessLayer.Model.Procurment.PurchaseDetail>
+    public class UpdatePurchaseDetailCommand : IRequest<Application.Model.Procurment.PurchaseDetail>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Procurment.PurchaseDetail PurchaseDetail { get; set; }
+        public Application.Model.Procurment.PurchaseDetail PurchaseDetail { get; set; }
     }
 
-    public class UpdatePurchaseDetailCommandHandler : IRequestHandler<UpdatePurchaseDetailCommand, DataAccessLayer.Model.Procurment.PurchaseDetail>
+    public class UpdatePurchaseDetailCommandHandler : IRequestHandler<UpdatePurchaseDetailCommand, Application.Model.Procurment.PurchaseDetail>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Procurment.PurchaseDetail> Handle(UpdatePurchaseDetailCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.PurchaseDetail> Handle(UpdatePurchaseDetailCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.PurchaseDetail;

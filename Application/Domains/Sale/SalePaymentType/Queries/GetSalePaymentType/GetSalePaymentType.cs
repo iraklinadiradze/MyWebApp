@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Sale;
-using DataAccessLayer;
+using Application.Model.Sale;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Sale.SalePaymentType.Queries.GetSalePaymentType
 {
 
-    public class GetSalePaymentTypeQuery : IRequest<DataAccessLayer.Model.Sale.SalePaymentType>
+    public class GetSalePaymentTypeQuery : IRequest<Application.Model.Sale.SalePaymentType>
     {
         public int? Id { get; set; }
     }
 
-    public class GetSalePaymentTypeQueryHandler : IRequestHandler<GetSalePaymentTypeQuery, DataAccessLayer.Model.Sale.SalePaymentType>
+    public class GetSalePaymentTypeQueryHandler : IRequestHandler<GetSalePaymentTypeQuery, Application.Model.Sale.SalePaymentType>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Sale.SalePaymentType.Queries.GetSalePaymentType
         }
 
 
-        public async Task<DataAccessLayer.Model.Sale.SalePaymentType> Handle(GetSalePaymentTypeQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Sale.SalePaymentType> Handle(GetSalePaymentTypeQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.SalePaymentType

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Client;
-using DataAccessLayer;
+using Application.Model.Client;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Client.LegalEntity.Commands.UpdateLegalEntity
 {
-    public class UpdateLegalEntityCommand : IRequest<DataAccessLayer.Model.Client.LegalEntity>
+    public class UpdateLegalEntityCommand : IRequest<Application.Model.Client.LegalEntity>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Client.LegalEntity LegalEntity { get; set; }
+        public Application.Model.Client.LegalEntity LegalEntity { get; set; }
     }
 
-    public class UpdateLegalEntityCommandHandler : IRequestHandler<UpdateLegalEntityCommand, DataAccessLayer.Model.Client.LegalEntity>
+    public class UpdateLegalEntityCommandHandler : IRequestHandler<UpdateLegalEntityCommand, Application.Model.Client.LegalEntity>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Client.LegalEntity.Commands.UpdateLegalEntity
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Client.LegalEntity> Handle(UpdateLegalEntityCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Client.LegalEntity> Handle(UpdateLegalEntityCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.LegalEntity;

@@ -6,12 +6,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Model\Client\Client - Copy.cs.old" />
-    <None Remove="Model\Client\ClientType.cs.old" />
+    <Compile Remove="Model\CashDesk\**" />
+    <Compile Remove="Model\GiftCard\**" />
+    <Compile Remove="Model\Loyality\**" />
+    <Compile Remove="Model\Production\**" />
+    <Compile Remove="Model\Transfer\**" />
+    <EmbeddedResource Remove="Model\CashDesk\**" />
+    <EmbeddedResource Remove="Model\GiftCard\**" />
+    <EmbeddedResource Remove="Model\Loyality\**" />
+    <EmbeddedResource Remove="Model\Production\**" />
+    <EmbeddedResource Remove="Model\Transfer\**" />
+    <None Remove="Model\CashDesk\**" />
+    <None Remove="Model\GiftCard\**" />
+    <None Remove="Model\Loyality\**" />
+    <None Remove="Model\Production\**" />
+    <None Remove="Model\Transfer\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -21,15 +34,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\SharedLib\SharedLib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\Loyality\" />
-    <Folder Include="Model\CashDesk\" />
-    <Folder Include="Model\GiftCard\" />
-    <Folder Include="Model\Transfer\" />
-    <Folder Include="Model\Production\" />
   </ItemGroup>
 
 </Project>

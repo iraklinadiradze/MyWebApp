@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Account;
-using DataAccessLayer;
+using Application.Model.Account;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;

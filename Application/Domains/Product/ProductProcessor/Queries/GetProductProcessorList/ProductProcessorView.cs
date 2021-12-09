@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Product;
+using Application.Model.Product;
 
 
 namespace Application.Domains.Product.ProductProcessor.Queries.GetProductProcessorList
 {
-    public class ProductProcessorView: DataAccessLayer.Model.Product.ProductProcessor
+    public class ProductProcessorView: Application.Model.Product.ProductProcessor
     {
 
           

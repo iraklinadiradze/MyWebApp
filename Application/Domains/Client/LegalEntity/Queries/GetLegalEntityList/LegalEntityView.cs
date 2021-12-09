@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Client;
+using Application.Model.Client;
 
 
 namespace Application.Domains.Client.LegalEntity.Queries.GetLegalEntityList
 {
-    public class LegalEntityView: DataAccessLayer.Model.Client.LegalEntity
+    public class LegalEntityView: Application.Model.Client.LegalEntity
     {
 
           public class _Client

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Product.Feature.Commands.UpdateFeature
 {
-    public class UpdateFeatureCommand : IRequest<DataAccessLayer.Model.Product.Feature>
+    public class UpdateFeatureCommand : IRequest<Application.Model.Product.Feature>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Product.Feature Feature { get; set; }
+        public Application.Model.Product.Feature Feature { get; set; }
     }
 
-    public class UpdateFeatureCommandHandler : IRequestHandler<UpdateFeatureCommand, DataAccessLayer.Model.Product.Feature>
+    public class UpdateFeatureCommandHandler : IRequestHandler<UpdateFeatureCommand, Application.Model.Product.Feature>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Product.Feature.Commands.UpdateFeature
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Product.Feature> Handle(UpdateFeatureCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.Feature> Handle(UpdateFeatureCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.Feature;

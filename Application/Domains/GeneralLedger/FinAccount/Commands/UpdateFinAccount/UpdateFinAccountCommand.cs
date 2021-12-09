@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.GeneralLedger;
-using DataAccessLayer;
+using Application.Model.GeneralLedger;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.GeneralLedger.FinAccount.Commands.UpdateFinAccount
 {
-    public class UpdateFinAccountCommand : IRequest<DataAccessLayer.Model.GeneralLedger.FinAccount>
+    public class UpdateFinAccountCommand : IRequest<Application.Model.GeneralLedger.FinAccount>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.GeneralLedger.FinAccount FinAccount { get; set; }
+        public Application.Model.GeneralLedger.FinAccount FinAccount { get; set; }
     }
 
-    public class UpdateFinAccountCommandHandler : IRequestHandler<UpdateFinAccountCommand, DataAccessLayer.Model.GeneralLedger.FinAccount>
+    public class UpdateFinAccountCommandHandler : IRequestHandler<UpdateFinAccountCommand, Application.Model.GeneralLedger.FinAccount>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.GeneralLedger.FinAccount.Commands.UpdateFinAccount
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.GeneralLedger.FinAccount> Handle(UpdateFinAccountCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.GeneralLedger.FinAccount> Handle(UpdateFinAccountCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.FinAccount;

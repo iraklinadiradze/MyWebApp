@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Procurment.PurchaseAllocationSource.Commands.UpdatePurchaseAllocationSource
 {
-    public class UpdatePurchaseAllocationSourceCommand : IRequest<DataAccessLayer.Model.Procurment.PurchaseAllocationSource>
+    public class UpdatePurchaseAllocationSourceCommand : IRequest<Application.Model.Procurment.PurchaseAllocationSource>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Procurment.PurchaseAllocationSource PurchaseAllocationSource { get; set; }
+        public Application.Model.Procurment.PurchaseAllocationSource PurchaseAllocationSource { get; set; }
     }
 
-    public class UpdatePurchaseAllocationSourceCommandHandler : IRequestHandler<UpdatePurchaseAllocationSourceCommand, DataAccessLayer.Model.Procurment.PurchaseAllocationSource>
+    public class UpdatePurchaseAllocationSourceCommandHandler : IRequestHandler<UpdatePurchaseAllocationSourceCommand, Application.Model.Procurment.PurchaseAllocationSource>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Procurment.PurchaseAllocationSource.Commands.Updat
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Procurment.PurchaseAllocationSource> Handle(UpdatePurchaseAllocationSourceCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.PurchaseAllocationSource> Handle(UpdatePurchaseAllocationSourceCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.PurchaseAllocationSource;

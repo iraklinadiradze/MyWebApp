@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Sale;
-using DataAccessLayer;
+using Application.Model.Sale;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Sale.SaleProduct.Commands.UpdateSaleProduct
 {
-    public class UpdateSaleProductCommand : IRequest<DataAccessLayer.Model.Sale.SaleProduct>
+    public class UpdateSaleProductCommand : IRequest<Application.Model.Sale.SaleProduct>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Sale.SaleProduct SaleProduct { get; set; }
+        public Application.Model.Sale.SaleProduct SaleProduct { get; set; }
     }
 
-    public class UpdateSaleProductCommandHandler : IRequestHandler<UpdateSaleProductCommand, DataAccessLayer.Model.Sale.SaleProduct>
+    public class UpdateSaleProductCommandHandler : IRequestHandler<UpdateSaleProductCommand, Application.Model.Sale.SaleProduct>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Sale.SaleProduct.Commands.UpdateSaleProduct
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Sale.SaleProduct> Handle(UpdateSaleProductCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Sale.SaleProduct> Handle(UpdateSaleProductCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.SaleProduct;

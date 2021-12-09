@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Product.ProductProcessor.Commands.UpdateProductProcessor
 {
-    public class UpdateProductProcessorCommand : IRequest<DataAccessLayer.Model.Product.ProductProcessor>
+    public class UpdateProductProcessorCommand : IRequest<Application.Model.Product.ProductProcessor>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Product.ProductProcessor ProductProcessor { get; set; }
+        public Application.Model.Product.ProductProcessor ProductProcessor { get; set; }
     }
 
-    public class UpdateProductProcessorCommandHandler : IRequestHandler<UpdateProductProcessorCommand, DataAccessLayer.Model.Product.ProductProcessor>
+    public class UpdateProductProcessorCommandHandler : IRequestHandler<UpdateProductProcessorCommand, Application.Model.Product.ProductProcessor>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Product.ProductProcessor.Commands.UpdateProductPro
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Product.ProductProcessor> Handle(UpdateProductProcessorCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.ProductProcessor> Handle(UpdateProductProcessorCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.ProductProcessor;

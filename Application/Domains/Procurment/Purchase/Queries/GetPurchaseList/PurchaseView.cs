@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Procurment;
+using Application.Model.Procurment;
 
 
 namespace Application.Domains.Procurment.Purchase.Queries.GetPurchaseList
 {
-    public class PurchaseView: DataAccessLayer.Model.Procurment.Purchase
+    public class PurchaseView: Application.Model.Procurment.Purchase
     {
 
           public class _Client

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using DataAccessLayer.SeedWork;
-using DataAccessLayer.Model.[###moduleName###];
-using DataAccessLayer;
+using Application.SeedWork;
+using Application.Model.[###moduleName###];
+using Application;
 
 namespace WebAPI.Domains.[###moduleName###].Data
 {

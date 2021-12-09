@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 
 using MediatR;
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application.Model.Product;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 using System.Threading.Tasks;
@@ -17,17 +17,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
 {
-    public class ProductToInventoryCommand : IRequest<DataAccessLayer.Model.Inventory.Inventory>
+    public class ProductToInventoryCommand : IRequest<Application.Model.Inventory.Inventory>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public int SenderReferenceId { get; set; }
-        public DataAccessLayer.Model.Product.Product Product { get; set; }
+        public Application.Model.Product.Product Product { get; set; }
         public bool StockProductPerProcess { get; set; }
         public DateTime StartDate { get; set; }
         public string InventoryCode { get; set; }
     }
 
-    public class ProductToInventoryCommandHandler : IRequestHandler<ProductToInventoryCommand, DataAccessLayer.Model.Inventory.Inventory>
+    public class ProductToInventoryCommandHandler : IRequestHandler<ProductToInventoryCommand, Application.Model.Inventory.Inventory>
     {
 
         private readonly IMediator _mediator;
@@ -39,10 +39,10 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
             _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Inventory.Inventory> Handle(ProductToInventoryCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.Inventory> Handle(ProductToInventoryCommand request, CancellationToken cancellationToken)
         {
 
-            DataAccessLayer.Model.Inventory.Inventory _inventory;
+            Application.Model.Inventory.Inventory _inventory;
 
             if (request.Product.IsSingle == true)
             {
@@ -88,7 +88,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
                               ).First();
             }
 
-            var inventory = new DataAccessLayer.Model.Inventory.Inventory();
+            var inventory = new Application.Model.Inventory.Inventory();
 
             if (_inventory != null)
             {

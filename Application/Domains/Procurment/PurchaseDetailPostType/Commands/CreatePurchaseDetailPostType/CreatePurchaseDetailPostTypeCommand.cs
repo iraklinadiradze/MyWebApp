@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Procurment.PurchaseDetailPostType.Commands.CreatePurchaseDetailPostType
 {
-    public class CreatePurchaseDetailPostTypeCommand : IRequest<DataAccessLayer.Model.Procurment.PurchaseDetailPostType>
+    public class CreatePurchaseDetailPostTypeCommand : IRequest<Application.Model.Procurment.PurchaseDetailPostType>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Procurment.PurchaseDetailPostType PurchaseDetailPostType { get; set; }
+        public Application.Model.Procurment.PurchaseDetailPostType PurchaseDetailPostType { get; set; }
     }
 
-    public class CreatePurchaseDetailPostTypeCommandHandler : IRequestHandler<CreatePurchaseDetailPostTypeCommand, DataAccessLayer.Model.Procurment.PurchaseDetailPostType>
+    public class CreatePurchaseDetailPostTypeCommandHandler : IRequestHandler<CreatePurchaseDetailPostTypeCommand, Application.Model.Procurment.PurchaseDetailPostType>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Procurment.PurchaseDetailPostType.Commands.CreateP
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Procurment.PurchaseDetailPostType> Handle(CreatePurchaseDetailPostTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.PurchaseDetailPostType> Handle(CreatePurchaseDetailPostTypeCommand request, CancellationToken cancellationToken)
         {
             var entity = request.PurchaseDetailPostType;
 

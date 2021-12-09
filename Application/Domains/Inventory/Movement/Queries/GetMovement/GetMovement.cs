@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Inventory.Movement.Queries.GetMovement
 {
 
-    public class GetMovementQuery : IRequest<DataAccessLayer.Model.Inventory.Movement>
+    public class GetMovementQuery : IRequest<Application.Model.Inventory.Movement>
     {
         public int? Id { get; set; }
     }
 
-    public class GetMovementQueryHandler : IRequestHandler<GetMovementQuery, DataAccessLayer.Model.Inventory.Movement>
+    public class GetMovementQueryHandler : IRequestHandler<GetMovementQuery, Application.Model.Inventory.Movement>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Inventory.Movement.Queries.GetMovement
         }
 
 
-        public async Task<DataAccessLayer.Model.Inventory.Movement> Handle(GetMovementQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.Movement> Handle(GetMovementQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.Movement

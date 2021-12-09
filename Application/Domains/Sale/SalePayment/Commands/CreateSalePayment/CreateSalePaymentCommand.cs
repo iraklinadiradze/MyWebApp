@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Sale;
-using DataAccessLayer;
+using Application.Model.Sale;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Sale.SalePayment.Commands.CreateSalePayment
 {
-    public class CreateSalePaymentCommand : IRequest<DataAccessLayer.Model.Sale.SalePayment>
+    public class CreateSalePaymentCommand : IRequest<Application.Model.Sale.SalePayment>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Sale.SalePayment SalePayment { get; set; }
+        public Application.Model.Sale.SalePayment SalePayment { get; set; }
     }
 
-    public class CreateSalePaymentCommandHandler : IRequestHandler<CreateSalePaymentCommand, DataAccessLayer.Model.Sale.SalePayment>
+    public class CreateSalePaymentCommandHandler : IRequestHandler<CreateSalePaymentCommand, Application.Model.Sale.SalePayment>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Sale.SalePayment.Commands.CreateSalePayment
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Sale.SalePayment> Handle(CreateSalePaymentCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Sale.SalePayment> Handle(CreateSalePaymentCommand request, CancellationToken cancellationToken)
         {
             var entity = request.SalePayment;
 

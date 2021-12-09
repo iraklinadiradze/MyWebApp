@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 
 using MediatR;
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 using System.Threading.Tasks;
@@ -19,11 +19,11 @@ using Application.Domains.Inventory.InventoryChangeType.Common;
 
 namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseDetailStatusCommand
 {
-    public class UpdatePurchaseDetailStatusCommand : IRequest<int>
+    public class UpdatePurchaseDetailStatusCommand : IRequest<Application.Model.Procurment.PurchaseDetail>
     {
         //        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
 
-        public DataAccessLayer.Model.Procurment.PurchaseDetail PurchaseDetail { get; set; }
+        public Application.Model.Procurment.PurchaseDetail PurchaseDetail { get; set; }
         public bool doQtyPost { get; set; }
         public bool doQtyUnPost { get; set; }
         public bool doCostPost { get; set; }
@@ -32,7 +32,7 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
         public DateTime TimeSequence { get; set; }
     }
 
-    public class UpdatePurchaseDetailStatusCommandHandler : IRequestHandler<UpdatePurchaseDetailStatusCommand, int>
+    public class UpdatePurchaseDetailStatusCommandHandler : IRequestHandler<UpdatePurchaseDetailStatusCommand, Application.Model.Procurment.PurchaseDetail>
     {
 
         private readonly IMediator _mediator;
@@ -44,11 +44,13 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
             _context = context;
         }
 
-        public async Task<int> Handle(UpdatePurchaseDetailStatusCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.PurchaseDetail> Handle(UpdatePurchaseDetailStatusCommand request, CancellationToken cancellationToken)
         {
 
-            DataAccessLayer.Model.Inventory.Inventory inventory;
-            DataAccessLayer.Model.Inventory.InventoryChange _inventoryChange;
+//            throw new Exception("dddddddddddddddddd");
+
+            Application.Model.Inventory.Inventory inventory;
+            Application.Model.Inventory.InventoryChange _inventoryChange;
 
             inventory = await _mediator.Send(
                             new ProductToInventoryCommand {
@@ -118,13 +120,13 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
             _context.PurchaseDetail.Update(request.PurchaseDetail);
 
             // Make cascasade update of related inventory changes
-//            List<DataAccessLayer.Model.Inventory.Inventory> costAffectedInventoryList = new List<DataAccessLayer.Model.Inventory.Inventory>();
-//            Dictionary<long, DataAccessLayer.Model.Inventory.Inventory> costAffectedInventoryList = new Dictionary<long, DataAccessLayer.Model.Inventory.Inventory>();
+//            List<Application.Model.Inventory.Inventory> costAffectedInventoryList = new List<Application.Model.Inventory.Inventory>();
+//            Dictionary<long, Application.Model.Inventory.Inventory> costAffectedInventoryList = new Dictionary<long, Application.Model.Inventory.Inventory>();
 
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return 0;
+            return await _context.PurchaseDetail.FindAsync(request.PurchaseDetail.Id);
         }
 
     }

@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Account;
-using DataAccessLayer;
+using Application.Model.Account;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Account.Transaction.Queries.GetTransaction
 {
 
-    public class GetTransactionQuery : IRequest<DataAccessLayer.Model.Account.Transaction>
+    public class GetTransactionQuery : IRequest<Application.Model.Account.Transaction>
     {
         public int? Id { get; set; }
     }
 
-    public class GetTransactionQueryHandler : IRequestHandler<GetTransactionQuery, DataAccessLayer.Model.Account.Transaction>
+    public class GetTransactionQueryHandler : IRequestHandler<GetTransactionQuery, Application.Model.Account.Transaction>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Account.Transaction.Queries.GetTransaction
         }
 
 
-        public async Task<DataAccessLayer.Model.Account.Transaction> Handle(GetTransactionQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Account.Transaction> Handle(GetTransactionQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.Transaction

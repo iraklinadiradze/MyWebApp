@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Procurment.PurchaseAllocationSourceType.Commands.UpdatePurchaseAllocationSourceType
 {
-    public class UpdatePurchaseAllocationSourceTypeCommand : IRequest<DataAccessLayer.Model.Procurment.PurchaseAllocationSourceType>
+    public class UpdatePurchaseAllocationSourceTypeCommand : IRequest<Application.Model.Procurment.PurchaseAllocationSourceType>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Procurment.PurchaseAllocationSourceType PurchaseAllocationSourceType { get; set; }
+        public Application.Model.Procurment.PurchaseAllocationSourceType PurchaseAllocationSourceType { get; set; }
     }
 
-    public class UpdatePurchaseAllocationSourceTypeCommandHandler : IRequestHandler<UpdatePurchaseAllocationSourceTypeCommand, DataAccessLayer.Model.Procurment.PurchaseAllocationSourceType>
+    public class UpdatePurchaseAllocationSourceTypeCommandHandler : IRequestHandler<UpdatePurchaseAllocationSourceTypeCommand, Application.Model.Procurment.PurchaseAllocationSourceType>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Procurment.PurchaseAllocationSourceType.Commands.U
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Procurment.PurchaseAllocationSourceType> Handle(UpdatePurchaseAllocationSourceTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.PurchaseAllocationSourceType> Handle(UpdatePurchaseAllocationSourceTypeCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.PurchaseAllocationSourceType;

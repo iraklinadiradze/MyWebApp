@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.GeneralLedger;
-using DataAccessLayer;
+using Application.Model.GeneralLedger;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.GeneralLedger.GlAccount.Commands.CreateGlAccount
 {
-    public class CreateGlAccountCommand : IRequest<DataAccessLayer.Model.GeneralLedger.GlAccount>
+    public class CreateGlAccountCommand : IRequest<Application.Model.GeneralLedger.GlAccount>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.GeneralLedger.GlAccount GlAccount { get; set; }
+        public Application.Model.GeneralLedger.GlAccount GlAccount { get; set; }
     }
 
-    public class CreateGlAccountCommandHandler : IRequestHandler<CreateGlAccountCommand, DataAccessLayer.Model.GeneralLedger.GlAccount>
+    public class CreateGlAccountCommandHandler : IRequestHandler<CreateGlAccountCommand, Application.Model.GeneralLedger.GlAccount>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.GeneralLedger.GlAccount.Commands.CreateGlAccount
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.GeneralLedger.GlAccount> Handle(CreateGlAccountCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.GeneralLedger.GlAccount> Handle(CreateGlAccountCommand request, CancellationToken cancellationToken)
         {
             var entity = request.GlAccount;
 

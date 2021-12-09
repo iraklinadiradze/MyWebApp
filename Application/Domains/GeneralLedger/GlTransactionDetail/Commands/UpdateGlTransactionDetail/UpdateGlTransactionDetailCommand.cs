@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.GeneralLedger;
-using DataAccessLayer;
+using Application.Model.GeneralLedger;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.GeneralLedger.GlTransactionDetail.Commands.UpdateGlTransactionDetail
 {
-    public class UpdateGlTransactionDetailCommand : IRequest<DataAccessLayer.Model.GeneralLedger.GlTransactionDetail>
+    public class UpdateGlTransactionDetailCommand : IRequest<Application.Model.GeneralLedger.GlTransactionDetail>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.GeneralLedger.GlTransactionDetail GlTransactionDetail { get; set; }
+        public Application.Model.GeneralLedger.GlTransactionDetail GlTransactionDetail { get; set; }
     }
 
-    public class UpdateGlTransactionDetailCommandHandler : IRequestHandler<UpdateGlTransactionDetailCommand, DataAccessLayer.Model.GeneralLedger.GlTransactionDetail>
+    public class UpdateGlTransactionDetailCommandHandler : IRequestHandler<UpdateGlTransactionDetailCommand, Application.Model.GeneralLedger.GlTransactionDetail>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.GeneralLedger.GlTransactionDetail.Commands.UpdateG
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.GeneralLedger.GlTransactionDetail> Handle(UpdateGlTransactionDetailCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.GeneralLedger.GlTransactionDetail> Handle(UpdateGlTransactionDetailCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.GlTransactionDetail;

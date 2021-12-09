@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Account;
-using DataAccessLayer;
+using Application.Model.Account;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Account.Transaction.Commands.UpdateTransaction
 {
-    public class UpdateTransactionCommand : IRequest<DataAccessLayer.Model.Account.Transaction>
+    public class UpdateTransactionCommand : IRequest<Application.Model.Account.Transaction>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Account.Transaction Transaction { get; set; }
+        public Application.Model.Account.Transaction Transaction { get; set; }
     }
 
-    public class UpdateTransactionCommandHandler : IRequestHandler<UpdateTransactionCommand, DataAccessLayer.Model.Account.Transaction>
+    public class UpdateTransactionCommandHandler : IRequestHandler<UpdateTransactionCommand, Application.Model.Account.Transaction>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Account.Transaction.Commands.UpdateTransaction
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Account.Transaction> Handle(UpdateTransactionCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Account.Transaction> Handle(UpdateTransactionCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.Transaction;

@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Core;
-using DataAccessLayer;
+using Application.Model.Core;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Core.Country.Commands.CreateCountry
 {
-    public class CreateCountryCommand : IRequest<DataAccessLayer.Model.Core.Country>
+    public class CreateCountryCommand : IRequest<Application.Model.Core.Country>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Core.Country Country { get; set; }
+        public Application.Model.Core.Country Country { get; set; }
     }
 
-    public class CreateCountryCommandHandler : IRequestHandler<CreateCountryCommand, DataAccessLayer.Model.Core.Country>
+    public class CreateCountryCommandHandler : IRequestHandler<CreateCountryCommand, Application.Model.Core.Country>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Core.Country.Commands.CreateCountry
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Core.Country> Handle(CreateCountryCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Core.Country> Handle(CreateCountryCommand request, CancellationToken cancellationToken)
         {
             var entity = request.Country;
 

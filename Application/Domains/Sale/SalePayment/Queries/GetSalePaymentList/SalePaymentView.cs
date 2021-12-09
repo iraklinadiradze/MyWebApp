@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Sale;
+using Application.Model.Sale;
 
 
 namespace Application.Domains.Sale.SalePayment.Queries.GetSalePaymentList
 {
-    public class SalePaymentView: DataAccessLayer.Model.Sale.SalePayment
+    public class SalePaymentView: Application.Model.Sale.SalePayment
     {
 
           public class _Sale

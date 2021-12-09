@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Core;
-using DataAccessLayer;
+using Application.Model.Core;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Core.Country.Commands.UpdateCountry
 {
-    public class UpdateCountryCommand : IRequest<DataAccessLayer.Model.Core.Country>
+    public class UpdateCountryCommand : IRequest<Application.Model.Core.Country>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Core.Country Country { get; set; }
+        public Application.Model.Core.Country Country { get; set; }
     }
 
-    public class UpdateCountryCommandHandler : IRequestHandler<UpdateCountryCommand, DataAccessLayer.Model.Core.Country>
+    public class UpdateCountryCommandHandler : IRequestHandler<UpdateCountryCommand, Application.Model.Core.Country>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Core.Country.Commands.UpdateCountry
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Core.Country> Handle(UpdateCountryCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Core.Country> Handle(UpdateCountryCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.Country;

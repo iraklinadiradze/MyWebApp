@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Account;
-using DataAccessLayer;
+using Application.Model.Account;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Account.AccountDimension.Queries.GetAccountDimension
 {
 
-    public class GetAccountDimensionQuery : IRequest<DataAccessLayer.Model.Account.AccountDimension>
+    public class GetAccountDimensionQuery : IRequest<Application.Model.Account.AccountDimension>
     {
         public int? Id { get; set; }
     }
 
-    public class GetAccountDimensionQueryHandler : IRequestHandler<GetAccountDimensionQuery, DataAccessLayer.Model.Account.AccountDimension>
+    public class GetAccountDimensionQueryHandler : IRequestHandler<GetAccountDimensionQuery, Application.Model.Account.AccountDimension>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Account.AccountDimension.Queries.GetAccountDimensi
         }
 
 
-        public async Task<DataAccessLayer.Model.Account.AccountDimension> Handle(GetAccountDimensionQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Account.AccountDimension> Handle(GetAccountDimensionQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.AccountDimension

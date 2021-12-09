@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Client;
-using DataAccessLayer;
+using Application.Model.Client;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Client.Client.Queries.GetClient
 {
 
-    public class GetClientQuery : IRequest<DataAccessLayer.Model.Client.Client>
+    public class GetClientQuery : IRequest<Application.Model.Client.Client>
     {
         public int? Id { get; set; }
     }
 
-    public class GetClientQueryHandler : IRequestHandler<GetClientQuery, DataAccessLayer.Model.Client.Client>
+    public class GetClientQueryHandler : IRequestHandler<GetClientQuery, Application.Model.Client.Client>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Client.Client.Queries.GetClient
         }
 
 
-        public async Task<DataAccessLayer.Model.Client.Client> Handle(GetClientQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Client.Client> Handle(GetClientQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.Client

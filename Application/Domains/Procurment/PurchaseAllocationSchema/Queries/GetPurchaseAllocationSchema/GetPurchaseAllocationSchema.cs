@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Procurment.PurchaseAllocationSchema.Queries.GetPurchaseAllocationSchema
 {
 
-    public class GetPurchaseAllocationSchemaQuery : IRequest<DataAccessLayer.Model.Procurment.PurchaseAllocationSchema>
+    public class GetPurchaseAllocationSchemaQuery : IRequest<Application.Model.Procurment.PurchaseAllocationSchema>
     {
         public int? Id { get; set; }
     }
 
-    public class GetPurchaseAllocationSchemaQueryHandler : IRequestHandler<GetPurchaseAllocationSchemaQuery, DataAccessLayer.Model.Procurment.PurchaseAllocationSchema>
+    public class GetPurchaseAllocationSchemaQueryHandler : IRequestHandler<GetPurchaseAllocationSchemaQuery, Application.Model.Procurment.PurchaseAllocationSchema>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Procurment.PurchaseAllocationSchema.Queries.GetPur
         }
 
 
-        public async Task<DataAccessLayer.Model.Procurment.PurchaseAllocationSchema> Handle(GetPurchaseAllocationSchemaQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.PurchaseAllocationSchema> Handle(GetPurchaseAllocationSchemaQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.PurchaseAllocationSchema

@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.GeneralLedger;
-using DataAccessLayer;
+using Application.Model.GeneralLedger;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.GeneralLedger.FinAccount.Queries.GetFinAccount
 {
 
-    public class GetFinAccountQuery : IRequest<DataAccessLayer.Model.GeneralLedger.FinAccount>
+    public class GetFinAccountQuery : IRequest<Application.Model.GeneralLedger.FinAccount>
     {
         public int? Id { get; set; }
     }
 
-    public class GetFinAccountQueryHandler : IRequestHandler<GetFinAccountQuery, DataAccessLayer.Model.GeneralLedger.FinAccount>
+    public class GetFinAccountQueryHandler : IRequestHandler<GetFinAccountQuery, Application.Model.GeneralLedger.FinAccount>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.GeneralLedger.FinAccount.Queries.GetFinAccount
         }
 
 
-        public async Task<DataAccessLayer.Model.GeneralLedger.FinAccount> Handle(GetFinAccountQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.GeneralLedger.FinAccount> Handle(GetFinAccountQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.FinAccount

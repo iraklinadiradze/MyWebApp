@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.[###moduleName###];
-using DataAccessLayer;
+using Application.Model.[###moduleName###];
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.[###moduleName###].[###entityName###].Queries.Get[###entityName###]
 {
 
-    public class Get[###entityName###]Query : IRequest<DataAccessLayer.Model.[###moduleName###].[###entityName###]>
+    public class Get[###entityName###]Query : IRequest<Application.Model.[###moduleName###].[###entityName###]>
     {
         public int? Id { get; set; }
     }
 
-    public class Get[###entityName###]QueryHandler : IRequestHandler<Get[###entityName###]Query, DataAccessLayer.Model.[###moduleName###].[###entityName###]>
+    public class Get[###entityName###]QueryHandler : IRequestHandler<Get[###entityName###]Query, Application.Model.[###moduleName###].[###entityName###]>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.[###moduleName###].[###entityName###].Queries.Get[
         }
 
 
-        public async Task<DataAccessLayer.Model.[###moduleName###].[###entityName###]> Handle(Get[###entityName###]Query request, CancellationToken cancellationToken)
+        public async Task<Application.Model.[###moduleName###].[###entityName###]> Handle(Get[###entityName###]Query request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.[###entityName###]

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Account;
-using DataAccessLayer;
+using Application.Model.Account;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Account.AccountBalance.Commands.UpdateAccountBalance
 {
-    public class UpdateAccountBalanceCommand : IRequest<DataAccessLayer.Model.Account.AccountBalance>
+    public class UpdateAccountBalanceCommand : IRequest<Application.Model.Account.AccountBalance>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Account.AccountBalance AccountBalance { get; set; }
+        public Application.Model.Account.AccountBalance AccountBalance { get; set; }
     }
 
-    public class UpdateAccountBalanceCommandHandler : IRequestHandler<UpdateAccountBalanceCommand, DataAccessLayer.Model.Account.AccountBalance>
+    public class UpdateAccountBalanceCommandHandler : IRequestHandler<UpdateAccountBalanceCommand, Application.Model.Account.AccountBalance>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Account.AccountBalance.Commands.UpdateAccountBalan
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Account.AccountBalance> Handle(UpdateAccountBalanceCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Account.AccountBalance> Handle(UpdateAccountBalanceCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.AccountBalance;

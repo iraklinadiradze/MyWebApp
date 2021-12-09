@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Product.ProductProcessorSalePrice.Commands.CreateProductProcessorSalePrice
 {
-    public class CreateProductProcessorSalePriceCommand : IRequest<DataAccessLayer.Model.Product.ProductProcessorSalePrice>
+    public class CreateProductProcessorSalePriceCommand : IRequest<Application.Model.Product.ProductProcessorSalePrice>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Product.ProductProcessorSalePrice ProductProcessorSalePrice { get; set; }
+        public Application.Model.Product.ProductProcessorSalePrice ProductProcessorSalePrice { get; set; }
     }
 
-    public class CreateProductProcessorSalePriceCommandHandler : IRequestHandler<CreateProductProcessorSalePriceCommand, DataAccessLayer.Model.Product.ProductProcessorSalePrice>
+    public class CreateProductProcessorSalePriceCommandHandler : IRequestHandler<CreateProductProcessorSalePriceCommand, Application.Model.Product.ProductProcessorSalePrice>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Product.ProductProcessorSalePrice.Commands.CreateP
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Product.ProductProcessorSalePrice> Handle(CreateProductProcessorSalePriceCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.ProductProcessorSalePrice> Handle(CreateProductProcessorSalePriceCommand request, CancellationToken cancellationToken)
         {
             var entity = request.ProductProcessorSalePrice;
 

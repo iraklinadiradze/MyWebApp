@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Inventory.MovementDetail.Commands.UpdateMovementDetail
 {
-    public class UpdateMovementDetailCommand : IRequest<DataAccessLayer.Model.Inventory.MovementDetail>
+    public class UpdateMovementDetailCommand : IRequest<Application.Model.Inventory.MovementDetail>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Inventory.MovementDetail MovementDetail { get; set; }
+        public Application.Model.Inventory.MovementDetail MovementDetail { get; set; }
     }
 
-    public class UpdateMovementDetailCommandHandler : IRequestHandler<UpdateMovementDetailCommand, DataAccessLayer.Model.Inventory.MovementDetail>
+    public class UpdateMovementDetailCommandHandler : IRequestHandler<UpdateMovementDetailCommand, Application.Model.Inventory.MovementDetail>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Inventory.MovementDetail.Commands.UpdateMovementDe
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Inventory.MovementDetail> Handle(UpdateMovementDetailCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.MovementDetail> Handle(UpdateMovementDetailCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.MovementDetail;

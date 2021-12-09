@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Procurment.PurchaseDetailPostType.Queries.GetPurchaseDetailPostType
 {
 
-    public class GetPurchaseDetailPostTypeQuery : IRequest<DataAccessLayer.Model.Procurment.PurchaseDetailPostType>
+    public class GetPurchaseDetailPostTypeQuery : IRequest<Application.Model.Procurment.PurchaseDetailPostType>
     {
         public int? Id { get; set; }
     }
 
-    public class GetPurchaseDetailPostTypeQueryHandler : IRequestHandler<GetPurchaseDetailPostTypeQuery, DataAccessLayer.Model.Procurment.PurchaseDetailPostType>
+    public class GetPurchaseDetailPostTypeQueryHandler : IRequestHandler<GetPurchaseDetailPostTypeQuery, Application.Model.Procurment.PurchaseDetailPostType>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Procurment.PurchaseDetailPostType.Queries.GetPurch
         }
 
 
-        public async Task<DataAccessLayer.Model.Procurment.PurchaseDetailPostType> Handle(GetPurchaseDetailPostTypeQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.PurchaseDetailPostType> Handle(GetPurchaseDetailPostTypeQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.PurchaseDetailPostType

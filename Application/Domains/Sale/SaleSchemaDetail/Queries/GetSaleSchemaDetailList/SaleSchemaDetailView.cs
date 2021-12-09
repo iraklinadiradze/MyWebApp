@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Sale;
+using Application.Model.Sale;
 
 
 namespace Application.Domains.Sale.SaleSchemaDetail.Queries.GetSaleSchemaDetailList
 {
-    public class SaleSchemaDetailView: DataAccessLayer.Model.Sale.SaleSchemaDetail
+    public class SaleSchemaDetailView: Application.Model.Sale.SaleSchemaDetail
     {
 
           public class _Product

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Procurment.PurchaseAllocationSchema.Commands.UpdatePurchaseAllocationSchema
 {
-    public class UpdatePurchaseAllocationSchemaCommand : IRequest<DataAccessLayer.Model.Procurment.PurchaseAllocationSchema>
+    public class UpdatePurchaseAllocationSchemaCommand : IRequest<Application.Model.Procurment.PurchaseAllocationSchema>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Procurment.PurchaseAllocationSchema PurchaseAllocationSchema { get; set; }
+        public Application.Model.Procurment.PurchaseAllocationSchema PurchaseAllocationSchema { get; set; }
     }
 
-    public class UpdatePurchaseAllocationSchemaCommandHandler : IRequestHandler<UpdatePurchaseAllocationSchemaCommand, DataAccessLayer.Model.Procurment.PurchaseAllocationSchema>
+    public class UpdatePurchaseAllocationSchemaCommandHandler : IRequestHandler<UpdatePurchaseAllocationSchemaCommand, Application.Model.Procurment.PurchaseAllocationSchema>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Procurment.PurchaseAllocationSchema.Commands.Updat
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Procurment.PurchaseAllocationSchema> Handle(UpdatePurchaseAllocationSchemaCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.PurchaseAllocationSchema> Handle(UpdatePurchaseAllocationSchemaCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.PurchaseAllocationSchema;

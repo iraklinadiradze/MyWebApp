@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Product;
+using Application.Model.Product;
 
 
 namespace Application.Domains.Product.ProductGroupTemplateFeature.Queries.GetProductGroupTemplateFeatureList
 {
-    public class ProductGroupTemplateFeatureView: DataAccessLayer.Model.Product.ProductGroupTemplateFeature
+    public class ProductGroupTemplateFeatureView: Application.Model.Product.ProductGroupTemplateFeature
     {
 
           public class _Feature

@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.GeneralLedger;
+using Application.Model.GeneralLedger;
 
 
 namespace Application.Domains.GeneralLedger.FinAccount.Queries.GetFinAccountList
 {
-    public class FinAccountView: DataAccessLayer.Model.GeneralLedger.FinAccount
+    public class FinAccountView: Application.Model.GeneralLedger.FinAccount
     {
 
           

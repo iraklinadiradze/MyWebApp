@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Account;
-using DataAccessLayer;
+using Application.Model.Account;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Account.Account.Commands.CreateAccount
 {
-    public class CreateAccountCommand : IRequest<DataAccessLayer.Model.Account.Account>
+    public class CreateAccountCommand : IRequest<Application.Model.Account.Account>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Account.Account Account { get; set; }
+        public Application.Model.Account.Account Account { get; set; }
     }
 
-    public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, DataAccessLayer.Model.Account.Account>
+    public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, Application.Model.Account.Account>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Account.Account.Commands.CreateAccount
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Account.Account> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Account.Account> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
         {
             var entity = request.Account;
 

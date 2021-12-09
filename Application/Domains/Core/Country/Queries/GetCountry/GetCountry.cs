@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Core;
-using DataAccessLayer;
+using Application.Model.Core;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Core.Country.Queries.GetCountry
 {
 
-    public class GetCountryQuery : IRequest<DataAccessLayer.Model.Core.Country>
+    public class GetCountryQuery : IRequest<Application.Model.Core.Country>
     {
         public int? Id { get; set; }
     }
 
-    public class GetCountryQueryHandler : IRequestHandler<GetCountryQuery, DataAccessLayer.Model.Core.Country>
+    public class GetCountryQueryHandler : IRequestHandler<GetCountryQuery, Application.Model.Core.Country>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Core.Country.Queries.GetCountry
         }
 
 
-        public async Task<DataAccessLayer.Model.Core.Country> Handle(GetCountryQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Core.Country> Handle(GetCountryQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.Country

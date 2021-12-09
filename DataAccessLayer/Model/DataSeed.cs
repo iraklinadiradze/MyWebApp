@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+// using Application.Model;
 
 namespace DataAccessLayer.Model
 {
@@ -21,22 +22,22 @@ namespace DataAccessLayer.Model
             _dbContext.Currency.AddRange(
                 new []
                 {
-                    new Core.Currency{ CurrencyCode="GEL", CurrencyDescrip ="Georgian Lari" } ,
-                    new Core.Currency{ CurrencyCode="USD", CurrencyDescrip ="US Dollar" } ,
-                    new Core.Currency{ CurrencyCode="EUR", CurrencyDescrip ="Euro" } ,
-                    new Core.Currency{ CurrencyCode="GBP", CurrencyDescrip ="British Pound" } 
+                    new Application.Model.Core.Currency{ CurrencyCode="GEL", CurrencyDescrip ="Georgian Lari" } ,
+                    new Application.Model.Core.Currency{ CurrencyCode="USD", CurrencyDescrip ="US Dollar" } ,
+                    new Application.Model.Core.Currency{ CurrencyCode="EUR", CurrencyDescrip ="Euro" } ,
+                    new Application.Model.Core.Currency{ CurrencyCode="GBP", CurrencyDescrip ="British Pound" } 
                 }
              );
 
             _dbContext.Country.AddRange(
                 new[]
                 {
-                    new Core.Country{ Code="GEO", Name="Republic of Georgia"} ,
-                    new Core.Country{ Code="USA", Name="United States Of America"},
-                    new Core.Country{ Code="GER", Name="Germany"},
-                    new Core.Country{ Code="AZE", Name="Azerbaijan"},
-                    new Core.Country{ Code="ARM", Name="Armenia"},
-                    new Core.Country{ Code="TUR", Name="Turkey"}
+                    new Application.Model.Core.Country{ Code="GEO", Name="Republic of Georgia"} ,
+                    new Application.Model.Core.Country{ Code="USA", Name="United States Of America"},
+                    new Application.Model.Core.Country{ Code="GER", Name="Germany"},
+                    new Application.Model.Core.Country{ Code="AZE", Name="Azerbaijan"},
+                    new Application.Model.Core.Country{ Code="ARM", Name="Armenia"},
+                    new Application.Model.Core.Country{ Code="TUR", Name="Turkey"}
                 }
              );
 
@@ -55,12 +56,12 @@ namespace DataAccessLayer.Model
             _dbContext.ProductUnit.AddRange( 
                 new[]
                 {
-                    new Product.ProductUnit{ ProductUnitName ="ცალი" } ,
-                    new Product.ProductUnit{ ProductUnitName ="კილოგრამი" } ,
-                    new Product.ProductUnit{ ProductUnitName ="გრამი" } ,
-                    new Product.ProductUnit{ ProductUnitName ="მეტრი" } ,
-                    new Product.ProductUnit{ ProductUnitName ="სანტიმეტრი" },
-                    new Product.ProductUnit{ ProductUnitName ="მილიმეტრი" }
+                    new Application.Model.Product.ProductUnit{ ProductUnitName ="ცალი" } ,
+                    new Application.Model.Product.ProductUnit{ ProductUnitName ="კილოგრამი" } ,
+                    new Application.Model.Product.ProductUnit{ ProductUnitName ="გრამი" } ,
+                    new Application.Model.Product.ProductUnit{ ProductUnitName ="მეტრი" } ,
+                    new Application.Model.Product.ProductUnit{ ProductUnitName ="სანტიმეტრი" },
+                    new Application.Model.Product.ProductUnit{ ProductUnitName ="მილიმეტრი" }
 
                 }
              );
@@ -70,11 +71,11 @@ namespace DataAccessLayer.Model
             _dbContext.InventoryChangeType.AddRange(
                 new[]
                 {
-                    new Inventory.InventoryChangeType{ ChangeCode="PRC", ChangeName="შესყიდვა" , IsFinRelated= true, IsQtyRelated=false} ,
-                    new Inventory.InventoryChangeType{ ChangeCode="MVM", ChangeName="გადაზიდვა" , IsFinRelated= true, IsQtyRelated=false} ,
-                    new Inventory.InventoryChangeType{ ChangeCode="SAL", ChangeName="გაყიდვა" , IsFinRelated= true, IsQtyRelated=false} ,
-                    new Inventory.InventoryChangeType{ ChangeCode="WRO", ChangeName="ჩამოწერა" , IsFinRelated= true, IsQtyRelated=false} ,
-                    new Inventory.InventoryChangeType{ ChangeCode="PRD", ChangeName="ტრანსფორმაცია" , IsFinRelated= true, IsQtyRelated=false} 
+                    new Application.Model.Inventory.InventoryChangeType{ ChangeCode="PRC", ChangeName="შესყიდვა" , IsFinRelated= true, IsQtyRelated=false} ,
+                    new Application.Model.Inventory.InventoryChangeType{ ChangeCode="MVM", ChangeName="გადაზიდვა" , IsFinRelated= true, IsQtyRelated=false} ,
+                    new Application.Model.Inventory.InventoryChangeType{ ChangeCode="SAL", ChangeName="გაყიდვა" , IsFinRelated= true, IsQtyRelated=false} ,
+                    new Application.Model.Inventory.InventoryChangeType{ ChangeCode="WRO", ChangeName="ჩამოწერა" , IsFinRelated= true, IsQtyRelated=false} ,
+                    new Application.Model.Inventory.InventoryChangeType{ ChangeCode="PRD", ChangeName="ტრანსფორმაცია" , IsFinRelated= true, IsQtyRelated=false} 
                 }
              );
 

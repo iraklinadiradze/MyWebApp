@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.GeneralLedger;
+using Application.Model.GeneralLedger;
 
 
 namespace Application.Domains.GeneralLedger.GlTransaction.Queries.GetGlTransactionList
 {
-    public class GlTransactionView: DataAccessLayer.Model.GeneralLedger.GlTransaction
+    public class GlTransactionView: Application.Model.GeneralLedger.GlTransaction
     {
 
           

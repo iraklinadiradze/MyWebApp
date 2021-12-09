@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Product;
+using Application.Model.Product;
 
 
 namespace Application.Domains.Product.Brand.Queries.GetBrandList
 {
-    public class BrandView: DataAccessLayer.Model.Product.Brand
+    public class BrandView: Application.Model.Product.Brand
     {
 
           

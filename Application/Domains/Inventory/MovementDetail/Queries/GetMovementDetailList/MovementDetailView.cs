@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Inventory;
+using Application.Model.Inventory;
 
 
 namespace Application.Domains.Inventory.MovementDetail.Queries.GetMovementDetailList
 {
-    public class MovementDetailView : DataAccessLayer.Model.Inventory.MovementDetail
+    public class MovementDetailView : Application.Model.Inventory.MovementDetail
     {
 
         public class _Inventory
@@ -18,7 +18,7 @@ namespace Application.Domains.Inventory.MovementDetail.Queries.GetMovementDetail
 
         public class _Movement
         {
-            public Int32 Id { get; set; }
+            public long Id { get; set; }
         }
 
         public _Inventory inventory { get; set; }

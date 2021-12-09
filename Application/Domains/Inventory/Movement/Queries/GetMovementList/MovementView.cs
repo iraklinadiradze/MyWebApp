@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Inventory;
+using Application.Model.Inventory;
 
 
 namespace Application.Domains.Inventory.Movement.Queries.GetMovementList
 {
-    public class MovementView: DataAccessLayer.Model.Inventory.Movement
+    public class MovementView: Application.Model.Inventory.Movement
     {
 
           

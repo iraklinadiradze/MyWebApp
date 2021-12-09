@@ -297,7 +297,7 @@ namespace FormDesignerApp
             this.edtEFSpaceName.Name = "edtEFSpaceName";
             this.edtEFSpaceName.Size = new System.Drawing.Size(418, 23);
             this.edtEFSpaceName.TabIndex = 12;
-            this.edtEFSpaceName.Text = "DataAccessLayer";
+            this.edtEFSpaceName.Text = "Application";
             // 
             // button4
             // 
@@ -324,7 +324,7 @@ namespace FormDesignerApp
             this.tbEntityFrameworkFolder.Name = "tbEntityFrameworkFolder";
             this.tbEntityFrameworkFolder.Size = new System.Drawing.Size(418, 23);
             this.tbEntityFrameworkFolder.TabIndex = 9;
-            this.tbEntityFrameworkFolder.Text = "C:\\Users\\inadir\\source\\repos\\MyWebApp\\DataAccessLayer\\Model";
+            this.tbEntityFrameworkFolder.Text = "C:\\Users\\inadir\\source\\repos\\MyWebApp\\Application\\Model";
             // 
             // button3
             // 

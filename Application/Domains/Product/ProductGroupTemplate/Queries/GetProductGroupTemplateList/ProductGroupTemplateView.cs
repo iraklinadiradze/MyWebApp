@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Product;
+using Application.Model.Product;
 
 
 namespace Application.Domains.Product.ProductGroupTemplate.Queries.GetProductGroupTemplateList
 {
-    public class ProductGroupTemplateView: DataAccessLayer.Model.Product.ProductGroupTemplate
+    public class ProductGroupTemplateView: Application.Model.Product.ProductGroupTemplate
     {
 
           public class _ProductUnit

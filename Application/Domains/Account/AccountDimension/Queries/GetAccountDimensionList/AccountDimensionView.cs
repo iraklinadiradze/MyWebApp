@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Account;
+using Application.Model.Account;
 
 
 namespace Application.Domains.Account.AccountDimension.Queries.GetAccountDimensionList
 {
-    public class AccountDimensionView: DataAccessLayer.Model.Account.AccountDimension
+    public class AccountDimensionView: Application.Model.Account.AccountDimension
     {
 
           

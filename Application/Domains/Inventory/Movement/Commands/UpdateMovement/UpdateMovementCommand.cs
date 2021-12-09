@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Inventory.Movement.Commands.UpdateMovement
 {
-    public class UpdateMovementCommand : IRequest<DataAccessLayer.Model.Inventory.Movement>
+    public class UpdateMovementCommand : IRequest<Application.Model.Inventory.Movement>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Inventory.Movement Movement { get; set; }
+        public Application.Model.Inventory.Movement Movement { get; set; }
     }
 
-    public class UpdateMovementCommandHandler : IRequestHandler<UpdateMovementCommand, DataAccessLayer.Model.Inventory.Movement>
+    public class UpdateMovementCommandHandler : IRequestHandler<UpdateMovementCommand, Application.Model.Inventory.Movement>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Inventory.Movement.Commands.UpdateMovement
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Inventory.Movement> Handle(UpdateMovementCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.Movement> Handle(UpdateMovementCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.Movement;

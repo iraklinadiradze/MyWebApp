@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Account;
+using Application.Model.Account;
 
 
 namespace Application.Domains.Account.AccountBalance.Queries.GetAccountBalanceList
 {
-    public class AccountBalanceView: DataAccessLayer.Model.Account.AccountBalance
+    public class AccountBalanceView: Application.Model.Account.AccountBalance
     {
 
           public class _Account

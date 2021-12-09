@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.GeneralLedger;
-using DataAccessLayer;
+using Application.Model.GeneralLedger;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.GeneralLedger.GlTransaction.Queries.GetGlTransaction
 {
 
-    public class GetGlTransactionQuery : IRequest<DataAccessLayer.Model.GeneralLedger.GlTransaction>
+    public class GetGlTransactionQuery : IRequest<Application.Model.GeneralLedger.GlTransaction>
     {
         public int? Id { get; set; }
     }
 
-    public class GetGlTransactionQueryHandler : IRequestHandler<GetGlTransactionQuery, DataAccessLayer.Model.GeneralLedger.GlTransaction>
+    public class GetGlTransactionQueryHandler : IRequestHandler<GetGlTransactionQuery, Application.Model.GeneralLedger.GlTransaction>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.GeneralLedger.GlTransaction.Queries.GetGlTransacti
         }
 
 
-        public async Task<DataAccessLayer.Model.GeneralLedger.GlTransaction> Handle(GetGlTransactionQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.GeneralLedger.GlTransaction> Handle(GetGlTransactionQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.GlTransaction

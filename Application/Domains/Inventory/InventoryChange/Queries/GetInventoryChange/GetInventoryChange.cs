@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Inventory.InventoryChange.Queries.GetInventoryChange
 {
 
-    public class GetInventoryChangeQuery : IRequest<DataAccessLayer.Model.Inventory.InventoryChange>
+    public class GetInventoryChangeQuery : IRequest<Application.Model.Inventory.InventoryChange>
     {
         public int? Id { get; set; }
     }
 
-    public class GetInventoryChangeQueryHandler : IRequestHandler<GetInventoryChangeQuery, DataAccessLayer.Model.Inventory.InventoryChange>
+    public class GetInventoryChangeQueryHandler : IRequestHandler<GetInventoryChangeQuery, Application.Model.Inventory.InventoryChange>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Inventory.InventoryChange.Queries.GetInventoryChan
         }
 
 
-        public async Task<DataAccessLayer.Model.Inventory.InventoryChange> Handle(GetInventoryChangeQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.InventoryChange> Handle(GetInventoryChangeQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.InventoryChange

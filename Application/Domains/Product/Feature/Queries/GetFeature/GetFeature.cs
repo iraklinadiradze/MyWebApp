@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Product.Feature.Queries.GetFeature
 {
 
-    public class GetFeatureQuery : IRequest<DataAccessLayer.Model.Product.Feature>
+    public class GetFeatureQuery : IRequest<Application.Model.Product.Feature>
     {
         public int? Id { get; set; }
     }
 
-    public class GetFeatureQueryHandler : IRequestHandler<GetFeatureQuery, DataAccessLayer.Model.Product.Feature>
+    public class GetFeatureQueryHandler : IRequestHandler<GetFeatureQuery, Application.Model.Product.Feature>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Product.Feature.Queries.GetFeature
         }
 
 
-        public async Task<DataAccessLayer.Model.Product.Feature> Handle(GetFeatureQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.Feature> Handle(GetFeatureQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.Feature

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 
 using MediatR;
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application.Model.Product;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 using System.Threading.Tasks;
@@ -20,11 +20,11 @@ using Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseDetai
 
 namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
 {
-    public class ChangeInventoryAddCommand : IRequest<DataAccessLayer.Model.Inventory.InventoryChange>
+    public class ChangeInventoryAddCommand : IRequest<Application.Model.Inventory.InventoryChange>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public int SenderReferenceId { get; set; }
-        public DataAccessLayer.Model.Inventory.Inventory Inventory { get; set; }
+        public Application.Model.Inventory.Inventory Inventory { get; set; }
         public int LocationId { get; set; }
         public InventoryChangeTypeEnum InventoryChangeTypeId { get; set; }
         public DateTime TransDate { get; set; }
@@ -37,7 +37,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
         public decimal CostDecrease { get; set; }
     }
 
-    public class ChangeInventoryAddCommandHandler : IRequestHandler<ChangeInventoryAddCommand, DataAccessLayer.Model.Inventory.InventoryChange>
+    public class ChangeInventoryAddCommandHandler : IRequestHandler<ChangeInventoryAddCommand, Application.Model.Inventory.InventoryChange>
     {
 
         private readonly IMediator _mediator;
@@ -48,15 +48,15 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
             _mediator = mediator;
             _context = context;
 
-            CoreDBContext xxx;
+            // CoreDBContext xxx;
 
         }
 
         /*
-                public async Task<DataAccessLayer.Model.Inventory.InventoryChange> Handle(ChangeInventoryAddCommand request, CancellationToken cancellationToken)
+                public async Task<Application.Model.Inventory.InventoryChange> Handle(ChangeInventoryAddCommand request, CancellationToken cancellationToken)
                 {
-                    DataAccessLayer.Model.Inventory.InventoryChange maxInventoryChange = null;
-                    DataAccessLayer.Model.Inventory.InventoryChange _inventoryChange = null;
+                    Application.Model.Inventory.InventoryChange maxInventoryChange = null;
+                    Application.Model.Inventory.InventoryChange _inventoryChange = null;
 
                     if (!request.doChangeQty)
                     {
@@ -130,7 +130,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                         if (maxInventoryChange == null)
                         {
 
-                            _inventoryChange = new DataAccessLayer.Model.Inventory.InventoryChange
+                            _inventoryChange = new Application.Model.Inventory.InventoryChange
                             {
                                 TransDate = request.TransDate,
                                 InventoryId = request.Inventory.Id,
@@ -153,7 +153,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                         else
                         {
 
-                            _inventoryChange = new DataAccessLayer.Model.Inventory.InventoryChange
+                            _inventoryChange = new Application.Model.Inventory.InventoryChange
                             {
                                 TransDate = request.TransDate,
                                 InventoryId = request.Inventory.Id,
@@ -233,7 +233,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                 }
         */
 
-        public async Task<DataAccessLayer.Model.Inventory.InventoryChange> Handle(ChangeInventoryAddCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.InventoryChange> Handle(ChangeInventoryAddCommand request, CancellationToken cancellationToken)
         {
 
             if (
@@ -255,8 +255,8 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                 throw new Exception($"Inventory {request.Inventory.Id} is single type and may be changed only by 1");
 
 
-            DataAccessLayer.Model.Inventory.InventoryChange maxInventoryChange = null;
-            DataAccessLayer.Model.Inventory.InventoryChange _inventoryChange = null;
+            Application.Model.Inventory.InventoryChange maxInventoryChange = null;
+            Application.Model.Inventory.InventoryChange _inventoryChange = null;
 
             _inventoryChange = await (from e in _context.InventoryChange
                                       where (
@@ -357,7 +357,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                 if (maxInventoryChange == null)
                 {
 
-                    _inventoryChange = new DataAccessLayer.Model.Inventory.InventoryChange
+                    _inventoryChange = new Application.Model.Inventory.InventoryChange
                     {
                         TransDate = request.TransDate,
                         InventoryId = request.Inventory.Id,
@@ -380,7 +380,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                 else
                 {
 
-                    _inventoryChange = new DataAccessLayer.Model.Inventory.InventoryChange
+                    _inventoryChange = new Application.Model.Inventory.InventoryChange
                     {
                         TransDate = request.TransDate,
                         InventoryId = request.Inventory.Id,

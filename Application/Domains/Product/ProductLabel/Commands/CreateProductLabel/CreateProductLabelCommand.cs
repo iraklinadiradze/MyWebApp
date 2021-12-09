@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Product.ProductLabel.Commands.CreateProductLabel
 {
-    public class CreateProductLabelCommand : IRequest<DataAccessLayer.Model.Product.ProductLabel>
+    public class CreateProductLabelCommand : IRequest<Application.Model.Product.ProductLabel>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Product.ProductLabel ProductLabel { get; set; }
+        public Application.Model.Product.ProductLabel ProductLabel { get; set; }
     }
 
-    public class CreateProductLabelCommandHandler : IRequestHandler<CreateProductLabelCommand, DataAccessLayer.Model.Product.ProductLabel>
+    public class CreateProductLabelCommandHandler : IRequestHandler<CreateProductLabelCommand, Application.Model.Product.ProductLabel>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Product.ProductLabel.Commands.CreateProductLabel
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Product.ProductLabel> Handle(CreateProductLabelCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.ProductLabel> Handle(CreateProductLabelCommand request, CancellationToken cancellationToken)
         {
             var entity = request.ProductLabel;
 

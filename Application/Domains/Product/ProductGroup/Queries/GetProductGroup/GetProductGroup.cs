@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Product.ProductGroup.Queries.GetProductGroup
 {
 
-    public class GetProductGroupQuery : IRequest<DataAccessLayer.Model.Product.ProductGroup>
+    public class GetProductGroupQuery : IRequest<Application.Model.Product.ProductGroup>
     {
         public int? Id { get; set; }
     }
 
-    public class GetProductGroupQueryHandler : IRequestHandler<GetProductGroupQuery, DataAccessLayer.Model.Product.ProductGroup>
+    public class GetProductGroupQueryHandler : IRequestHandler<GetProductGroupQuery, Application.Model.Product.ProductGroup>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Product.ProductGroup.Queries.GetProductGroup
         }
 
 
-        public async Task<DataAccessLayer.Model.Product.ProductGroup> Handle(GetProductGroupQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.ProductGroup> Handle(GetProductGroupQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.ProductGroup

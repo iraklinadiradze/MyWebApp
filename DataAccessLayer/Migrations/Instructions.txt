@@ -1,5 +1,5 @@
 ﻿# Locate Miggration Folder
-cd C:\Users\inadir\source\repos\MyWebApp\DataAccessLayer\Model
+cd C:\Users\inadir\source\repos\MyWebApp\Application\Model
 
 # Create Migration From Command Console
 dotnet ef migrations add CreateCoreDB

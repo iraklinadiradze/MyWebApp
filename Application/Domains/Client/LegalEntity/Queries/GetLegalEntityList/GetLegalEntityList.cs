@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Client;
-using DataAccessLayer;
+using Application.Model.Client;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;

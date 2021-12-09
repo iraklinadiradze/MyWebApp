@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Sale;
-using DataAccessLayer;
+using Application.Model.Sale;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Sale.ReturnProduct.Commands.CreateReturnProduct
 {
-    public class CreateReturnProductCommand : IRequest<DataAccessLayer.Model.Sale.ReturnProduct>
+    public class CreateReturnProductCommand : IRequest<Application.Model.Sale.ReturnProduct>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Sale.ReturnProduct ReturnProduct { get; set; }
+        public Application.Model.Sale.ReturnProduct ReturnProduct { get; set; }
     }
 
-    public class CreateReturnProductCommandHandler : IRequestHandler<CreateReturnProductCommand, DataAccessLayer.Model.Sale.ReturnProduct>
+    public class CreateReturnProductCommandHandler : IRequestHandler<CreateReturnProductCommand, Application.Model.Sale.ReturnProduct>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Sale.ReturnProduct.Commands.CreateReturnProduct
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Sale.ReturnProduct> Handle(CreateReturnProductCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Sale.ReturnProduct> Handle(CreateReturnProductCommand request, CancellationToken cancellationToken)
         {
             var entity = request.ReturnProduct;
 

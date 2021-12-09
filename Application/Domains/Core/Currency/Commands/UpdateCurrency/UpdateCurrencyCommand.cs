@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Core;
-using DataAccessLayer;
+using Application.Model.Core;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Core.Currency.Commands.UpdateCurrency
 {
-    public class UpdateCurrencyCommand : IRequest<DataAccessLayer.Model.Core.Currency>
+    public class UpdateCurrencyCommand : IRequest<Application.Model.Core.Currency>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Core.Currency Currency { get; set; }
+        public Application.Model.Core.Currency Currency { get; set; }
     }
 
-    public class UpdateCurrencyCommandHandler : IRequestHandler<UpdateCurrencyCommand, DataAccessLayer.Model.Core.Currency>
+    public class UpdateCurrencyCommandHandler : IRequestHandler<UpdateCurrencyCommand, Application.Model.Core.Currency>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Core.Currency.Commands.UpdateCurrency
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Core.Currency> Handle(UpdateCurrencyCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Core.Currency> Handle(UpdateCurrencyCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.Currency;

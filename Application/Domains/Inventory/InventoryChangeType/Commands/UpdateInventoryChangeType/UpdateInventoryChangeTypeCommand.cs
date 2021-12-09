@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Inventory.InventoryChangeType.Commands.UpdateInventoryChangeType
 {
-    public class UpdateInventoryChangeTypeCommand : IRequest<DataAccessLayer.Model.Inventory.InventoryChangeType>
+    public class UpdateInventoryChangeTypeCommand : IRequest<Application.Model.Inventory.InventoryChangeType>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Inventory.InventoryChangeType InventoryChangeType { get; set; }
+        public Application.Model.Inventory.InventoryChangeType InventoryChangeType { get; set; }
     }
 
-    public class UpdateInventoryChangeTypeCommandHandler : IRequestHandler<UpdateInventoryChangeTypeCommand, DataAccessLayer.Model.Inventory.InventoryChangeType>
+    public class UpdateInventoryChangeTypeCommandHandler : IRequestHandler<UpdateInventoryChangeTypeCommand, Application.Model.Inventory.InventoryChangeType>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Inventory.InventoryChangeType.Commands.UpdateInven
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Inventory.InventoryChangeType> Handle(UpdateInventoryChangeTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.InventoryChangeType> Handle(UpdateInventoryChangeTypeCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.InventoryChangeType;

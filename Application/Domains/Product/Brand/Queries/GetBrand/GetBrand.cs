@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Product.Brand.Queries.GetBrand
 {
 
-    public class GetBrandQuery : IRequest<DataAccessLayer.Model.Product.Brand>
+    public class GetBrandQuery : IRequest<Application.Model.Product.Brand>
     {
         public int? Id { get; set; }
     }
 
-    public class GetBrandQueryHandler : IRequestHandler<GetBrandQuery, DataAccessLayer.Model.Product.Brand>
+    public class GetBrandQueryHandler : IRequestHandler<GetBrandQuery, Application.Model.Product.Brand>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Product.Brand.Queries.GetBrand
         }
 
 
-        public async Task<DataAccessLayer.Model.Product.Brand> Handle(GetBrandQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.Brand> Handle(GetBrandQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.Brand

@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Product.ProductCategory.Commands.CreateProductCategory
 {
-    public class CreateProductCategoryCommand : IRequest<DataAccessLayer.Model.Product.ProductCategory>
+    public class CreateProductCategoryCommand : IRequest<Application.Model.Product.ProductCategory>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Product.ProductCategory ProductCategory { get; set; }
+        public Application.Model.Product.ProductCategory ProductCategory { get; set; }
     }
 
-    public class CreateProductCategoryCommandHandler : IRequestHandler<CreateProductCategoryCommand, DataAccessLayer.Model.Product.ProductCategory>
+    public class CreateProductCategoryCommandHandler : IRequestHandler<CreateProductCategoryCommand, Application.Model.Product.ProductCategory>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Product.ProductCategory.Commands.CreateProductCate
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Product.ProductCategory> Handle(CreateProductCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.ProductCategory> Handle(CreateProductCategoryCommand request, CancellationToken cancellationToken)
         {
             var entity = request.ProductCategory;
 

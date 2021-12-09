@@ -6,8 +6,8 @@ using System.Text;
 using System.Runtime;
 
 using MediatR;
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 using System.Threading.Tasks;
@@ -40,14 +40,14 @@ namespace Application.Domains.Inventory.Inventory.InventoryRecalcAffectedCosts
 
             while (_context.CostAffectedInventoryChangeList.Length > 0)
             {
-                //                Dictionary<long, DataAccessLayer.Model.Inventory.InventoryChange> _costAffectedInventoryChangeList = new Dictionary<long, DataAccessLayer.Model.Inventory.InventoryChange>(_context.CostAffectedInventoryChangeList);
-                DataAccessLayer.Model.Inventory.InventoryChange[] _costAffectedInventoryChangeList= { };
+                //                Dictionary<long, Application.Model.Inventory.InventoryChange> _costAffectedInventoryChangeList = new Dictionary<long, Application.Model.Inventory.InventoryChange>(_context.CostAffectedInventoryChangeList);
+                Application.Model.Inventory.InventoryChange[] _costAffectedInventoryChangeList= { };
 
                 ArrayList a = new ArrayList();
                 //a.Clear();
                 //a.Add();
 
-                _costAffectedInventoryChangeList = (DataAccessLayer.Model.Inventory.InventoryChange[])_costAffectedInventoryChangeList.Concat(_context.CostAffectedInventoryChangeList);
+                _costAffectedInventoryChangeList = (Application.Model.Inventory.InventoryChange[])_costAffectedInventoryChangeList.Concat(_context.CostAffectedInventoryChangeList);
 
 //                _context.CostAffectedInventoryChangeList.
 
@@ -57,7 +57,7 @@ namespace Application.Domains.Inventory.Inventory.InventoryRecalcAffectedCosts
 /*
                 foreach (var _inventoryChange in _costAffectedInventoryChangeList.Values)
                 {
-                    //                    Dictionary<int, DataAccessLayer.Model.Inventory.InventoryChange> xyz=new Dictionary<int, DataAccessLayer.Model.Inventory.InventoryChange>;
+                    //                    Dictionary<int, Application.Model.Inventory.InventoryChange> xyz=new Dictionary<int, Application.Model.Inventory.InventoryChange>;
                     //                    var r = xyz.Where(x => x.Key == 123).FirstOrDefault();
 
                     if (_inventoryChange.EntityId == (int)ModuleEnum.mdInventory)

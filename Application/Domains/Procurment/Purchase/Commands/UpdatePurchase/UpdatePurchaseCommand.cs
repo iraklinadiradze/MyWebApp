@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchase
 {
-    public class UpdatePurchaseCommand : IRequest<DataAccessLayer.Model.Procurment.Purchase>
+    public class UpdatePurchaseCommand : IRequest<Application.Model.Procurment.Purchase>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Procurment.Purchase Purchase { get; set; }
+        public Application.Model.Procurment.Purchase Purchase { get; set; }
     }
 
-    public class UpdatePurchaseCommandHandler : IRequestHandler<UpdatePurchaseCommand, DataAccessLayer.Model.Procurment.Purchase>
+    public class UpdatePurchaseCommandHandler : IRequestHandler<UpdatePurchaseCommand, Application.Model.Procurment.Purchase>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchase
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Procurment.Purchase> Handle(UpdatePurchaseCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.Purchase> Handle(UpdatePurchaseCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.Purchase;

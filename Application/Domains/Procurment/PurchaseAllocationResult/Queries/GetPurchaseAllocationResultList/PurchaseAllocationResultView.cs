@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Procurment;
+using Application.Model.Procurment;
 
 
 namespace Application.Domains.Procurment.PurchaseAllocationResult.Queries.GetPurchaseAllocationResultList
 {
-    public class PurchaseAllocationResultView: DataAccessLayer.Model.Procurment.PurchaseAllocationResult
+    public class PurchaseAllocationResultView: Application.Model.Procurment.PurchaseAllocationResult
     {
 
           public class _PurchaseAllocationSource

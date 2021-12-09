@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 
 using MediatR;
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application.Model.Product;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 using System.Threading.Tasks;
@@ -18,7 +18,7 @@ using Application.Domains.Inventory.InventoryChangeType.Common;
 
 namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryRemove
 {
-    public class ChangeInventoryRemoveCommand : IRequest<DataAccessLayer.Model.Inventory.InventoryChange>
+    public class ChangeInventoryRemoveCommand : IRequest<Application.Model.Inventory.InventoryChange>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public int SenderReferenceId { get; set; }
@@ -27,7 +27,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryRemove
         public bool doChangeCost { get; set; }
     }
 
-    public class ChangeInventoryRemoveCommandHandler : IRequestHandler<ChangeInventoryRemoveCommand, DataAccessLayer.Model.Inventory.InventoryChange>
+    public class ChangeInventoryRemoveCommandHandler : IRequestHandler<ChangeInventoryRemoveCommand, Application.Model.Inventory.InventoryChange>
     {
 
         private readonly IMediator _mediator;
@@ -39,10 +39,10 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryRemove
             _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Inventory.InventoryChange> Handle(ChangeInventoryRemoveCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.InventoryChange> Handle(ChangeInventoryRemoveCommand request, CancellationToken cancellationToken)
         {
-            //            DataAccessLayer.Model.Inventory.InventoryChange maxInventoryChange;
-            DataAccessLayer.Model.Inventory.InventoryChange _inventoryChange;
+            //            Application.Model.Inventory.InventoryChange maxInventoryChange;
+            Application.Model.Inventory.InventoryChange _inventoryChange;
 
             _inventoryChange = await (from e in _context.InventoryChange
                                       where (

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Account;
-using DataAccessLayer;
+using Application.Model.Account;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Account.TransactionOrder.Commands.UpdateTransactionOrder
 {
-    public class UpdateTransactionOrderCommand : IRequest<DataAccessLayer.Model.Account.TransactionOrder>
+    public class UpdateTransactionOrderCommand : IRequest<Application.Model.Account.TransactionOrder>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Account.TransactionOrder TransactionOrder { get; set; }
+        public Application.Model.Account.TransactionOrder TransactionOrder { get; set; }
     }
 
-    public class UpdateTransactionOrderCommandHandler : IRequestHandler<UpdateTransactionOrderCommand, DataAccessLayer.Model.Account.TransactionOrder>
+    public class UpdateTransactionOrderCommandHandler : IRequestHandler<UpdateTransactionOrderCommand, Application.Model.Account.TransactionOrder>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Account.TransactionOrder.Commands.UpdateTransactio
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Account.TransactionOrder> Handle(UpdateTransactionOrderCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Account.TransactionOrder> Handle(UpdateTransactionOrderCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.TransactionOrder;

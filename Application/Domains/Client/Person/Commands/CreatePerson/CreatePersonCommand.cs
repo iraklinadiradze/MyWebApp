@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Client;
-using DataAccessLayer;
+using Application.Model.Client;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Client.Person.Commands.CreatePerson
 {
-    public class CreatePersonCommand : IRequest<DataAccessLayer.Model.Client.Person>
+    public class CreatePersonCommand : IRequest<Application.Model.Client.Person>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Client.Person Person { get; set; }
+        public Application.Model.Client.Person Person { get; set; }
     }
 
-    public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, DataAccessLayer.Model.Client.Person>
+    public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, Application.Model.Client.Person>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Client.Person.Commands.CreatePerson
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Client.Person> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Client.Person> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
         {
             var entity = request.Person;
 

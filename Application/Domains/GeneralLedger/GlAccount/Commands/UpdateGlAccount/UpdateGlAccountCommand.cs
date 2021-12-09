@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.GeneralLedger;
-using DataAccessLayer;
+using Application.Model.GeneralLedger;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.GeneralLedger.GlAccount.Commands.UpdateGlAccount
 {
-    public class UpdateGlAccountCommand : IRequest<DataAccessLayer.Model.GeneralLedger.GlAccount>
+    public class UpdateGlAccountCommand : IRequest<Application.Model.GeneralLedger.GlAccount>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.GeneralLedger.GlAccount GlAccount { get; set; }
+        public Application.Model.GeneralLedger.GlAccount GlAccount { get; set; }
     }
 
-    public class UpdateGlAccountCommandHandler : IRequestHandler<UpdateGlAccountCommand, DataAccessLayer.Model.GeneralLedger.GlAccount>
+    public class UpdateGlAccountCommandHandler : IRequestHandler<UpdateGlAccountCommand, Application.Model.GeneralLedger.GlAccount>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.GeneralLedger.GlAccount.Commands.UpdateGlAccount
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.GeneralLedger.GlAccount> Handle(UpdateGlAccountCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.GeneralLedger.GlAccount> Handle(UpdateGlAccountCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.GlAccount;

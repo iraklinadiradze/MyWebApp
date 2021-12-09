@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Product.ProductProcessorSalePrice.Queries.GetProductProcessorSalePrice
 {
 
-    public class GetProductProcessorSalePriceQuery : IRequest<DataAccessLayer.Model.Product.ProductProcessorSalePrice>
+    public class GetProductProcessorSalePriceQuery : IRequest<Application.Model.Product.ProductProcessorSalePrice>
     {
         public int? Id { get; set; }
     }
 
-    public class GetProductProcessorSalePriceQueryHandler : IRequestHandler<GetProductProcessorSalePriceQuery, DataAccessLayer.Model.Product.ProductProcessorSalePrice>
+    public class GetProductProcessorSalePriceQueryHandler : IRequestHandler<GetProductProcessorSalePriceQuery, Application.Model.Product.ProductProcessorSalePrice>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Product.ProductProcessorSalePrice.Queries.GetProdu
         }
 
 
-        public async Task<DataAccessLayer.Model.Product.ProductProcessorSalePrice> Handle(GetProductProcessorSalePriceQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.ProductProcessorSalePrice> Handle(GetProductProcessorSalePriceQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.ProductProcessorSalePrice

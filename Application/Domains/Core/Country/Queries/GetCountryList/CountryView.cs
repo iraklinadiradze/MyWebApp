@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Core;
+using Application.Model.Core;
 
 
 namespace Application.Domains.Core.Country.Queries.GetCountryList
 {
-    public class CountryView: DataAccessLayer.Model.Core.Country
+    public class CountryView: Application.Model.Core.Country
     {
 
           

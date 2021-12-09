@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Sale;
-using DataAccessLayer;
+using Application.Model.Sale;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Sale.SaleProduct.Queries.GetSaleProduct
 {
 
-    public class GetSaleProductQuery : IRequest<DataAccessLayer.Model.Sale.SaleProduct>
+    public class GetSaleProductQuery : IRequest<Application.Model.Sale.SaleProduct>
     {
         public int? Id { get; set; }
     }
 
-    public class GetSaleProductQueryHandler : IRequestHandler<GetSaleProductQuery, DataAccessLayer.Model.Sale.SaleProduct>
+    public class GetSaleProductQueryHandler : IRequestHandler<GetSaleProductQuery, Application.Model.Sale.SaleProduct>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Sale.SaleProduct.Queries.GetSaleProduct
         }
 
 
-        public async Task<DataAccessLayer.Model.Sale.SaleProduct> Handle(GetSaleProductQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Sale.SaleProduct> Handle(GetSaleProductQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.SaleProduct

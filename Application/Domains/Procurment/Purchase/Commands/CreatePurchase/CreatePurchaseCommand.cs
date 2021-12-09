@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Procurment.Purchase.Commands.CreatePurchase
 {
-    public class CreatePurchaseCommand : IRequest<DataAccessLayer.Model.Procurment.Purchase>
+    public class CreatePurchaseCommand : IRequest<Application.Model.Procurment.Purchase>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Procurment.Purchase Purchase { get; set; }
+        public Application.Model.Procurment.Purchase Purchase { get; set; }
     }
 
-    public class CreatePurchaseCommandHandler : IRequestHandler<CreatePurchaseCommand, DataAccessLayer.Model.Procurment.Purchase>
+    public class CreatePurchaseCommandHandler : IRequestHandler<CreatePurchaseCommand, Application.Model.Procurment.Purchase>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Procurment.Purchase.Commands.CreatePurchase
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Procurment.Purchase> Handle(CreatePurchaseCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.Purchase> Handle(CreatePurchaseCommand request, CancellationToken cancellationToken)
         {
             var entity = request.Purchase;
 

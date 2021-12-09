@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.[###moduleName###];
-using DataAccessLayer;
+using Application.Model.[###moduleName###];
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.[###moduleName###].[###entityName###].Commands.Create[###entityName###]
 {
-    public class Create[###entityName###]Command : IRequest<DataAccessLayer.Model.[###moduleName###].[###entityName###]>
+    public class Create[###entityName###]Command : IRequest<Application.Model.[###moduleName###].[###entityName###]>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.[###moduleName###].[###entityName###] [###entityName###] { get; set; }
+        public Application.Model.[###moduleName###].[###entityName###] [###entityName###] { get; set; }
     }
 
-    public class Create[###entityName###]CommandHandler : IRequestHandler<Create[###entityName###]Command, DataAccessLayer.Model.[###moduleName###].[###entityName###]>
+    public class Create[###entityName###]CommandHandler : IRequestHandler<Create[###entityName###]Command, Application.Model.[###moduleName###].[###entityName###]>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.[###moduleName###].[###entityName###].Commands.Cre
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.[###moduleName###].[###entityName###]> Handle(Create[###entityName###]Command request, CancellationToken cancellationToken)
+        public async Task<Application.Model.[###moduleName###].[###entityName###]> Handle(Create[###entityName###]Command request, CancellationToken cancellationToken)
         {
             var entity = request.[###entityName###];
 

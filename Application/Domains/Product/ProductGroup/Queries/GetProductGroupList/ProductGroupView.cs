@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Product;
+using Application.Model.Product;
 
 
 namespace Application.Domains.Product.ProductGroup.Queries.GetProductGroupList
 {
-    public class ProductGroupView: DataAccessLayer.Model.Product.ProductGroup
+    public class ProductGroupView: Application.Model.Product.ProductGroup
     {
 
           public class _ProductCategory

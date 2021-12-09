@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Account;
+using Application.Model.Account;
 
 
 namespace Application.Domains.Account.TransactionOrder.Queries.GetTransactionOrderList
 {
-    public class TransactionOrderView: DataAccessLayer.Model.Account.TransactionOrder
+    public class TransactionOrderView: Application.Model.Account.TransactionOrder
     {
 
           

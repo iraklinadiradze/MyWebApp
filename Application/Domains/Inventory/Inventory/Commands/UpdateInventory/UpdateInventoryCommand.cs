@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Inventory.Inventory.Commands.UpdateInventory
 {
-    public class UpdateInventoryCommand : IRequest<DataAccessLayer.Model.Inventory.Inventory>
+    public class UpdateInventoryCommand : IRequest<Application.Model.Inventory.Inventory>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Inventory.Inventory Inventory { get; set; }
+        public Application.Model.Inventory.Inventory Inventory { get; set; }
     }
 
-    public class UpdateInventoryCommandHandler : IRequestHandler<UpdateInventoryCommand, DataAccessLayer.Model.Inventory.Inventory>
+    public class UpdateInventoryCommandHandler : IRequestHandler<UpdateInventoryCommand, Application.Model.Inventory.Inventory>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.UpdateInventory
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Inventory.Inventory> Handle(UpdateInventoryCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.Inventory> Handle(UpdateInventoryCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.Inventory;

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Sale;
-using DataAccessLayer;
+using Application.Model.Sale;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Sale.SalePaymentType.Commands.UpdateSalePaymentType
 {
-    public class UpdateSalePaymentTypeCommand : IRequest<DataAccessLayer.Model.Sale.SalePaymentType>
+    public class UpdateSalePaymentTypeCommand : IRequest<Application.Model.Sale.SalePaymentType>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Sale.SalePaymentType SalePaymentType { get; set; }
+        public Application.Model.Sale.SalePaymentType SalePaymentType { get; set; }
     }
 
-    public class UpdateSalePaymentTypeCommandHandler : IRequestHandler<UpdateSalePaymentTypeCommand, DataAccessLayer.Model.Sale.SalePaymentType>
+    public class UpdateSalePaymentTypeCommandHandler : IRequestHandler<UpdateSalePaymentTypeCommand, Application.Model.Sale.SalePaymentType>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Sale.SalePaymentType.Commands.UpdateSalePaymentTyp
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Sale.SalePaymentType> Handle(UpdateSalePaymentTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Sale.SalePaymentType> Handle(UpdateSalePaymentTypeCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.SalePaymentType;

@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Sale;
-using DataAccessLayer;
+using Application.Model.Sale;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Sale.SaleSchema.Queries.GetSaleSchema
 {
 
-    public class GetSaleSchemaQuery : IRequest<DataAccessLayer.Model.Sale.SaleSchema>
+    public class GetSaleSchemaQuery : IRequest<Application.Model.Sale.SaleSchema>
     {
         public int? Id { get; set; }
     }
 
-    public class GetSaleSchemaQueryHandler : IRequestHandler<GetSaleSchemaQuery, DataAccessLayer.Model.Sale.SaleSchema>
+    public class GetSaleSchemaQueryHandler : IRequestHandler<GetSaleSchemaQuery, Application.Model.Sale.SaleSchema>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Sale.SaleSchema.Queries.GetSaleSchema
         }
 
 
-        public async Task<DataAccessLayer.Model.Sale.SaleSchema> Handle(GetSaleSchemaQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Sale.SaleSchema> Handle(GetSaleSchemaQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.SaleSchema

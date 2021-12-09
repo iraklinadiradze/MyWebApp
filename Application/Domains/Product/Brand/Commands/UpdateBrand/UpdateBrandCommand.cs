@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Product.Brand.Commands.UpdateBrand
 {
-    public class UpdateBrandCommand : IRequest<DataAccessLayer.Model.Product.Brand>
+    public class UpdateBrandCommand : IRequest<Application.Model.Product.Brand>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Product.Brand Brand { get; set; }
+        public Application.Model.Product.Brand Brand { get; set; }
     }
 
-    public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, DataAccessLayer.Model.Product.Brand>
+    public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, Application.Model.Product.Brand>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Product.Brand.Commands.UpdateBrand
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Product.Brand> Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.Brand> Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.Brand;

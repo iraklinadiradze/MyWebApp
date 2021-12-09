@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Inventory.Location.Commands.CreateLocation
 {
-    public class CreateLocationCommand : IRequest<DataAccessLayer.Model.Inventory.Location>
+    public class CreateLocationCommand : IRequest<Application.Model.Inventory.Location>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Inventory.Location Location { get; set; }
+        public Application.Model.Inventory.Location Location { get; set; }
     }
 
-    public class CreateLocationCommandHandler : IRequestHandler<CreateLocationCommand, DataAccessLayer.Model.Inventory.Location>
+    public class CreateLocationCommandHandler : IRequestHandler<CreateLocationCommand, Application.Model.Inventory.Location>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Inventory.Location.Commands.CreateLocation
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Inventory.Location> Handle(CreateLocationCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.Location> Handle(CreateLocationCommand request, CancellationToken cancellationToken)
         {
             var entity = request.Location;
 

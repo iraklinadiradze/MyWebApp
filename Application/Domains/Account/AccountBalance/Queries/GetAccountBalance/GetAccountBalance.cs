@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Account;
-using DataAccessLayer;
+using Application.Model.Account;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Account.AccountBalance.Queries.GetAccountBalance
 {
 
-    public class GetAccountBalanceQuery : IRequest<DataAccessLayer.Model.Account.AccountBalance>
+    public class GetAccountBalanceQuery : IRequest<Application.Model.Account.AccountBalance>
     {
         public int? Id { get; set; }
     }
 
-    public class GetAccountBalanceQueryHandler : IRequestHandler<GetAccountBalanceQuery, DataAccessLayer.Model.Account.AccountBalance>
+    public class GetAccountBalanceQueryHandler : IRequestHandler<GetAccountBalanceQuery, Application.Model.Account.AccountBalance>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Account.AccountBalance.Queries.GetAccountBalance
         }
 
 
-        public async Task<DataAccessLayer.Model.Account.AccountBalance> Handle(GetAccountBalanceQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Account.AccountBalance> Handle(GetAccountBalanceQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.AccountBalance

@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Inventory;
+using Application.Model.Inventory;
 
 
 namespace Application.Domains.Inventory.InventoryChange.Queries.GetInventoryChangeList
 {
-    public class InventoryChangeView: DataAccessLayer.Model.Inventory.InventoryChange
+    public class InventoryChangeView: Application.Model.Inventory.InventoryChange
     {
 
           public class _Inventory

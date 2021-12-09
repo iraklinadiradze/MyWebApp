@@ -4,14 +4,14 @@ using System.Text;
 
 using Microsoft.EntityFrameworkCore;
 
-using DataAccessLayer.Model.Client;
-using DataAccessLayer.Model.Core;
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer.Model.Product;
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer.Model.Sale;
-using DataAccessLayer.Model.Account;
-using DataAccessLayer.Model.GeneralLedger;
+using Application.Model.Client;
+using Application.Model.Core;
+using Application.Model.Inventory;
+using Application.Model.Product;
+using Application.Model.Procurment;
+using Application.Model.Sale;
+using Application.Model.Account;
+using Application.Model.GeneralLedger;
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -94,7 +94,7 @@ namespace Application.Common.Interfaces
         public DbSet<GlTransactionDetail> GlTransactionDetail { get; set; }
         public DbSet<FinAccount> FinAccount { get; set; }
 
-        object ChangeTracker { get; set; }
+       // object ChangeTracker { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

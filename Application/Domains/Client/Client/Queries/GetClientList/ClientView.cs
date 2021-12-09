@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Client;
+using Application.Model.Client;
 
 
 namespace Application.Domains.Client.Client.Queries.GetClientList
 {
-    public class ClientView: DataAccessLayer.Model.Client.Client
+    public class ClientView: Application.Model.Client.Client
     {
 
           

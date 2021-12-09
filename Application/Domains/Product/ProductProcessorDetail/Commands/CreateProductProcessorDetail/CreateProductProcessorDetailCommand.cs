@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Product.ProductProcessorDetail.Commands.CreateProductProcessorDetail
 {
-    public class CreateProductProcessorDetailCommand : IRequest<DataAccessLayer.Model.Product.ProductProcessorDetail>
+    public class CreateProductProcessorDetailCommand : IRequest<Application.Model.Product.ProductProcessorDetail>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Product.ProductProcessorDetail ProductProcessorDetail { get; set; }
+        public Application.Model.Product.ProductProcessorDetail ProductProcessorDetail { get; set; }
     }
 
-    public class CreateProductProcessorDetailCommandHandler : IRequestHandler<CreateProductProcessorDetailCommand, DataAccessLayer.Model.Product.ProductProcessorDetail>
+    public class CreateProductProcessorDetailCommandHandler : IRequestHandler<CreateProductProcessorDetailCommand, Application.Model.Product.ProductProcessorDetail>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Product.ProductProcessorDetail.Commands.CreateProd
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Product.ProductProcessorDetail> Handle(CreateProductProcessorDetailCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.ProductProcessorDetail> Handle(CreateProductProcessorDetailCommand request, CancellationToken cancellationToken)
         {
             var entity = request.ProductProcessorDetail;
 

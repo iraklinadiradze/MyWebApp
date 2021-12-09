@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.[###moduleName###];
+using Application.Model.[###moduleName###];
 
 
 namespace Application.Domains.[###moduleName###].[###entityName###].Queries.Get[###entityName###]List
 {
-    public class [###entityName###]View: DataAccessLayer.Model.[###moduleName###].[###entityName###]
+    public class [###entityName###]View: Application.Model.[###moduleName###].[###entityName###]
     {
 
           [###RelatedentityClasses###]

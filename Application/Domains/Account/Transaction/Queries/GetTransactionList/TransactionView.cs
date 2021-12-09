@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Account;
+using Application.Model.Account;
 
 
 namespace Application.Domains.Account.Transaction.Queries.GetTransactionList
 {
-    public class TransactionView: DataAccessLayer.Model.Account.Transaction
+    public class TransactionView: Application.Model.Account.Transaction
     {
 
           public class _Account

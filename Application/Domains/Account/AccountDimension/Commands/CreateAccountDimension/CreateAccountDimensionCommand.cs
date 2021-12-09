@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Account;
-using DataAccessLayer;
+using Application.Model.Account;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Account.AccountDimension.Commands.CreateAccountDimension
 {
-    public class CreateAccountDimensionCommand : IRequest<DataAccessLayer.Model.Account.AccountDimension>
+    public class CreateAccountDimensionCommand : IRequest<Application.Model.Account.AccountDimension>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Account.AccountDimension AccountDimension { get; set; }
+        public Application.Model.Account.AccountDimension AccountDimension { get; set; }
     }
 
-    public class CreateAccountDimensionCommandHandler : IRequestHandler<CreateAccountDimensionCommand, DataAccessLayer.Model.Account.AccountDimension>
+    public class CreateAccountDimensionCommandHandler : IRequestHandler<CreateAccountDimensionCommand, Application.Model.Account.AccountDimension>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Account.AccountDimension.Commands.CreateAccountDim
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Account.AccountDimension> Handle(CreateAccountDimensionCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Account.AccountDimension> Handle(CreateAccountDimensionCommand request, CancellationToken cancellationToken)
         {
             var entity = request.AccountDimension;
 

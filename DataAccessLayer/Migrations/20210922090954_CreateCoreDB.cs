@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DataAccessLayer.Migrations
+namespace Application.Migrations
 {
     public partial class CreateCoreDB : Migration
     {

@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Core;
-using DataAccessLayer;
+using Application.Model.Core;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Core.Currency.Queries.GetCurrency
 {
 
-    public class GetCurrencyQuery : IRequest<DataAccessLayer.Model.Core.Currency>
+    public class GetCurrencyQuery : IRequest<Application.Model.Core.Currency>
     {
         public int? Id { get; set; }
     }
 
-    public class GetCurrencyQueryHandler : IRequestHandler<GetCurrencyQuery, DataAccessLayer.Model.Core.Currency>
+    public class GetCurrencyQueryHandler : IRequestHandler<GetCurrencyQuery, Application.Model.Core.Currency>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Core.Currency.Queries.GetCurrency
         }
 
 
-        public async Task<DataAccessLayer.Model.Core.Currency> Handle(GetCurrencyQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Core.Currency> Handle(GetCurrencyQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.Currency

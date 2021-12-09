@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Procurment.PurchaseDetail.Queries.GetPurchaseDetail
 {
 
-    public class GetPurchaseDetailQuery : IRequest<DataAccessLayer.Model.Procurment.PurchaseDetail>
+    public class GetPurchaseDetailQuery : IRequest<Application.Model.Procurment.PurchaseDetail>
     {
         public int? Id { get; set; }
     }
 
-    public class GetPurchaseDetailQueryHandler : IRequestHandler<GetPurchaseDetailQuery, DataAccessLayer.Model.Procurment.PurchaseDetail>
+    public class GetPurchaseDetailQueryHandler : IRequestHandler<GetPurchaseDetailQuery, Application.Model.Procurment.PurchaseDetail>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Procurment.PurchaseDetail.Queries.GetPurchaseDetai
         }
 
 
-        public async Task<DataAccessLayer.Model.Procurment.PurchaseDetail> Handle(GetPurchaseDetailQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.PurchaseDetail> Handle(GetPurchaseDetailQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.PurchaseDetail

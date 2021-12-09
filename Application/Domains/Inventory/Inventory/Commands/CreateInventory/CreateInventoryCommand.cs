@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Inventory.Inventory.Commands.CreateInventory
 {
-    public class CreateInventoryCommand : IRequest<DataAccessLayer.Model.Inventory.Inventory>
+    public class CreateInventoryCommand : IRequest<Application.Model.Inventory.Inventory>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Inventory.Inventory Inventory { get; set; }
+        public Application.Model.Inventory.Inventory Inventory { get; set; }
     }
 
-    public class CreateInventoryCommandHandler : IRequestHandler<CreateInventoryCommand, DataAccessLayer.Model.Inventory.Inventory>
+    public class CreateInventoryCommandHandler : IRequestHandler<CreateInventoryCommand, Application.Model.Inventory.Inventory>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.CreateInventory
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Inventory.Inventory> Handle(CreateInventoryCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.Inventory> Handle(CreateInventoryCommand request, CancellationToken cancellationToken)
         {
             var entity = request.Inventory;
 

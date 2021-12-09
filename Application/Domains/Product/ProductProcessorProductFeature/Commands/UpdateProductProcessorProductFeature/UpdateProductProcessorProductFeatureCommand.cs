@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Product.ProductProcessorProductFeature.Commands.UpdateProductProcessorProductFeature
 {
-    public class UpdateProductProcessorProductFeatureCommand : IRequest<DataAccessLayer.Model.Product.ProductProcessorProductFeature>
+    public class UpdateProductProcessorProductFeatureCommand : IRequest<Application.Model.Product.ProductProcessorProductFeature>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Product.ProductProcessorProductFeature ProductProcessorProductFeature { get; set; }
+        public Application.Model.Product.ProductProcessorProductFeature ProductProcessorProductFeature { get; set; }
     }
 
-    public class UpdateProductProcessorProductFeatureCommandHandler : IRequestHandler<UpdateProductProcessorProductFeatureCommand, DataAccessLayer.Model.Product.ProductProcessorProductFeature>
+    public class UpdateProductProcessorProductFeatureCommandHandler : IRequestHandler<UpdateProductProcessorProductFeatureCommand, Application.Model.Product.ProductProcessorProductFeature>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Product.ProductProcessorProductFeature.Commands.Up
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Product.ProductProcessorProductFeature> Handle(UpdateProductProcessorProductFeatureCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.ProductProcessorProductFeature> Handle(UpdateProductProcessorProductFeatureCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.ProductProcessorProductFeature;

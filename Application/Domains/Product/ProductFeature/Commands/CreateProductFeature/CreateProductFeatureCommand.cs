@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Product.ProductFeature.Commands.CreateProductFeature
 {
-    public class CreateProductFeatureCommand : IRequest<DataAccessLayer.Model.Product.ProductFeature>
+    public class CreateProductFeatureCommand : IRequest<Application.Model.Product.ProductFeature>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Product.ProductFeature ProductFeature { get; set; }
+        public Application.Model.Product.ProductFeature ProductFeature { get; set; }
     }
 
-    public class CreateProductFeatureCommandHandler : IRequestHandler<CreateProductFeatureCommand, DataAccessLayer.Model.Product.ProductFeature>
+    public class CreateProductFeatureCommandHandler : IRequestHandler<CreateProductFeatureCommand, Application.Model.Product.ProductFeature>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Product.ProductFeature.Commands.CreateProductFeatu
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Product.ProductFeature> Handle(CreateProductFeatureCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.ProductFeature> Handle(CreateProductFeatureCommand request, CancellationToken cancellationToken)
         {
             var entity = request.ProductFeature;
 

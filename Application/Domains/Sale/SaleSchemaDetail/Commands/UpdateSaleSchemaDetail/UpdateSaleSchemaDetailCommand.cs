@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Sale;
-using DataAccessLayer;
+using Application.Model.Sale;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Sale.SaleSchemaDetail.Commands.UpdateSaleSchemaDetail
 {
-    public class UpdateSaleSchemaDetailCommand : IRequest<DataAccessLayer.Model.Sale.SaleSchemaDetail>
+    public class UpdateSaleSchemaDetailCommand : IRequest<Application.Model.Sale.SaleSchemaDetail>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Sale.SaleSchemaDetail SaleSchemaDetail { get; set; }
+        public Application.Model.Sale.SaleSchemaDetail SaleSchemaDetail { get; set; }
     }
 
-    public class UpdateSaleSchemaDetailCommandHandler : IRequestHandler<UpdateSaleSchemaDetailCommand, DataAccessLayer.Model.Sale.SaleSchemaDetail>
+    public class UpdateSaleSchemaDetailCommandHandler : IRequestHandler<UpdateSaleSchemaDetailCommand, Application.Model.Sale.SaleSchemaDetail>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Sale.SaleSchemaDetail.Commands.UpdateSaleSchemaDet
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Sale.SaleSchemaDetail> Handle(UpdateSaleSchemaDetailCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Sale.SaleSchemaDetail> Handle(UpdateSaleSchemaDetailCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.SaleSchemaDetail;

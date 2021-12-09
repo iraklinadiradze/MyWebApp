@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using DataAccessLayer.Model.Product;
+using Application.Model.Product;
 
 
 namespace Application.Domains.Product.ProductProcessorSalePrice.Queries.GetProductProcessorSalePriceList
 {
-    public class ProductProcessorSalePriceView: DataAccessLayer.Model.Product.ProductProcessorSalePrice
+    public class ProductProcessorSalePriceView: Application.Model.Product.ProductProcessorSalePrice
     {
 
           public class _ProductProcessorDetail

@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 using Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseDetailStatusCommand;
@@ -169,7 +169,7 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return 0;
+            return 5;
         }
     }
 

@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Account;
-using DataAccessLayer;
+using Application.Model.Account;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Account.AccountBalance.Commands.CreateAccountBalance
 {
-    public class CreateAccountBalanceCommand : IRequest<DataAccessLayer.Model.Account.AccountBalance>
+    public class CreateAccountBalanceCommand : IRequest<Application.Model.Account.AccountBalance>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Account.AccountBalance AccountBalance { get; set; }
+        public Application.Model.Account.AccountBalance AccountBalance { get; set; }
     }
 
-    public class CreateAccountBalanceCommandHandler : IRequestHandler<CreateAccountBalanceCommand, DataAccessLayer.Model.Account.AccountBalance>
+    public class CreateAccountBalanceCommandHandler : IRequestHandler<CreateAccountBalanceCommand, Application.Model.Account.AccountBalance>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Account.AccountBalance.Commands.CreateAccountBalan
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Account.AccountBalance> Handle(CreateAccountBalanceCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Account.AccountBalance> Handle(CreateAccountBalanceCommand request, CancellationToken cancellationToken)
         {
             var entity = request.AccountBalance;
 

@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Product;
-using DataAccessLayer;
+using Application.Model.Product;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Product.ProductGroupTemplateFeature.Queries.GetProductGroupTemplateFeature
 {
 
-    public class GetProductGroupTemplateFeatureQuery : IRequest<DataAccessLayer.Model.Product.ProductGroupTemplateFeature>
+    public class GetProductGroupTemplateFeatureQuery : IRequest<Application.Model.Product.ProductGroupTemplateFeature>
     {
         public int? Id { get; set; }
     }
 
-    public class GetProductGroupTemplateFeatureQueryHandler : IRequestHandler<GetProductGroupTemplateFeatureQuery, DataAccessLayer.Model.Product.ProductGroupTemplateFeature>
+    public class GetProductGroupTemplateFeatureQueryHandler : IRequestHandler<GetProductGroupTemplateFeatureQuery, Application.Model.Product.ProductGroupTemplateFeature>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Product.ProductGroupTemplateFeature.Queries.GetPro
         }
 
 
-        public async Task<DataAccessLayer.Model.Product.ProductGroupTemplateFeature> Handle(GetProductGroupTemplateFeatureQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Product.ProductGroupTemplateFeature> Handle(GetProductGroupTemplateFeatureQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.ProductGroupTemplateFeature

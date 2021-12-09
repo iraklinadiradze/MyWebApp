@@ -4,20 +4,19 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-using DataAccessLayer.Model.Client;
-using DataAccessLayer.Model.Core;
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer.Model.Product;
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer.Model.Sale;
-using DataAccessLayer.Model.Account;
-using DataAccessLayer.Model.GeneralLedger;
-
-
+using Application.Model.Client;
+using Application.Model.Core;
+using Application.Model.Inventory;
+using Application.Model.Product;
+using Application.Model.Procurment;
+using Application.Model.Sale;
+using Application.Model.Account;
+using Application.Model.GeneralLedger;
+using Application.Common.Interfaces;
 
 namespace DataAccessLayer
 {
-    public class CoreDBContext : DbContext
+    public class CoreDBContext : DbContext, ICoreDBContext
     {
 
         public InventoryChange[] CostAffectedInventoryChangeList { get; set; } = { };
@@ -25,7 +24,7 @@ namespace DataAccessLayer
 
 
         ///*
-        public CoreDBContext() : base()
+        public CoreDBContext(DbContextOptions<CoreDBContext> dbContextOptions) : base(dbContextOptions)
         {
 //         return null;
         }
@@ -107,12 +106,12 @@ namespace DataAccessLayer
         public virtual DbSet<FinAccount> FinAccount { get; set; }
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
         {
             if (!optionsBuilder.IsConfigured)
             {
                 ///#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.;Database=CoreDB;Integrated Security=True");
+        //        optionsBuilder.UseSqlServer("Server=.;Database=CoreDB;Integrated Security=True");
 
             }
         }

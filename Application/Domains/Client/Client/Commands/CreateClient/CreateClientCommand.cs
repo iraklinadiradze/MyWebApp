@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Client;
-using DataAccessLayer;
+using Application.Model.Client;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Client.Client.Commands.CreateClient
 {
-    public class CreateClientCommand : IRequest<DataAccessLayer.Model.Client.Client>
+    public class CreateClientCommand : IRequest<Application.Model.Client.Client>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Client.Client Client { get; set; }
+        public Application.Model.Client.Client Client { get; set; }
     }
 
-    public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, DataAccessLayer.Model.Client.Client>
+    public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, Application.Model.Client.Client>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Client.Client.Commands.CreateClient
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Client.Client> Handle(CreateClientCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Client.Client> Handle(CreateClientCommand request, CancellationToken cancellationToken)
         {
             var entity = request.Client;
 

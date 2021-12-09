@@ -1,157 +1,248 @@
-﻿using DataAccessLayer;
+﻿using Application;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Xunit;
+using DataAccessLayer;
+using MediatR;
+using Moq;
+
 
 namespace Application.Test.SeedData
 {
-    public class SeedData
+    public class SeedData : IDisposable
     {
-        CoreDBContext _dbConext;
+        public CoreDBContext _dbContext { get; set; }
+        public   Mock<IMediator> _mediator { get; set; }
 
-        public SeedData(CoreDBContext dbConext)
+
+        public SeedData()
         {
-            _dbConext = dbConext;
+
+            var builder = new DbContextOptionsBuilder<CoreDBContext>();
+            builder.UseInMemoryDatabase(databaseName: "LibraryDbInMemory");
+
+            _dbContext = new CoreDBContext(builder.Options);
+//            _dbContext.Database.EnsureDeleted();
+            _dbContext.Database.EnsureCreated();
+
+            _mediator = new Mock<IMediator>();
+
         }
 
-        void doMakeSeeding()
+        public void Dispose()
         {
 
+            _dbContext.Dispose();
+//            throw new NotImplementedException();
+        }
+
+        public void doMakeSeeding()
+        {
+
+            _dbContext.Currency.AddRange(
+                new[]
+                {
+                    new Application.Model.Core.Currency{ CurrencyCode="GEL", CurrencyDescrip ="Georgian Lari" } ,
+                    new Application.Model.Core.Currency{ CurrencyCode="USD", CurrencyDescrip ="US Dollar" } ,
+                    new Application.Model.Core.Currency{ CurrencyCode="EUR", CurrencyDescrip ="Euro" } ,
+                    new Application.Model.Core.Currency{ CurrencyCode="GBP", CurrencyDescrip ="British Pound" }
+                }
+             );
+
+            _dbContext.Country.AddRange(
+                new[]
+                {
+                    new Application.Model.Core.Country{ Code="GEO", Name="Republic of Georgia"} ,
+                    new Application.Model.Core.Country{ Code="USA", Name="United States Of America"},
+                    new Application.Model.Core.Country{ Code="GER", Name="Germany"},
+                    new Application.Model.Core.Country{ Code="AZE", Name="Azerbaijan"},
+                    new Application.Model.Core.Country{ Code="ARM", Name="Armenia"},
+                    new Application.Model.Core.Country{ Code="TUR", Name="Turkey"}
+                }
+             );
+
+            /*
+            _dbContext.User.AddRange(
+                new[]
+                {
+                    new Core.User{ Username="inadir", Password="123", Firstname="Irakli", Lastname="Nadiradze"} 
+                }
+             );
+            */
+
+            // Clients Schema
+
+            // Products Schema
+            _dbContext.ProductUnit.AddRange(
+                new[]
+                {
+                    new Application.Model.Product.ProductUnit{ ProductUnitName ="ცალი" } ,
+                    new Application.Model.Product.ProductUnit{ ProductUnitName ="კილოგრამი" } ,
+                    new Application.Model.Product.ProductUnit{ ProductUnitName ="გრამი" } ,
+                    new Application.Model.Product.ProductUnit{ ProductUnitName ="მეტრი" } ,
+                    new Application.Model.Product.ProductUnit{ ProductUnitName ="სანტიმეტრი" },
+                    new Application.Model.Product.ProductUnit{ ProductUnitName ="მილიმეტრი" }
+
+                }
+             );
+
+
+            // Inventory Schema
+            _dbContext.InventoryChangeType.AddRange(
+                new[]
+                {
+                    new Application.Model.Inventory.InventoryChangeType{ ChangeCode="PRC", ChangeName="შესყიდვა" , IsFinRelated= true, IsQtyRelated=false} ,
+                    new Application.Model.Inventory.InventoryChangeType{ ChangeCode="MVM", ChangeName="გადაზიდვა" , IsFinRelated= true, IsQtyRelated=false} ,
+                    new Application.Model.Inventory.InventoryChangeType{ ChangeCode="SAL", ChangeName="გაყიდვა" , IsFinRelated= true, IsQtyRelated=false} ,
+                    new Application.Model.Inventory.InventoryChangeType{ ChangeCode="WRO", ChangeName="ჩამოწერა" , IsFinRelated= true, IsQtyRelated=false} ,
+                    new Application.Model.Inventory.InventoryChangeType{ ChangeCode="PRD", ChangeName="ტრანსფორმაცია" , IsFinRelated= true, IsQtyRelated=false}
+                }
+             );
+
+            _dbContext.SaveChanges();
+
             // Location Seeding
-            DataAccessLayer.Model.Inventory.Location location1 =
-                new DataAccessLayer.Model.Inventory.Location
+            Application.Model.Inventory.Location location1 =
+                new Application.Model.Inventory.Location
                 {
                     Name = "Location 1"
                 };
 
-            DataAccessLayer.Model.Inventory.Location location2 =
-                new DataAccessLayer.Model.Inventory.Location
+            Application.Model.Inventory.Location location2 =
+                new Application.Model.Inventory.Location
                 {
                     Name = "Location 2"
                 };
 
-            DataAccessLayer.Model.Inventory.Location location3 =
-                new DataAccessLayer.Model.Inventory.Location
+            Application.Model.Inventory.Location location3 =
+                new Application.Model.Inventory.Location
                 {
                     Name = "Location 3"
                 };
 
-            _dbConext.Location.AddRange(location1, location2, location3 );
+            _dbContext.Location.AddRange(location1, location2, location3 );
 
 
+            _dbContext.SaveChanges();
 
             // Product Category Seeding
-            DataAccessLayer.Model.Product.ProductCategory productCategory1 = new DataAccessLayer.Model.Product.ProductCategory
+            Application.Model.Product.ProductCategory productCategory1 = new Application.Model.Product.ProductCategory
             {
                 ProductCategoryName = "ProductCategory1"
             };
 
-            DataAccessLayer.Model.Product.ProductCategory productCategory2 = new DataAccessLayer.Model.Product.ProductCategory
+            Application.Model.Product.ProductCategory productCategory2 = new Application.Model.Product.ProductCategory
             {
                 ProductCategoryName = "ProductCategory2"
             };
 
-            DataAccessLayer.Model.Product.ProductCategory productCategory3 = new DataAccessLayer.Model.Product.ProductCategory
+            Application.Model.Product.ProductCategory productCategory3 = new Application.Model.Product.ProductCategory
             {
                 ProductCategoryName = "ProductCategory3"
             };
 
-            _dbConext.ProductCategory.AddRange(productCategory1, productCategory2, productCategory3);
+            _dbContext.ProductCategory.AddRange(productCategory1, productCategory2, productCategory3);
+            _dbContext.SaveChanges();
 
 
 
             // Product Group Seeding
-            DataAccessLayer.Model.Product.ProductGroup productGroup1_1 = new DataAccessLayer.Model.Product.ProductGroup
+            Application.Model.Product.ProductGroup productGroup1_1 = new Application.Model.Product.ProductGroup
             {
                 ProductGroupName = "ProductGroup1_1",
                 ProductCategoryId = productCategory1.Id
             };
 
-            DataAccessLayer.Model.Product.ProductGroup productGroup1_2 = new DataAccessLayer.Model.Product.ProductGroup
+            Application.Model.Product.ProductGroup productGroup1_2 = new Application.Model.Product.ProductGroup
             {
                 ProductGroupName = "ProductGroup1_2",
                 ProductCategoryId = productCategory1.Id
             };
 
-            DataAccessLayer.Model.Product.ProductGroup productGroup1_3 = new DataAccessLayer.Model.Product.ProductGroup
+            Application.Model.Product.ProductGroup productGroup1_3 = new Application.Model.Product.ProductGroup
             {
                 ProductGroupName = "ProductGroup1_3",
                 ProductCategoryId = productCategory1.Id
             };
 
-            DataAccessLayer.Model.Product.ProductGroup productGroup2_1 = new DataAccessLayer.Model.Product.ProductGroup
+            Application.Model.Product.ProductGroup productGroup2_1 = new Application.Model.Product.ProductGroup
             {
                 ProductGroupName = "ProductGroup2_1",
                 ProductCategoryId = productCategory2.Id
             };
 
-            DataAccessLayer.Model.Product.ProductGroup productGroup2_2 = new DataAccessLayer.Model.Product.ProductGroup
+            Application.Model.Product.ProductGroup productGroup2_2 = new Application.Model.Product.ProductGroup
             {
                 ProductGroupName = "ProductGroup2_2",
                 ProductCategoryId = productCategory2.Id
             };
 
-            DataAccessLayer.Model.Product.ProductGroup productGroup3_1 = new DataAccessLayer.Model.Product.ProductGroup
+            Application.Model.Product.ProductGroup productGroup3_1 = new Application.Model.Product.ProductGroup
             {
                 ProductGroupName = "ProductGroup3_1",
                 ProductCategoryId = productCategory3.Id
             };
 
-            _dbConext.ProductGroup.AddRange(productGroup1_1, productGroup1_2, productGroup1_3, productGroup2_1, productGroup2_2, productGroup3_1);
+            _dbContext.ProductGroup.AddRange(productGroup1_1, productGroup1_2, productGroup1_3, productGroup2_1, productGroup2_2, productGroup3_1);
+            _dbContext.SaveChanges();
 
 
 
             // Product Brand Seeding
-            DataAccessLayer.Model.Product.Brand brand1 = new DataAccessLayer.Model.Product.Brand
+            Application.Model.Product.Brand brand1 = new Application.Model.Product.Brand
             {
                 BrandName ="Brand1"
             };
 
-            DataAccessLayer.Model.Product.Brand brand2 = new DataAccessLayer.Model.Product.Brand
+            Application.Model.Product.Brand brand2 = new Application.Model.Product.Brand
             {
                 BrandName = "Brand2"
             };
 
-            _dbConext.Brand.AddRange(brand1, brand2);
+            _dbContext.Brand.AddRange(brand1, brand2);
+            _dbContext.SaveChanges();
 
 
 
             // Product Label Seeding
-            DataAccessLayer.Model.Product.ProductLabel productlabel1 = new DataAccessLayer.Model.Product.ProductLabel
+            Application.Model.Product.ProductLabel productlabel1 = new Application.Model.Product.ProductLabel
             {
                 ProductLabelName = "ProductLabel1",
                 BrandId =  brand1.Id
             };
 
-            DataAccessLayer.Model.Product.ProductLabel productlabel2 = new DataAccessLayer.Model.Product.ProductLabel
+            Application.Model.Product.ProductLabel productlabel2 = new Application.Model.Product.ProductLabel
             {
                 ProductLabelName = "ProductLabel2",
                 BrandId = brand1.Id
             };
 
-            DataAccessLayer.Model.Product.ProductLabel productlabel3 = new DataAccessLayer.Model.Product.ProductLabel
+            Application.Model.Product.ProductLabel productlabel3 = new Application.Model.Product.ProductLabel
             {
                 ProductLabelName = "ProductLabel3",
                 BrandId = brand1.Id
             };
 
-            DataAccessLayer.Model.Product.ProductLabel productlabel4 = new DataAccessLayer.Model.Product.ProductLabel
+            Application.Model.Product.ProductLabel productlabel4 = new Application.Model.Product.ProductLabel
             {
                 ProductLabelName = "ProductLabel4",
                 BrandId = brand2.Id
             };
 
-            _dbConext.ProductLabel.AddRange(productlabel1, productlabel2, productlabel3, productlabel4);
+            _dbContext.ProductLabel.AddRange(productlabel1, productlabel2, productlabel3, productlabel4);
+            _dbContext.SaveChanges();
 
 
 
             // Product Seeding
-            DataAccessLayer.Model.Product.Product product1 =
-                new DataAccessLayer.Model.Product.Product
+            Application.Model.Product.Product product1 =
+                new Application.Model.Product.Product
                 {
                      ProductCode = "13245654654",
-                     ProductUnitId = _dbConext.ProductUnit.Where(x=>x.ProductUnitName=="ცალი").FirstOrDefault().Id,
+                     ProductUnitId = _dbContext.ProductUnit.Where(x=>x.ProductUnitName=="ცალი").FirstOrDefault().Id,
                      IsSingle = false,
                      IsTangible = true,
                      IsWholeQuantity = true ,
@@ -160,11 +251,11 @@ namespace Application.Test.SeedData
                      ProductGroupId = productGroup1_1.Id
                  };
 
-            DataAccessLayer.Model.Product.Product product2 =
-                new DataAccessLayer.Model.Product.Product
+            Application.Model.Product.Product product2 =
+                new Application.Model.Product.Product
                 {
                     ProductCode = "783457438834",
-                    ProductUnitId = _dbConext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
                     IsSingle = false,
                     IsTangible = true,
                     IsWholeQuantity = true,
@@ -173,11 +264,11 @@ namespace Application.Test.SeedData
                     ProductGroupId = productGroup1_1.Id
                 };
 
-            DataAccessLayer.Model.Product.Product product3 =
-                new DataAccessLayer.Model.Product.Product
+            Application.Model.Product.Product product3 =
+                new Application.Model.Product.Product
                 {
                     ProductCode = "798734234232" ,
-                    ProductUnitId = _dbConext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
                     IsSingle = false,
                     IsTangible = true,
                     IsWholeQuantity = true,
@@ -186,11 +277,11 @@ namespace Application.Test.SeedData
                     ProductGroupId = productGroup1_2.Id
                 };
 
-            DataAccessLayer.Model.Product.Product product4 =
-                new DataAccessLayer.Model.Product.Product
+            Application.Model.Product.Product product4 =
+                new Application.Model.Product.Product
                 {
                     ProductCode = "25632342322",
-                    ProductUnitId = _dbConext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
                     IsSingle = false,
                     IsTangible = true,
                     IsWholeQuantity = true,
@@ -199,11 +290,11 @@ namespace Application.Test.SeedData
                     ProductGroupId = productGroup1_2.Id
                 };
 
-            DataAccessLayer.Model.Product.Product product5 =
-                new DataAccessLayer.Model.Product.Product
+            Application.Model.Product.Product product5 =
+                new Application.Model.Product.Product
                 {
                     ProductCode = "2344447890",
-                    ProductUnitId = _dbConext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
                     IsSingle = false,
                     IsTangible = true,
                     IsWholeQuantity = true,
@@ -213,11 +304,11 @@ namespace Application.Test.SeedData
                 };
 
 
-            DataAccessLayer.Model.Product.Product product6 =
-                new DataAccessLayer.Model.Product.Product
+            Application.Model.Product.Product product6 =
+                new Application.Model.Product.Product
                 {
                     ProductCode = "23444473433",
-                    ProductUnitId = _dbConext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
                     IsSingle = false,
                     IsTangible = true,
                     IsWholeQuantity = true,
@@ -226,11 +317,11 @@ namespace Application.Test.SeedData
                     ProductGroupId = productGroup1_2.Id
                 };
 
-            DataAccessLayer.Model.Product.Product product7 =
-                new DataAccessLayer.Model.Product.Product
+            Application.Model.Product.Product product7 =
+                new Application.Model.Product.Product
                 {
                     ProductCode = "23443435345",
-                    ProductUnitId = _dbConext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
                     IsSingle = false,
                     IsTangible = true,
                     IsWholeQuantity = true,
@@ -239,11 +330,11 @@ namespace Application.Test.SeedData
                     ProductGroupId = productGroup1_3.Id
                 };
 
-            DataAccessLayer.Model.Product.Product product8 =
-                new DataAccessLayer.Model.Product.Product
+            Application.Model.Product.Product product8 =
+                new Application.Model.Product.Product
                 {
                     ProductCode = "7420029999333",
-                    ProductUnitId = _dbConext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
                     IsSingle = false,
                     IsTangible = true,
                     IsWholeQuantity = true,
@@ -252,11 +343,11 @@ namespace Application.Test.SeedData
                     ProductGroupId = productGroup1_3.Id
                 };
 
-            DataAccessLayer.Model.Product.Product product9 =
-                new DataAccessLayer.Model.Product.Product
+            Application.Model.Product.Product product9 =
+                new Application.Model.Product.Product
                 {
                     ProductCode = "234566544344",
-                    ProductUnitId = _dbConext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
                     IsSingle = false,
                     IsTangible = true,
                     IsWholeQuantity = true,
@@ -265,11 +356,11 @@ namespace Application.Test.SeedData
                     ProductGroupId = productGroup1_3.Id
                 };
 
-            DataAccessLayer.Model.Product.Product product10 =
-                new DataAccessLayer.Model.Product.Product
+            Application.Model.Product.Product product10 =
+                new Application.Model.Product.Product
                 {
                     ProductCode = "57753222233",
-                    ProductUnitId = _dbConext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
                     IsSingle = false,
                     IsTangible = true,
                     IsWholeQuantity = true,
@@ -278,11 +369,11 @@ namespace Application.Test.SeedData
                     ProductGroupId = productGroup2_2.Id
                 };
 
-            DataAccessLayer.Model.Product.Product product11 =
-                new DataAccessLayer.Model.Product.Product
+            Application.Model.Product.Product product11 =
+                new Application.Model.Product.Product
                 {
                     ProductCode = "3485858543",
-                    ProductUnitId = _dbConext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
                     IsSingle = false,
                     IsTangible = true,
                     IsWholeQuantity = true,
@@ -291,11 +382,11 @@ namespace Application.Test.SeedData
                     ProductGroupId = productGroup2_2.Id
                 };
 
-            DataAccessLayer.Model.Product.Product product12 =
-                new DataAccessLayer.Model.Product.Product
+            Application.Model.Product.Product product12 =
+                new Application.Model.Product.Product
                 {
                     ProductCode = "2348838383",
-                    ProductUnitId = _dbConext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
                     IsSingle = false,
                     IsTangible = true,
                     IsWholeQuantity = true,
@@ -304,33 +395,14 @@ namespace Application.Test.SeedData
                     ProductGroupId = productGroup2_2.Id
                 };
 
-            _dbConext.Product.AddRange(product1, product2, product3, product4, product5, product6, product7, 
+            _dbContext.Product.AddRange(product1, product2, product3, product4, product5, product6, product7, 
                 product8, product9, product10, product11, product12);
-
-
-
-            // Legal Entity 
-
-            DataAccessLayer.Model.Client.LegalEntity legal_entity1 =
-                new DataAccessLayer.Model.Client.LegalEntity
-                {
-                    LegalEntityName ="LTD vendor1",
-                    Email = "info@vendro1.com",
-                    LegalAddress = "1 downingstreet , TownCity",
-                    OfficeAddress = "1 downingstreet , TownCity",
-                    Mobile = "+1-321-232-344",
-                    RegistrationCountryID = _dbConext.Country.Where(x=> x.Code == "GEO").FirstOrDefault().Id,
-                    TaxCode = "1235563313",
-                    TaxRegDate = new DateTime(2017,05, 27)
-                };
-
-            _dbConext.LegalEntity.Add(legal_entity1);
-
+            _dbContext.SaveChanges();
 
 
             // Client Seeding
-            DataAccessLayer.Model.Client.Client client1 =
-                new DataAccessLayer.Model.Client.Client
+            Application.Model.Client.Client client1 =
+                new Application.Model.Client.Client
                 {
                     IsCustomer = false,
                     IsBank = false,
@@ -339,17 +411,38 @@ namespace Application.Test.SeedData
                     IsSupplier = true,
 
                     Name = "Vendro 1"
-                 };
+                };
 
-            _dbConext.Client.Add(client1);
+            _dbContext.Client.Add(client1);
+            _dbContext.SaveChanges();
+
+
+            // Legal Entity 
+
+            Application.Model.Client.LegalEntity legal_entity1 =
+                new Application.Model.Client.LegalEntity
+                {
+                    Id =  client1.Id,
+                    LegalEntityName ="LTD vendor1",
+                    Email = "info@vendro1.com",
+                    LegalAddress = "1 downingstreet , TownCity",
+                    OfficeAddress = "1 downingstreet , TownCity",
+                    Mobile = "+1-321-232-344",
+                    RegistrationCountryID = _dbContext.Country.Where(x=> x.Code == "GEO").FirstOrDefault().Id,
+                    TaxCode = "1235563313",
+                    TaxRegDate = new DateTime(2017,05, 27)
+                };
+
+            _dbContext.LegalEntity.Add(legal_entity1);
+            _dbContext.SaveChanges();
 
 
             // Purchase Seeding
-            DataAccessLayer.Model.Procurment.Purchase purchase1 =
-                new DataAccessLayer.Model.Procurment.Purchase
+            Application.Model.Procurment.Purchase purchase1 =
+                new Application.Model.Procurment.Purchase
                 {
                     TransDate = new DateTime(2021, 5, 1),
-                    CurrencyId = _dbConext.Currency.Where(x => x.CurrencyCode == "GEL").FirstOrDefault().Id,
+                    CurrencyId = _dbContext.Currency.Where(x => x.CurrencyCode == "GEL").FirstOrDefault().Id,
                     ClientId = client1.Id,
                     InvoiceNumber = "INV-001",
                     Note = $"Purchase 1 from vendor:{client1.Name} ",
@@ -364,9 +457,12 @@ namespace Application.Test.SeedData
                     Posted = false
                 };
 
+            _dbContext.Purchase.AddRange(purchase1);
+            _dbContext.SaveChanges();
+
             // Purchase Detail Seeding
-            DataAccessLayer.Model.Procurment.PurchaseDetail purchaseDetail1 =
-                new DataAccessLayer.Model.Procurment.PurchaseDetail
+            Application.Model.Procurment.PurchaseDetail purchaseDetail1 =
+                new Application.Model.Procurment.PurchaseDetail
                 {
                     PurchaseId = purchase1.Id,
                     LocationId =  location1.Id,
@@ -399,8 +495,8 @@ namespace Application.Test.SeedData
                     
                 };
 
-            DataAccessLayer.Model.Procurment.PurchaseDetail purchaseDetail2 =
-                new DataAccessLayer.Model.Procurment.PurchaseDetail
+            Application.Model.Procurment.PurchaseDetail purchaseDetail2 =
+                new Application.Model.Procurment.PurchaseDetail
                 {
                     PurchaseId = purchase1.Id,
                     LocationId = location1.Id,
@@ -433,8 +529,8 @@ namespace Application.Test.SeedData
 
                 };
 
-            DataAccessLayer.Model.Procurment.PurchaseDetail purchaseDetail3 =
-                new DataAccessLayer.Model.Procurment.PurchaseDetail
+            Application.Model.Procurment.PurchaseDetail purchaseDetail3 =
+                new Application.Model.Procurment.PurchaseDetail
                 {
                     PurchaseId = purchase1.Id,
                     LocationId = location1.Id,
@@ -467,8 +563,8 @@ namespace Application.Test.SeedData
 
                 };
 
-            DataAccessLayer.Model.Procurment.PurchaseDetail purchaseDetail4 =
-                new DataAccessLayer.Model.Procurment.PurchaseDetail
+            Application.Model.Procurment.PurchaseDetail purchaseDetail4 =
+                new Application.Model.Procurment.PurchaseDetail
                 {
                     PurchaseId = purchase1.Id,
                     LocationId = location1.Id,
@@ -501,8 +597,8 @@ namespace Application.Test.SeedData
 
                 };
 
-            DataAccessLayer.Model.Procurment.PurchaseDetail purchaseDetail5 =
-                new DataAccessLayer.Model.Procurment.PurchaseDetail
+            Application.Model.Procurment.PurchaseDetail purchaseDetail5 =
+                new Application.Model.Procurment.PurchaseDetail
                 {
                     PurchaseId = purchase1.Id,
                     LocationId = location1.Id,
@@ -535,8 +631,8 @@ namespace Application.Test.SeedData
 
                 };
 
-            DataAccessLayer.Model.Procurment.PurchaseDetail purchaseDetail6 =
-                new DataAccessLayer.Model.Procurment.PurchaseDetail
+            Application.Model.Procurment.PurchaseDetail purchaseDetail6 =
+                new Application.Model.Procurment.PurchaseDetail
                 {
                     PurchaseId = purchase1.Id,
                     LocationId = location1.Id,
@@ -568,6 +664,9 @@ namespace Application.Test.SeedData
                     PurchaseDraftId = 0
 
                 };
+
+            _dbContext.PurchaseDetail.AddRange(purchaseDetail1, purchaseDetail2, purchaseDetail3, purchaseDetail4, purchaseDetail5, purchaseDetail6);
+            _dbContext.SaveChanges();
 
         }
 

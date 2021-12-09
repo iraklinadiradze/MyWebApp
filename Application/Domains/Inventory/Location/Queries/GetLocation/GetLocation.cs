@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-using DataAccessLayer.Model.Inventory;
-using DataAccessLayer;
+using Application.Model.Inventory;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -17,12 +17,12 @@ using System.Linq;
 namespace Application.Domains.Inventory.Location.Queries.GetLocation
 {
 
-    public class GetLocationQuery : IRequest<DataAccessLayer.Model.Inventory.Location>
+    public class GetLocationQuery : IRequest<Application.Model.Inventory.Location>
     {
         public int? Id { get; set; }
     }
 
-    public class GetLocationQueryHandler : IRequestHandler<GetLocationQuery, DataAccessLayer.Model.Inventory.Location>
+    public class GetLocationQueryHandler : IRequestHandler<GetLocationQuery, Application.Model.Inventory.Location>
     {
 
         private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ namespace Application.Domains.Inventory.Location.Queries.GetLocation
         }
 
 
-        public async Task<DataAccessLayer.Model.Inventory.Location> Handle(GetLocationQuery request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.Location> Handle(GetLocationQuery request, CancellationToken cancellationToken)
         {
 
             var entity = await _context.Location

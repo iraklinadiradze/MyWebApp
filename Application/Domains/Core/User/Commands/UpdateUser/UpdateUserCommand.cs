@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using DataAccessLayer.Model.Core;
-using DataAccessLayer;
+using Application.Model.Core;
+using Application;
 
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
@@ -14,13 +14,13 @@ using Application.Common;
 
 namespace Application.Domains.Core.User.Commands.UpdateUser
 {
-    public class UpdateUserCommand : IRequest<DataAccessLayer.Model.Core.User>
+    public class UpdateUserCommand : IRequest<Application.Model.Core.User>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Core.User User { get; set; }
+        public Application.Model.Core.User User { get; set; }
     }
 
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, DataAccessLayer.Model.Core.User>
+    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Application.Model.Core.User>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -31,7 +31,7 @@ namespace Application.Domains.Core.User.Commands.UpdateUser
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Core.User> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Core.User> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
 
             var entity = request.User;

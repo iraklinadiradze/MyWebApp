@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccessLayer.Model.Procurment;
-using DataAccessLayer;
+using Application.Model.Procurment;
+using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 
 namespace Application.Domains.Procurment.PurchaseAllocationResult.Commands.CreatePurchaseAllocationResult
 {
-    public class CreatePurchaseAllocationResultCommand : IRequest<DataAccessLayer.Model.Procurment.PurchaseAllocationResult>
+    public class CreatePurchaseAllocationResultCommand : IRequest<Application.Model.Procurment.PurchaseAllocationResult>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public DataAccessLayer.Model.Procurment.PurchaseAllocationResult PurchaseAllocationResult { get; set; }
+        public Application.Model.Procurment.PurchaseAllocationResult PurchaseAllocationResult { get; set; }
     }
 
-    public class CreatePurchaseAllocationResultCommandHandler : IRequestHandler<CreatePurchaseAllocationResultCommand, DataAccessLayer.Model.Procurment.PurchaseAllocationResult>
+    public class CreatePurchaseAllocationResultCommandHandler : IRequestHandler<CreatePurchaseAllocationResultCommand, Application.Model.Procurment.PurchaseAllocationResult>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Procurment.PurchaseAllocationResult.Commands.Creat
            _context = context;
         }
 
-        public async Task<DataAccessLayer.Model.Procurment.PurchaseAllocationResult> Handle(CreatePurchaseAllocationResultCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.PurchaseAllocationResult> Handle(CreatePurchaseAllocationResultCommand request, CancellationToken cancellationToken)
         {
             var entity = request.PurchaseAllocationResult;
 
