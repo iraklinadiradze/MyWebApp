@@ -1,114 +1,72 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Application.Test.SeedData;
+﻿using Application.Domains.Procurment.Purchase;
+using Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusCommand;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using Moq;
-using MediatR;
-
-using Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusCommand;
-using Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseDetailStatusCommand;
-using Application.Domains.Inventory.Inventory.Commands.ProductToInventory;
-
-using Application.Domains.Procurment.Purchase;
-using Application.Common.Interfaces;
-using System.Threading;
-using System.Threading.Tasks;
+using Xunit;
 // using System.ComponentModel;
-using MediatR.Pipeline;
 // using Shouldly;
 // MediatR.Extensions.Microsoft.DependencyInjection;
 
 // using SimpleInjector;
-using StructureMap;
-using DataAccessLayer;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Application.Test.Domains.Procurment.Purchase
 {
 
-    public class PurchaseUpdateStatusTest : IClassFixture<Application.Test.SeedData.SeedData>
+    public class PurchaseUpdateStatusTest : IClassFixture<Application.Test.TestContext.TestContext>
     {
 
-        Application.Test.SeedData.SeedData _seedData;
+        Application.Test.TestContext.TestContext _testContext;
 
-        public PurchaseUpdateStatusTest(Application.Test.SeedData.SeedData seedData)
+        public PurchaseUpdateStatusTest(Application.Test.TestContext.TestContext testContext)
         {
-            _seedData = seedData;
-            _seedData.doMakeSeeding();
+            _testContext = testContext;
+            //            _seedData.doMakeSeeding();
 
-            var container = new Container(cfg =>
-            {
-                cfg.Scan(scanner =>
-                {
-
-//                    scanner.AssemblyContainingType(typeof(PublishTests));
-//                    scanner.IncludeNamespaceContainingType<UpdatePurchaseStatusCommandHandler>();
-
-                    scanner.AssemblyContainingType<UpdatePurchaseStatusCommandHandler>();
-                    scanner.AssemblyContainingType<UpdatePurchaseDetailStatusCommandHandler>();
-                    scanner.AssemblyContainingType<ProductToInventoryCommandHandler>();
-                    scanner.AssemblyContainingType<ICoreDBContext>();
-                    scanner.AssemblyContainingType<CoreDBContext>();
-                    scanner.AssembliesAndExecutablesFromApplicationBaseDirectory();
-                    scanner.AssemblyContainingType<DbContextOptions<CoreDBContext>>();
-                    scanner.WithDefaultConventions();
-                    scanner.AddAllTypesOf(typeof(IRequestHandler<,>));
-                });
-
-                cfg.For<ServiceFactory>().Use<ServiceFactory>(ctx => t => ctx.GetInstance(t));
-                cfg.For<IMediator>().Use<Mediator>();
-                cfg.For<ICoreDBContext>().Use<CoreDBContext>(_seedData._dbContext);
-//                cfg.RegisterType
-
-//                cfg.For<IDbContextOptions>().Use<_seedData._builder>();
-
-                //                cfg.For<IReadOnlyDictionary<Type, IDbContextOptionsExtension>>().Use<_seedData._builder >();
-
-
-
-
-            });
-
-            var mediator = container.GetInstance<IMediator>();
-            _seedData._mediator = mediator;
 
         }
+
+        [Fact]
+        public async void CheckPurchaseTest1()
+        {
+            var i = await _testContext._dbContext.Inventory.ToListAsync();
+            var ic = await _testContext._dbContext.InventoryChange.ToListAsync();
+
+            var c = await _testContext._dbContext.Currency.ToListAsync();
+
+            Assert.Equal(6, i.Count());
+        }
+
 
         [Fact]
 
         public async void CheckPurchaseTest()
         {
-            Application.Model.Procurment.Purchase _purchase = _seedData._dbContext.Purchase.FirstOrDefault();
-
-            //            var mediator = new Mock<IMediator>();
-            //            var mediator = new NestedMediator();
-
+            Application.Model.Procurment.Purchase _purchase = _testContext._dbContext.Purchase.FirstOrDefault();
 
             UpdatePurchaseStatusCommand _updatePurchaseStatusCommand = new UpdatePurchaseStatusCommand { Id = _purchase.Id, SenderId = 0, PurchaseDetailId = null, PurchaseAction = PurchaseAction.paFullPost };
 
-//            mediator.Setup(m => m.Send(It.IsAny<Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseDetailStatusCommand.UpdatePurchaseDetailStatusCommand>(),
-//                It.IsAny<CancellationToken>()))
-//                .ReturnsAsync(new Application.Model.Procurment.PurchaseDetail()) //<-- return Task to allow await to continue
-//                .Verifiable("Notification was not sent.");
+            var result = await _testContext._mediator.Send(_updatePurchaseStatusCommand);
 
-//            UpdatePurchaseStatusCommandHandler _updatePurchaseStatusCommandHandler = new UpdatePurchaseStatusCommandHandler(_seedData._mediator,  _seedData._dbContext);
+            await _testContext._dbContext.SaveChangesAsync();
 
-//            var result = await _updatePurchaseStatusCommandHandler.Handle(_updatePurchaseStatusCommand, new System.Threading.CancellationToken() );
+            var i = await _testContext._dbContext.Inventory.ToListAsync();
+            var ic = await _testContext._dbContext.InventoryChange.ToListAsync();
 
-            var result = await _seedData._mediator.Send(_updatePurchaseStatusCommand);
-
-
-            await _seedData._dbContext.SaveChangesAsync();
-
-            var i = await _seedData._dbContext.Inventory.ToListAsync();
-            var ic = await _seedData._dbContext.InventoryChange.ToListAsync();
-
-            Assert.Equal(6, i.Count());
+//            Assert.Equal(7, ic.Count());
+            Assert.Equal(7, i.Count());
         }
 
+
+        [Fact]
+        public async void CheckPurchaseTest2()
+        {
+            var i = await _testContext._dbContext.Inventory.ToListAsync();
+            var ic = await _testContext._dbContext.InventoryChange.ToListAsync();
+
+            var c = await _testContext._dbContext.Currency.ToListAsync();
+
+            Assert.Equal(7, i.Count());
+        }
 
     }
 

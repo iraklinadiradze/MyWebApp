@@ -7,19 +7,20 @@ using System.Text;
 using Xunit;
 using DataAccessLayer;
 using MediatR;
-using Moq;
+using StructureMap;
+using Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusCommand;
+using Application.Common.Interfaces;
 
-
-namespace Application.Test.SeedData
+namespace Application.Test.TestContext
 {
-    public class SeedData : IDisposable
+    public class TestContext : IDisposable
     {
         public CoreDBContext _dbContext { get; set; }
         public IMediator _mediator { get; set; }
 
         public DbContextOptionsBuilder<CoreDBContext> _builder { get; set; }
 
-        public SeedData()
+        public TestContext()
         {
 
             var builder = new DbContextOptionsBuilder<CoreDBContext>();
@@ -31,7 +32,34 @@ namespace Application.Test.SeedData
 //            _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
 
-//            _mediator = new Mock<IMediator>();
+            //            _mediator = new Mock<IMediator>();
+
+            doMakeSeeding();
+
+
+            var container = new Container(cfg =>
+            {
+                cfg.Scan(scanner =>
+                {
+                    scanner.AssemblyContainingType<UpdatePurchaseStatusCommandHandler>();
+                    //                    scanner.AssemblyContainingType<UpdatePurchaseDetailStatusCommandHandler>();
+                    //                   scanner.AssemblyContainingType<ProductToInventoryCommandHandler>();
+                    //                   scanner.AssemblyContainingType<ICoreDBContext>();
+                    //                    scanner.AssemblyContainingType<CoreDBContext>();
+                    //                    scanner.AssembliesAndExecutablesFromApplicationBaseDirectory();
+                    //                    scanner.AssemblyContainingType<DbContextOptions<CoreDBContext>>();
+                    scanner.WithDefaultConventions();
+                    scanner.AddAllTypesOf(typeof(IRequestHandler<,>));
+                });
+
+                cfg.For<ServiceFactory>().Use<ServiceFactory>(ctx => t => ctx.GetInstance(t));
+                cfg.For<IMediator>().Use<Mediator>();
+                cfg.For<ICoreDBContext>().Use<CoreDBContext>(_dbContext);
+
+            });
+
+            var mediator = container.GetInstance<IMediator>();
+            _mediator = mediator;
 
         }
 
