@@ -9,7 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using MediatR;
 
 using Application.Common;
-using DataAccessLayer.Model.Account;
+using Application.Model.Account;
+using Application.Model.Account;
 
 using Application.Domains.Account.AccountBalance.Queries.GetAccountBalance;
 using Application.Domains.Account.AccountBalance.Queries.GetAccountBalanceList;

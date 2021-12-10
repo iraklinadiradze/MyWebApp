@@ -46,7 +46,6 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
 
             if (request.Product.IsSingle == true)
             {
-
                 _inventory = (from x in _context.Inventory
                               where x.InventoryCode == request.InventoryCode
                               select x).First();
@@ -68,8 +67,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
             }
             else
             {
-
-                _inventory = (from x in _context.Inventory
+                _inventory = await (from x in _context.Inventory
                               where
                               (x.ProductId == request.Product.Id)
                               &&
@@ -85,12 +83,12 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
                                 )
                               )
                               select x
-                              ).First();
+                              ).FirstOrDefaultAsync();
             }
 
             var inventory = new Application.Model.Inventory.Inventory();
 
-            if (_inventory != null)
+            if (_inventory == null)
             {
 
                 inventory.IsSingle = request.Product.IsSingle;
@@ -102,9 +100,11 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
                 inventory.ProductId = request.Product.Id;
                 inventory.StartDate = request.StartDate;
 
-                inventory = await _mediator.Send(
-                    new CreateInventoryCommand { SenderId = ModuleEnum.mdUndefined, Inventory = inventory }
-                    );
+                await _context.Inventory.AddAsync(inventory);
+
+//                inventory = await _mediator.Send(
+//                    new CreateInventoryCommand { SenderId = ModuleEnum.mdUndefined, Inventory = inventory }
+//                    );
 
             }
             else

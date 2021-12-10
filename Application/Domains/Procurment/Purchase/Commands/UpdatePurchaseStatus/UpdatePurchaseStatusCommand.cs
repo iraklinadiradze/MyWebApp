@@ -143,6 +143,7 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                         new UpdatePurchaseDetailStatusCommand
                         {
                             PurchaseDetail = purchaseDetail,
+                            TransDate = purchase.TransDate,
                             doQtyPost = detailQtyPost,
                             doCostPost = detailFinPost
                         }

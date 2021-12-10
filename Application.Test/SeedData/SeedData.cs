@@ -15,8 +15,9 @@ namespace Application.Test.SeedData
     public class SeedData : IDisposable
     {
         public CoreDBContext _dbContext { get; set; }
-        public   Mock<IMediator> _mediator { get; set; }
+        public IMediator _mediator { get; set; }
 
+        public DbContextOptionsBuilder<CoreDBContext> _builder { get; set; }
 
         public SeedData()
         {
@@ -24,11 +25,13 @@ namespace Application.Test.SeedData
             var builder = new DbContextOptionsBuilder<CoreDBContext>();
             builder.UseInMemoryDatabase(databaseName: "LibraryDbInMemory");
 
+            _builder = builder;
+
             _dbContext = new CoreDBContext(builder.Options);
 //            _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
 
-            _mediator = new Mock<IMediator>();
+//            _mediator = new Mock<IMediator>();
 
         }
 
