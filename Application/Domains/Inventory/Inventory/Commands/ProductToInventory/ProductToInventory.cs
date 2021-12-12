@@ -72,7 +72,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
                               (x.ProductId == request.Product.Id)
                               &&
                               (
-                               ( (!request.StockProductPerProcess) && (x.ProcInInventory == false) )
+                               ( (!request.StockProductPerProcess)) // && (x.ProcInInventory == false) )
                                 ||
                                (
                                  (x.EntityId == (int)request.SenderId)

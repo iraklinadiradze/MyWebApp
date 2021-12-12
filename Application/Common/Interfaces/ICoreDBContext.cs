@@ -21,6 +21,8 @@ namespace Application.Common.Interfaces
     public interface ICoreDBContext
     {
 
+        public List<InventoryChange> AffectedInventoryChangeList { get; set; }
+
         public InventoryChange[] CostAffectedInventoryChangeList { get; set; }
 //        public List<InventoryChange> CostAffectedInventoryChangeList { get; set; }
         

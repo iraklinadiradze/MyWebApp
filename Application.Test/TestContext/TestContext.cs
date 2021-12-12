@@ -10,6 +10,7 @@ using MediatR;
 using StructureMap;
 using Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusCommand;
 using Application.Common.Interfaces;
+using Application.Domains.Inventory.Inventory.Commands.ProductToInventory;
 
 namespace Application.Test.TestContext
 {
@@ -29,7 +30,7 @@ namespace Application.Test.TestContext
             _builder = builder;
 
             _dbContext = new CoreDBContext(builder.Options);
-//            _dbContext.Database.EnsureDeleted();
+            _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
 
             //            _mediator = new Mock<IMediator>();
@@ -43,7 +44,7 @@ namespace Application.Test.TestContext
                 {
                     scanner.AssemblyContainingType<UpdatePurchaseStatusCommandHandler>();
                     //                    scanner.AssemblyContainingType<UpdatePurchaseDetailStatusCommandHandler>();
-                    //                   scanner.AssemblyContainingType<ProductToInventoryCommandHandler>();
+                    scanner.AssemblyContainingType<ProductToInventoryCommandHandler>();
                     //                   scanner.AssemblyContainingType<ICoreDBContext>();
                     //                    scanner.AssemblyContainingType<CoreDBContext>();
                     //                    scanner.AssembliesAndExecutablesFromApplicationBaseDirectory();
@@ -428,6 +429,7 @@ namespace Application.Test.TestContext
 
             _dbContext.Product.AddRange(product1, product2, product3, product4, product5, product6, product7, 
                 product8, product9, product10, product11, product12);
+
             _dbContext.SaveChanges();
 
 
@@ -670,7 +672,7 @@ namespace Application.Test.TestContext
                     InventoryCode = "",
                     ProjectId = 0,
                     AddCost = 0,
-                    ProductId = product5.Id,
+                    ProductId = product6.Id,
 
                     QtyInvoiced = 25,
                     QtyCalculated = 25,

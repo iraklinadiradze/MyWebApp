@@ -126,15 +126,20 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                         (request.PurchaseAction == PurchaseAction.paFinPost)
                         )
                        )
+                    {
                         detailFinPost = true;
+                        detailQtyPost = true;
+                    }
 
-                    if (
+                        if (
                         (purchaseDetail.FinPosted)
                         &&
                         (
                         (request.PurchaseAction == PurchaseAction.paFinUnpostWithDetails)
                         ||
                         (request.PurchaseAction == PurchaseAction.paFullUnpostWithDetails)
+                        ||
+                        (request.PurchaseAction == PurchaseAction.paQtyUnpostWithDetails)
                         )
                        )
                         detailFinPost = false;

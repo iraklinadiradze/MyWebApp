@@ -58,11 +58,15 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
                                 SenderReferenceId = request.PurchaseDetail.Id,
                                 InventoryCode = request.PurchaseDetail.InventoryCode,
                                 StartDate =  request.TransDate,
-                                Product = request.PurchaseDetail.Product,
+                                Product = await _context.Product.FindAsync(request.PurchaseDetail.ProductId),
                                 StockProductPerProcess = request.PurchaseDetail.StockProductPerProcess
                             }
                             );
-  
+
+
+//            if (request.doCostPost && (!request.doQtyPost) ) { request.doQtyPost = true; };
+//            if (request.doCostPost && (!request.doQtyPost)) { request.doCostPost = false; };
+
             if (request.doQtyPost || request.doCostPost)
             {
 
@@ -75,9 +79,9 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
                             LocationId = request.PurchaseDetail.LocationId,
                             TransDate = request.TransDate,
                             CostDecrease = 0,
-                            CostIncrease = request.PurchaseDetail.FinalCost,
+                            CostIncrease = request.doCostPost?request.PurchaseDetail.FinalCost:0,
                             QtyDecrease = 0,
-                            QtyIncrease = request.PurchaseDetail.FinalQty,
+                            QtyIncrease = request.doQtyPost ? request.PurchaseDetail.FinalQty:0,
                             InventoryChangeTypeId = InventoryChangeTypeEnum.ictPurchase,
                             doChangeCost = request.doCostPost,
                             doChangeQty = request.doQtyPost,

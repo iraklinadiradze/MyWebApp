@@ -47,9 +47,6 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
         {
             _mediator = mediator;
             _context = context;
-
-            // CoreDBContext xxx;
-
         }
 
         /*
@@ -256,75 +253,79 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
 
 
             Application.Model.Inventory.InventoryChange maxInventoryChange = null;
-            Application.Model.Inventory.InventoryChange _inventoryChange = null;
 
-            _inventoryChange = await (from e in _context.InventoryChange
-                                      where (
-                                       (e.InventoryId == request.Inventory.Id)
-                                       &&
-                                       (e.EntityId == (int)request.SenderId)
-                                       &&
-                                       (e.EntityForeignId == request.SenderReferenceId)
-                                     )
-                                      select e).FirstOrDefaultAsync();
+            Application.Model.Inventory.InventoryChange _inventoryChangeNew = null;
+            Application.Model.Inventory.InventoryChange _inventoryChangeOld = null;
 
-            bool inventoryChangeExists = _inventoryChange != null;
+            _inventoryChangeOld = await (from e in _context.InventoryChange
+                                         where (
+                                          (e.EntityId == (int)request.SenderId)
+                                          &&
+                                          (e.EntityForeignId == request.SenderReferenceId)
+                                        )
+                                         select e).FirstOrDefaultAsync();
 
-            bool isInventoryChangeDelete = (request.CostDecrease > 0)
+            bool inventoryChangeExists = _inventoryChangeOld != null;
+
+            bool isInventoryChangeDelete = !(
+                                            (request.CostDecrease > 0)
                                             ||
                                             (request.CostIncrease > 0)
                                             ||
                                             (request.QtyDecrease > 0)
                                             ||
-                                            (request.QtyIncrease > 0);
+                                            (request.QtyIncrease > 0)
+                                           );
 
-            if (inventoryChangeExists
+            /*
+                        if (inventoryChangeExists
+                            &&
+                           (
+                            (request.CostDecrease != _inventoryChangeOld.CostDecrease)
+                            ||
+                            (request.QtyDecrease != _inventoryChangeOld.QtyDecrease)
+                            ||
+                            (request.CostIncrease != _inventoryChangeOld.CostIncrease)
+                            ||
+                            (request.QtyIncrease != _inventoryChangeOld.QtyIncrease)
+                           )
+                           )
+            */
+            if (
+                (_inventoryChangeOld != null)
                 &&
-               (
-                (request.CostDecrease != _inventoryChange.CostDecrease)
-                ||
-                (request.QtyDecrease != _inventoryChange.QtyDecrease)
-                ||
-                (request.CostIncrease != _inventoryChange.CostIncrease)
-                ||
-                (request.QtyIncrease != _inventoryChange.QtyIncrease)
-               )
-               )
+                (_inventoryChangeOld.InventoryId == request.Inventory.Id)
+                &&
+                (_inventoryChangeOld.LocationId == request.LocationId)
+                &&
+                (_inventoryChangeOld.TransDate == request.TransDate)
+                )
             {
+                _inventoryChangeNew = _inventoryChangeOld;
 
-                /*
-                if (_inventoryChange.ParentInventoryChangeId != null)
-                    maxInventoryChange = (from z in _context.InventoryChange
-                                          where z.Id == _inventoryChange.ParentInventoryChangeId).FirstOrDefaultAsync();
-
-                if (maxInventoryChange!=null)
-                {
-
-                }
-                */
-
-                _inventoryChange.CostBalance = _inventoryChange.CostBalance
-                                                + _inventoryChange.CostDecrease
-                                                - _inventoryChange.CostIncrease
+                _inventoryChangeNew.CostBalance = _inventoryChangeNew.CostBalance
+                                                + _inventoryChangeNew.CostDecrease
+                                                - _inventoryChangeNew.CostIncrease
                                                 + request.CostIncrease
                                                 - request.CostDecrease;
 
-                _inventoryChange.QtyBalance = _inventoryChange.QtyBalance
-                                                + _inventoryChange.QtyDecrease
-                                                - _inventoryChange.QtyIncrease
+                _inventoryChangeNew.QtyBalance = _inventoryChangeNew.QtyBalance
+                                                + _inventoryChangeNew.QtyDecrease
+                                                - _inventoryChangeNew.QtyIncrease
                                                 + request.QtyIncrease
                                                 - request.QtyDecrease;
 
-                _inventoryChange.CostDecrease = request.CostDecrease;
-                _inventoryChange.CostIncrease = request.CostIncrease;
-                _inventoryChange.QtyDecrease = request.QtyDecrease;
-                _inventoryChange.QtyIncrease = request.QtyIncrease;
+                _inventoryChangeNew.CostDecrease = request.CostDecrease;
+                _inventoryChangeNew.CostIncrease = request.CostIncrease;
+                _inventoryChangeNew.QtyDecrease = request.QtyDecrease;
+                _inventoryChangeNew.QtyIncrease = request.QtyIncrease;
 
-                _context.InventoryChange.Update(_inventoryChange);
+                _context.InventoryChange.Update(_inventoryChangeNew);
+
+                //                _context.AffectedInventoryChangeList.Remove(_context.AffectedInventoryChangeList.Find)
+
             }
-            //            else
-
-            if (!inventoryChangeExists)
+            else
             {
 
                 maxInventoryChange = await (from e in _context.InventoryChange
@@ -357,7 +358,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                 if (maxInventoryChange == null)
                 {
 
-                    _inventoryChange = new Application.Model.Inventory.InventoryChange
+                    _inventoryChangeNew = new Application.Model.Inventory.InventoryChange
                     {
                         TransDate = request.TransDate,
                         InventoryId = request.Inventory.Id,
@@ -375,12 +376,12 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                         ParentInventoryChangeId = null
                     };
 
-                    _context.InventoryChange.Add(_inventoryChange);
+                    _context.InventoryChange.Add(_inventoryChangeNew);
                 }
                 else
                 {
 
-                    _inventoryChange = new Application.Model.Inventory.InventoryChange
+                    _inventoryChangeNew = new Application.Model.Inventory.InventoryChange
                     {
                         TransDate = request.TransDate,
                         InventoryId = request.Inventory.Id,
@@ -398,83 +399,138 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                         ParentInventoryChangeId = maxInventoryChange.Id
                     };
 
-                    _context.InventoryChange.Add(_inventoryChange);
+                    _context.InventoryChange.Add(_inventoryChangeNew);
                 }
 
-                if (_inventoryChange.QtyBalance < 0)
+                if (_inventoryChangeNew.QtyBalance < 0)
                 {
                     throw new Exception($"Inventory {request.Inventory.Id} Goes below Zero in {request.TransDate} for location {request.LocationId}");
                 }
 
             }
 
-            var parentInventoryChangeId = (maxInventoryChange == null) ? _inventoryChange.Id : maxInventoryChange.Id;
+            Application.Model.Inventory.InventoryChange _invetoryChangeToRecalculateOld = null;
 
-            var invetoryChangeToRecalculate = (maxInventoryChange != null) ?
-                                                 await (from z in _context.InventoryChange
-                                                        where
-                                                         z.InventoryId == request.Inventory.Id
-                                                         &&
-                                                         z.LocationId == request.LocationId
-                                                         &&
-                                                         z.ParentInventoryChangeId == parentInventoryChangeId
-                                                        orderby z.TransDate ascending, z.TimeSequence ascending
-                                                        select z
-                                                  ).FirstOrDefaultAsync() :
-                                                  await (from z in _context.InventoryChange
-                                                         where
-                                                              z.InventoryId == request.Inventory.Id
-                                                              &&
-                                                              z.LocationId == request.LocationId
-                                                              &&
-                                                              z.ParentInventoryChangeId == null
-                                                         orderby z.TransDate ascending, z.TimeSequence ascending
-                                                         select z
-                                                  ).FirstOrDefaultAsync();
-
-            if (invetoryChangeToRecalculate != null)
+            if (_inventoryChangeOld != null)
             {
-                if (isInventoryChangeDelete && inventoryChangeExists)
-                    invetoryChangeToRecalculate.ParentInventoryChangeId = _inventoryChange.ParentInventoryChangeId;
+                _invetoryChangeToRecalculateOld = await _context.InventoryChange.Where(p => p.ParentInventoryChangeId == _inventoryChangeOld.Id).FirstOrDefaultAsync();
 
-                var isBalanceChange = false;
+                if (_invetoryChangeToRecalculateOld != null)
+                    AffectedInventoryChangeListAdd(_invetoryChangeToRecalculateOld);
+                //                _context.AffectedInventoryChangeList.Add(_invetoryChangeToRecalculateOld);
 
-                var _newQtyBalance = _inventoryChange.QtyBalance + invetoryChangeToRecalculate.QtyIncrease - invetoryChangeToRecalculate.QtyDecrease;
-                var _newCostBalance = _inventoryChange.CostBalance + invetoryChangeToRecalculate.CostIncrease - invetoryChangeToRecalculate.CostDecrease;
+            }
 
-                if (_newQtyBalance != invetoryChangeToRecalculate.QtyBalance)
+            Application.Model.Inventory.InventoryChange _invetoryChangeToRecalculateNew = null;
+
+            if (_inventoryChangeNew.Id != _inventoryChangeOld.Id)
+            {
+
+                if (maxInventoryChange != null)
                 {
-                    invetoryChangeToRecalculate.QtyBalance = _newQtyBalance;
-                    isBalanceChange = true;
+                    _invetoryChangeToRecalculateNew = await _context.InventoryChange.Where(
+                                                                                         p => p.ParentInventoryChangeId == maxInventoryChange.Id
+                                                                                        ).FirstOrDefaultAsync();
+                }
+                else
+                {
+
+                    _invetoryChangeToRecalculateNew = await (from z in _context.InventoryChange
+                                                             where
+                                                                  z.InventoryId == request.Inventory.Id
+                                                                  &&
+                                                                  z.LocationId == request.LocationId
+                                                                  &&
+                                                                  z.ParentInventoryChangeId == null
+                                                             orderby z.TransDate ascending, z.TimeSequence ascending
+                                                             select z
+                    ).FirstOrDefaultAsync();
+
                 }
 
-                if (_newCostBalance != invetoryChangeToRecalculate.CostBalance)
+                if (_invetoryChangeToRecalculateNew != null)
+                    if (_invetoryChangeToRecalculateNew.Id != _invetoryChangeToRecalculateOld.Id)
+                        AffectedInventoryChangeListAdd(_invetoryChangeToRecalculateNew);
+                //                        _context.AffectedInventoryChangeList.Add(_invetoryChangeToRecalculateNew);
+
+            }
+
+
+            var orderedAffectedInventoryChangeList = (
+                                                    from e in _context.AffectedInventoryChangeList
+                                                    orderby e.TransDate ascending, e.TimeSequence ascending
+                                                    select e
+                                                    ).ToArray();
+
+
+            for (var i = 0; i < orderedAffectedInventoryChangeList.Count(); i++)
+            {
+                var invetoryChangeToRecalculate = orderedAffectedInventoryChangeList[i];
+
+                if (invetoryChangeToRecalculate.EntityId == (int)ModuleEnum.mdPurchaseDetail)
                 {
-                    invetoryChangeToRecalculate.CostBalance = _newCostBalance;
-                    isBalanceChange = true;
-                }
+                    var _purchaseDetail = await _context.PurchaseDetail.FindAsync(invetoryChangeToRecalculate.EntityForeignId);
 
-                _context.InventoryChange.Update(invetoryChangeToRecalculate);
-
-                if (isBalanceChange)
-                {
-                    //                    Send InventoryChangeRepostCommand To Correspoonding Business Operation;
-
-                    if (invetoryChangeToRecalculate.EntityId==(int)ModuleEnum.mdPurchaseDetail)
-                    {
-                        await _mediator.Send(
-                            new UpdatePurchaseDetailStatusCommand
-                            {
-                                TransDate = invetoryChangeToRecalculate.TransDate,
-                                doCostPost = true
-                            }
-                            );
-                    }
-
+                    await _mediator.Send(
+                        new UpdatePurchaseDetailStatusCommand
+                        {
+                            PurchaseDetail = _purchaseDetail,
+                            TransDate = invetoryChangeToRecalculate.TransDate,
+                            doCostPost = _purchaseDetail.FinPosted,
+                            doQtyPost = _purchaseDetail.QtyPosted
+                        }
+                     ); ;
                 }
 
             }
 
+
+            /*
+                        if (invetoryChangeToRecalculate != null)
+                        {
+                            if (isInventoryChangeDelete && inventoryChangeExists)
+                                invetoryChangeToRecalculate.ParentInventoryChangeId = _inventoryChange.ParentInventoryChangeId;
+
+                            var isBalanceChange = false;
+
+                            var _newQtyBalance = _inventoryChange.QtyBalance + invetoryChangeToRecalculate.QtyIncrease - invetoryChangeToRecalculate.QtyDecrease;
+                            var _newCostBalance = _inventoryChange.CostBalance + invetoryChangeToRecalculate.CostIncrease - invetoryChangeToRecalculate.CostDecrease;
+
+                            if (_newQtyBalance != invetoryChangeToRecalculate.QtyBalance)
+                            {
+                                invetoryChangeToRecalculate.QtyBalance = _newQtyBalance;
+                                isBalanceChange = true;
+                            }
+
+                            if (_newCostBalance != invetoryChangeToRecalculate.CostBalance)
+                            {
+                                invetoryChangeToRecalculate.CostBalance = _newCostBalance;
+                                isBalanceChange = true;
+                            }
+
+                            _context.InventoryChange.Update(invetoryChangeToRecalculate);
+
+                            if (isBalanceChange)
+                            {
+                                //                    Send InventoryChangeRepostCommand To Correspoonding Business Operation;
+
+                                if (invetoryChangeToRecalculate.EntityId == (int)ModuleEnum.mdPurchaseDetail)
+                                {
+                                    await _mediator.Send(
+                                        new UpdatePurchaseDetailStatusCommand
+                                        {
+                                            PurchaseDetail = await _context.PurchaseDetail.FindAsync(invetoryChangeToRecalculate.EntityForeignId),
+                                            TransDate = invetoryChangeToRecalculate.TransDate,
+                                            doCostPost = true,
+                                            doQtyPost = false
+                                        }
+                                        ); ;
+                                }
+
+                            }
+
+                        }
+            */
             /*
                         foreach (var x in invetoryChangeListToRecalculate)
                         {
@@ -503,7 +559,14 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
             return null;
         }
 
+        private void AffectedInventoryChangeListAdd(Application.Model.Inventory.InventoryChange inventoryChange)
+        {
 
+            var findInventoryChange = _context.AffectedInventoryChangeList.Find(x => x.Id == inventoryChange.Id);
+
+            if (findInventoryChange == null)
+                _context.AffectedInventoryChangeList.Add(inventoryChange);
+        }
 
     }
 
