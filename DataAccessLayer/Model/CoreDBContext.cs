@@ -19,6 +19,7 @@ namespace DataAccessLayer
     public class CoreDBContext : DbContext, ICoreDBContext
     {
 
+        public List<InventoryChange> AffectedInventoryChangeList { get; set; } = new List<InventoryChange>();
         public InventoryChange[] CostAffectedInventoryChangeList { get; set; } = { };
         // public List<InventoryChange> CostAffectedInventoryChangeList { get; set; } = new List<InventoryChange>();
 

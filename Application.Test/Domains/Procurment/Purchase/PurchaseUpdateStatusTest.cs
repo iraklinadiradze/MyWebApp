@@ -29,23 +29,33 @@ namespace Application.Test.Domains.Procurment.Purchase
         }
 
 
- //       [Fact]
-        public async void CheckPurchaseTest1()
+        [Fact]
+        public void CheckPurchaseTest1()
         {
             var _testContext = new TestContext.TestContext();
 
-            var i = await _testContext._dbContext.Inventory.ToListAsync();
-            var ic = await _testContext._dbContext.InventoryChange.ToListAsync();
+            Application.Model.Procurment.Purchase _purchase = _testContext._dbContext.Purchase.FirstOrDefault();
+            _purchase.PurchaseName = "DDDDDDDD";
+            _testContext._dbContext.Purchase.Update(_purchase);
 
-            var c = await _testContext._dbContext.Currency.ToListAsync();
 
-            Assert.Equal(6, i.Count());
+            Application.Model.Procurment.Purchase _purchase1 = (from e in _testContext._dbContext.Purchase
+                                                               select e).FirstOrDefault();
+
+//            var i = await _testContext._dbContext.Inventory.ToListAsync();
+//            var ic = await _testContext._dbContext.InventoryChange.ToListAsync();
+
+//            var c = await _testContext._dbContext.Currency.ToListAsync();
+
+            Assert.Equal(_purchase.PurchaseName, _purchase1.PurchaseName );
         }
 
 
-  //      [Fact]
+        [Fact]
         public async void CheckPurchaseFullTest()
         {
+//            return;
+
             var _testContext = new TestContext.TestContext();
 
             Application.Model.Procurment.Purchase _purchase = _testContext._dbContext.Purchase.FirstOrDefault();
@@ -69,13 +79,15 @@ namespace Application.Test.Domains.Procurment.Purchase
             //            _testOutputHelper.WriteLine(ic[0].Id.ToString());
 
         //    Assert.Equal(6, i.Count());
-            Assert.Equal(7, i.Count());
+            Assert.Equal(6, i.Count());
         }
 
 
-//        [Fact]
+        [Fact]
         public async void CheckPurchaseQtyTest()
         {
+//            return;
+
             var _testContext = new TestContext.TestContext();
 
             Application.Model.Procurment.Purchase _purchase = _testContext._dbContext.Purchase.FirstOrDefault();
@@ -95,7 +107,7 @@ namespace Application.Test.Domains.Procurment.Purchase
             var i = await _testContext._dbContext.Inventory.ToListAsync();
             var ic = await _testContext._dbContext.InventoryChange.ToListAsync();
 
-            Assert.Equal(7, i.Count());
+            Assert.Equal(6, i.Count());
 
         }
 
@@ -136,7 +148,7 @@ namespace Application.Test.Domains.Procurment.Purchase
             var i = await _testContext._dbContext.Inventory.ToListAsync();
             var ic = await _testContext._dbContext.InventoryChange.ToListAsync();
 
-            Assert.Equal(7, i.Count());
+            Assert.Equal(6, i.Count());
 
         }
 
