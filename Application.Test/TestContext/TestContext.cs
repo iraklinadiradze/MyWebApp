@@ -11,6 +11,12 @@ using StructureMap;
 using Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusCommand;
 using Application.Common.Interfaces;
 using Application.Domains.Inventory.Inventory.Commands.ProductToInventory;
+using Serilog;
+using Microsoft.Extensions.Configuration;
+using Xunit.Abstractions;
+using Serilog.Sinks;
+using System.Diagnostics;
+using Application.Test.Pipelines;
 
 namespace Application.Test.TestContext
 {
@@ -19,9 +25,11 @@ namespace Application.Test.TestContext
         public CoreDBContext _dbContext { get; set; }
         public IMediator _mediator { get; set; }
 
+        public ILogger _Logger;
+
         public DbContextOptionsBuilder<CoreDBContext> _builder { get; set; }
 
-        public TestContext()
+        public TestContext(ITestOutputHelper _testOutputHelper)
         {
 
             var builder = new DbContextOptionsBuilder<CoreDBContext>();
@@ -33,6 +41,8 @@ namespace Application.Test.TestContext
             _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
 
+
+            
             //            _mediator = new Mock<IMediator>();
 
             doMakeSeeding();
@@ -43,6 +53,7 @@ namespace Application.Test.TestContext
                 cfg.Scan(scanner =>
                 {
                     scanner.AssemblyContainingType<UpdatePurchaseStatusCommandHandler>();
+                    scanner.AssemblyContainingType<Serilog.ILogger>();
                     //                    scanner.AssemblyContainingType<UpdatePurchaseDetailStatusCommandHandler>();
                     scanner.AssemblyContainingType<ProductToInventoryCommandHandler>();
                     //                   scanner.AssemblyContainingType<ICoreDBContext>();
@@ -51,11 +62,33 @@ namespace Application.Test.TestContext
                     //                    scanner.AssemblyContainingType<DbContextOptions<CoreDBContext>>();
                     scanner.WithDefaultConventions();
                     scanner.AddAllTypesOf(typeof(IRequestHandler<,>));
+                    scanner.AddAllTypesOf(typeof(IPipelineBehavior<,>));
+
                 });
 
                 cfg.For<ServiceFactory>().Use<ServiceFactory>(ctx => t => ctx.GetInstance(t));
                 cfg.For<IMediator>().Use<Mediator>();
                 cfg.For<ICoreDBContext>().Use<CoreDBContext>(_dbContext);
+//                cfg.For<typeof(IPipelineBehavior<IRequest, MediatR.IREs>)>().Use<typeof(AppLoggingBehaviour<,>)>();
+
+                
+
+                //                cfg.For< IPipelineBehavior>().Use<AppLoggingBehaviour>();
+
+                //                cfg.For<IPipelineBehavior>().Use< Application.Test.Pipelines.AppLoggingBehaviour<,>  >();
+
+
+                var outtemplate ="{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] [{SourceContext}] {Message}{NewLine}{Exception}";
+
+                Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
+                Serilog.Debugging.SelfLog.Enable(Console.Error);
+
+                _Logger = new LoggerConfiguration()
+                    .MinimumLevel.Verbose()
+                    .WriteTo.TestOutput( _testOutputHelper, Serilog.Events.LogEventLevel.Verbose, outputTemplate: outtemplate)
+                    .CreateLogger();
+
+                cfg.For<ILogger>().Use<ILogger>(_Logger);
 
             });
 

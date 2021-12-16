@@ -12,10 +12,15 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using WebAPI.Models;
+using WebAPI.Pipelines;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Serilog;
+using MediatR;
+using System.Reflection;
 
 namespace WebAPIs
 {
@@ -33,6 +38,9 @@ namespace WebAPIs
         {
             var connection = Configuration.GetConnectionString("PilotDB");
             services.AddDbContextPool<PilotDBContext>(options => options.UseSqlServer(connection));
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AppLoggingBehaviour<,>));
+
 
             services.AddControllers();
 
@@ -72,6 +80,8 @@ namespace WebAPIs
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 

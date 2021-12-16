@@ -1,0 +1,87 @@
+﻿2021-12-17 00:16:57.642 +04:00 [Information] [] 
+Start DDDTest
+2021-12-17 00:16:57.724 +04:00 [Information] [] 
+Begin Request Id:9d8eb5f0-6454-4191-9efa-0923def08a58, request name:UpdatePurchaseStatusCommand
+2021-12-17 00:16:57.749 +04:00 [Information] [] 
+Request: UpdatePurchaseStatusCommand { SenderId: mdUndefined, Id: 1, PurchaseDetailId: null, PurchaseAction: paFullPost }
+
+2021-12-17 00:16:57.773 +04:00 [Information] [] 
+Purchase: Purchase { Id: 1, TransDate: 05/01/2021 00:00:00, InvoiceNumber: "INV-001", ClientId: 1, CurrencyId: 1, xrate: 1, ProcInInventory: False, PurchaseStatusId: 0, PurchaseName: "Delivery of Ordered Purchase: Order Number1", Note: "Purchase 1 from vendor:Vendro 1 ", TotalCostInvoiced: 0, TotalCostInvoicedEqu: 0, TotalAllocCost: 0, TotalFinalCostEqu: 0, AllocStarted: False, Allocated: False, FinPostStarted: False, QtyPostStarted: False, FinPosted: False, QtyPosted: False, Posted: False, Client: Client { Id: 1, IsPerson: False, Name: "Vendro 1", IsSupplier: True, IsCustomer: False, IsBank: False, IsEmployee: False, Person: null, LegalEntity: LegalEntity { Id: 1, LegalEntityName: "LTD vendor1", RegistrationCountryID: 1, TaxCode: "1235563313", TaxRegDate: 05/27/2017 00:00:00, LegalAddress: "1 downingstreet , TownCity", OfficeAddress: "1 downingstreet , TownCity", Mobile: "+1-321-232-344", Email: "info@vendro1.com", Client: Client { Id: 1, IsPerson: False, Name: "Vendro 1", IsSupplier: True, IsCustomer: False, IsBank: False, IsEmployee: False, Person: null, LegalEntity: LegalEntity { Id: 1, LegalEntityName: "LTD vendor1", RegistrationCountryID: 1, TaxCode: "1235563313", TaxRegDate: 05/27/2017 00:00:00, LegalAddress: "1 downingstreet , TownCity", OfficeAddress: "1 downingstreet , TownCity", Mobile: "+1-321-232-344", Email: "info@vendro1.com", Client: Client { Id: 1, IsPerson: False, Name: "Vendro 1", IsSupplier: True, IsCustomer: False, IsBank: False, IsEmployee: False, Person: null, LegalEntity: LegalEntity { Id: 1, LegalEntityName: "LTD vendor1", RegistrationCountryID: 1, TaxCode: "1235563313", TaxRegDate: 05/27/2017 00:00:00, LegalAddress: "1 downingstreet , TownCity", OfficeAddress: "1 downingstreet , TownCity", Mobile: "+1-321-232-344", Email: "info@vendro1.com", Client: Client { Id: 1, IsPerson: False, Name: "Vendro 1", IsSupplier: True, IsCustomer: False, IsBank: False, IsEmployee: False, Person: null, LegalEntity: LegalEntity { Id: 1, LegalEntityName: "LTD vendor1", RegistrationCountryID: 1, TaxCode: "1235563313", TaxRegDate: 05/27/2017 00:00:00, LegalAddress: "1 downingstreet , TownCity", OfficeAddress: "1 downingstreet , TownCity", Mobile: "+1-321-232-344", Email: "info@vendro1.com", Client: Client { Id: null, IsPerson: null, Name: null, IsSupplier: null, IsCustomer: null, IsBank: null, IsEmployee: null, Person: null, LegalEntity: null }, Country: Country { Id: null, Name: null, Code: null, Person: null, LegalEntity: null } } }, Country: Country { Id: 1, Name: "Republic of Georgia", Code: "GEO", Person: null, LegalEntity: [LegalEntity { Id: null, LegalEntityName: null, RegistrationCountryID: null, TaxCode: null, TaxRegDate: null, LegalAddress: null, OfficeAddress: null, Mobile: null, Email: null, Client: null, Country: null }] } } }, Country: Country { Id: 1, Name: "Republic of Georgia", Code: "GEO", Person: null, LegalEntity: [LegalEntity { Id: 1, LegalEntityName: "LTD vendor1", RegistrationCountryID: 1, TaxCode: "1235563313", TaxRegDate: 05/27/2017 00:00:00, LegalAddress: "1 downingstreet , TownCity", OfficeAddress: "1 downingstreet , TownCity", Mobile: "+1-321-232-344", Email: "info@vendro1.com", Client: Client { Id: 1, IsPerson: False, Name: "Vendro 1", IsSupplier: True, IsCustomer: False, IsBank: False, IsEmployee: False, Person: null, LegalEntity: LegalEntity { Id: null, LegalEntityName: null, RegistrationCountryID: null, TaxCode: null, TaxRegDate: null, LegalAddress: null, OfficeAddress: null, Mobile: null, Email: null, Client: null, Country: null } }, Country: Country { Id: 1, Name: "Republic of Georgia", Code: "GEO", Person: null, LegalEntity: [null] } }] } } }, Country: Country { Id: 1, Name: "Republic of Georgia", Code: "GEO", Person: null, LegalEntity: [LegalEntity { Id: 1, LegalEntityName: "LTD vendor1", RegistrationCountryID: 1, TaxCode: "1235563313", TaxRegDate: 05/27/2017 00:00:00, LegalAddress: "1 downingstreet , TownCity", OfficeAddress: "1 downingstreet , TownCity", Mobile: "+1-321-232-344", Email: "info@vendro1.com", Client: Client { Id: 1, IsPerson: False, Name: "Vendro 1", IsSupplier: True, IsCustomer: False, IsBank: False, IsEmployee: False, Person: null, LegalEntity: LegalEntity { Id: 1, LegalEntityName: "LTD vendor1", RegistrationCountryID: 1, TaxCode: "1235563313", TaxRegDate: 05/27/2017 00:00:00, LegalAddress: "1 downingstreet , TownCity", OfficeAddress: "1 downingstreet , TownCity", Mobile: "+1-321-232-344", Email: "info@vendro1.com", Client: Client { Id: 1, IsPerson: False, Name: "Vendro 1", IsSupplier: True, IsCustomer: False, IsBank: False, IsEmployee: False, Person: null, LegalEntity: LegalEntity { Id: null, LegalEntityName: null, RegistrationCountryID: null, TaxCode: null, TaxRegDate: null, LegalAddress: null, OfficeAddress: null, Mobile: null, Email: null, Client: null, Country: null } }, Country: Country { Id: 1, Name: "Republic of Georgia", Code: "GEO", Person: null, LegalEntity: [null] } } }, Country: Country { Id: 1, Name: "Republic of Georgia", Code: "GEO", Person: null, LegalEntity: [LegalEntity { Id: 1, LegalEntityName: "LTD vendor1", RegistrationCountryID: 1, TaxCode: "1235563313", TaxRegDate: 05/27/2017 00:00:00, LegalAddress: "1 downingstreet , TownCity", OfficeAddress: "1 downingstreet , TownCity", Mobile: "+1-321-232-344", Email: "info@vendro1.com", Client: Client { Id: null, IsPerson: null, Name: null, IsSupplier: null, IsCustomer: null, IsBank: null, IsEmployee: null, Person: null, LegalEntity: null }, Country: Country { Id: null, Name: null, Code: null, Person: null, LegalEntity: null } }] } }] } } }, Currency: Currency { Id: 1, CurrencyCode: "GEL", CurrencyDescrip: "Georgian Lari" } }
+2021-12-17 00:16:57.845 +04:00 [Information] [] 
+Begin Request Id:bf68f33e-1e7c-48c4-b3ff-0e020488b8ad, request name:UpdatePurchaseDetailStatusCommand
+2021-12-17 00:16:57.853 +04:00 [Information] [] 
+Begin Request Id:d7d7c676-fde4-4a22-8c8f-a29b7d6e674f, request name:ProductToInventoryCommand
+2021-12-17 00:16:58.012 +04:00 [Information] [] 
+Begin Request Id:d7d7c676-fde4-4a22-8c8f-a29b7d6e674f, request name:ProductToInventoryCommand, total request time:158
+2021-12-17 00:16:58.016 +04:00 [Information] [] 
+Begin Request Id:f2f2b2a3-cb63-415c-acf3-8dd8a5dfa1e3, request name:ChangeInventoryAddCommand
+2021-12-17 00:16:58.136 +04:00 [Information] [] 
+Begin Request Id:f2f2b2a3-cb63-415c-acf3-8dd8a5dfa1e3, request name:ChangeInventoryAddCommand, total request time:119
+2021-12-17 00:16:58.155 +04:00 [Information] [] 
+Begin Request Id:bf68f33e-1e7c-48c4-b3ff-0e020488b8ad, request name:UpdatePurchaseDetailStatusCommand, total request time:310
+2021-12-17 00:16:58.156 +04:00 [Information] [] 
+Begin Request Id:04583b58-2053-4481-bc8d-7c1dfc8e76f2, request name:UpdatePurchaseDetailStatusCommand
+2021-12-17 00:16:58.156 +04:00 [Information] [] 
+Begin Request Id:587db38e-0c0b-4529-8e59-aa6e282c6739, request name:ProductToInventoryCommand
+2021-12-17 00:16:58.157 +04:00 [Information] [] 
+Begin Request Id:587db38e-0c0b-4529-8e59-aa6e282c6739, request name:ProductToInventoryCommand, total request time:1
+2021-12-17 00:16:58.157 +04:00 [Information] [] 
+Begin Request Id:76cc57f1-e824-41f7-941e-6416a248512f, request name:ChangeInventoryAddCommand
+2021-12-17 00:16:58.159 +04:00 [Information] [] 
+Begin Request Id:76cc57f1-e824-41f7-941e-6416a248512f, request name:ChangeInventoryAddCommand, total request time:1
+2021-12-17 00:16:58.160 +04:00 [Information] [] 
+Begin Request Id:04583b58-2053-4481-bc8d-7c1dfc8e76f2, request name:UpdatePurchaseDetailStatusCommand, total request time:4
+2021-12-17 00:16:58.161 +04:00 [Information] [] 
+Begin Request Id:c17d99e4-1ce0-4fb0-8395-4bf83b9c9cf0, request name:UpdatePurchaseDetailStatusCommand
+2021-12-17 00:16:58.162 +04:00 [Information] [] 
+Begin Request Id:3d90a0e2-7bc2-4d71-ba22-640201f1c0e6, request name:ProductToInventoryCommand
+2021-12-17 00:16:58.164 +04:00 [Information] [] 
+Begin Request Id:3d90a0e2-7bc2-4d71-ba22-640201f1c0e6, request name:ProductToInventoryCommand, total request time:1
+2021-12-17 00:16:58.164 +04:00 [Information] [] 
+Begin Request Id:4c7940ba-d705-4bd8-ba64-24782c3fae59, request name:ChangeInventoryAddCommand
+2021-12-17 00:16:58.166 +04:00 [Information] [] 
+Begin Request Id:4c7940ba-d705-4bd8-ba64-24782c3fae59, request name:ChangeInventoryAddCommand, total request time:1
+2021-12-17 00:16:58.168 +04:00 [Information] [] 
+Begin Request Id:c17d99e4-1ce0-4fb0-8395-4bf83b9c9cf0, request name:UpdatePurchaseDetailStatusCommand, total request time:6
+2021-12-17 00:16:58.168 +04:00 [Information] [] 
+Begin Request Id:5644a9d4-d245-4ec9-b94b-c93b3bd77ffa, request name:UpdatePurchaseDetailStatusCommand
+2021-12-17 00:16:58.169 +04:00 [Information] [] 
+Begin Request Id:ada16214-8139-4009-808a-be755d9b8937, request name:ProductToInventoryCommand
+2021-12-17 00:16:58.169 +04:00 [Information] [] 
+Begin Request Id:ada16214-8139-4009-808a-be755d9b8937, request name:ProductToInventoryCommand, total request time:0
+2021-12-17 00:16:58.170 +04:00 [Information] [] 
+Begin Request Id:22694904-4006-4a4f-84ef-b1c08bbecb42, request name:ChangeInventoryAddCommand
+2021-12-17 00:16:58.171 +04:00 [Information] [] 
+Begin Request Id:22694904-4006-4a4f-84ef-b1c08bbecb42, request name:ChangeInventoryAddCommand, total request time:1
+2021-12-17 00:16:58.173 +04:00 [Information] [] 
+Begin Request Id:5644a9d4-d245-4ec9-b94b-c93b3bd77ffa, request name:UpdatePurchaseDetailStatusCommand, total request time:4
+2021-12-17 00:16:58.173 +04:00 [Information] [] 
+Begin Request Id:522e00cb-5e86-43d4-b9a8-1b083d5888cf, request name:UpdatePurchaseDetailStatusCommand
+2021-12-17 00:16:58.173 +04:00 [Information] [] 
+Begin Request Id:31d12cde-006a-4440-825a-2280922bf5a0, request name:ProductToInventoryCommand
+2021-12-17 00:16:58.174 +04:00 [Information] [] 
+Begin Request Id:31d12cde-006a-4440-825a-2280922bf5a0, request name:ProductToInventoryCommand, total request time:0
+2021-12-17 00:16:58.174 +04:00 [Information] [] 
+Begin Request Id:b27c2ce6-f20f-4e4f-9755-a5db78c289a8, request name:ChangeInventoryAddCommand
+2021-12-17 00:16:58.176 +04:00 [Information] [] 
+Begin Request Id:b27c2ce6-f20f-4e4f-9755-a5db78c289a8, request name:ChangeInventoryAddCommand, total request time:1
+2021-12-17 00:16:58.177 +04:00 [Information] [] 
+Begin Request Id:522e00cb-5e86-43d4-b9a8-1b083d5888cf, request name:UpdatePurchaseDetailStatusCommand, total request time:4
+2021-12-17 00:16:58.177 +04:00 [Information] [] 
+Begin Request Id:5018b9a1-d4d9-4ee8-a1bc-9e4c051db73f, request name:UpdatePurchaseDetailStatusCommand
+2021-12-17 00:16:58.178 +04:00 [Information] [] 
+Begin Request Id:3a7d76d3-2d52-415e-a8dd-941544775451, request name:ProductToInventoryCommand
+2021-12-17 00:16:58.178 +04:00 [Information] [] 
+Begin Request Id:3a7d76d3-2d52-415e-a8dd-941544775451, request name:ProductToInventoryCommand, total request time:0
+2021-12-17 00:16:58.179 +04:00 [Information] [] 
+Begin Request Id:72cc4685-18a7-4f78-b089-532c90f8a1e4, request name:ChangeInventoryAddCommand
+2021-12-17 00:16:58.180 +04:00 [Information] [] 
+Begin Request Id:72cc4685-18a7-4f78-b089-532c90f8a1e4, request name:ChangeInventoryAddCommand, total request time:1
+2021-12-17 00:16:58.182 +04:00 [Information] [] 
+Begin Request Id:5018b9a1-d4d9-4ee8-a1bc-9e4c051db73f, request name:UpdatePurchaseDetailStatusCommand, total request time:4
+2021-12-17 00:16:58.241 +04:00 [Information] [] 
+Begin Request Id:9d8eb5f0-6454-4191-9efa-0923def08a58, request name:UpdatePurchaseStatusCommand, total request time:515
+2021-12-17 00:16:58.241 +04:00 [Information] [] 
+
+2021-12-17 00:16:58.243 +04:00 [Information] [] 
+End DDDTest

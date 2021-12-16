@@ -22,7 +22,6 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
     public class UpdatePurchaseDetailStatusCommand : IRequest<Application.Model.Procurment.PurchaseDetail>
     {
         //        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-
         public Application.Model.Procurment.PurchaseDetail PurchaseDetail { get; set; }
         public bool doQtyPost { get; set; }
         public bool doQtyUnPost { get; set; }
@@ -47,8 +46,6 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
         public async Task<Application.Model.Procurment.PurchaseDetail> Handle(UpdatePurchaseDetailStatusCommand request, CancellationToken cancellationToken)
         {
 
-//            throw new Exception("dddddddddddddddddd");
-
             Application.Model.Inventory.Inventory inventory;
             Application.Model.Inventory.InventoryChange _inventoryChange;
 
@@ -63,9 +60,6 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
                             }
                             );
 
-
-//            if (request.doCostPost && (!request.doQtyPost) ) { request.doQtyPost = true; };
-//            if (request.doCostPost && (!request.doQtyPost)) { request.doCostPost = false; };
 
             if (request.doQtyPost || request.doCostPost)
             {
@@ -122,10 +116,6 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
             request.PurchaseDetail.Posted = request.PurchaseDetail.QtyPosted && request.PurchaseDetail.FinPosted;
   
             _context.PurchaseDetail.Update(request.PurchaseDetail);
-
-            // Make cascasade update of related inventory changes
-//            List<Application.Model.Inventory.Inventory> costAffectedInventoryList = new List<Application.Model.Inventory.Inventory>();
-//            Dictionary<long, Application.Model.Inventory.Inventory> costAffectedInventoryList = new Dictionary<long, Application.Model.Inventory.Inventory>();
 
 
             await _context.SaveChangesAsync(cancellationToken);

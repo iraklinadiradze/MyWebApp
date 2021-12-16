@@ -8,6 +8,8 @@ using Application.Model.[###moduleName###];
 using Application;
 using Application.Common.Interfaces;
 using Application.Common;
+using Serilog;
+
 
 namespace Application.Domains.[###moduleName###].[###entityName###].Commands.Create[###entityName###]
 {
@@ -21,11 +23,13 @@ namespace Application.Domains.[###moduleName###].[###entityName###].Commands.Cre
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
+        private readonly Serilog.ILogger _logger;
 
-        public Create[###entityName###]CommandHandler(IMediator mediator, ICoreDBContext context)
+        public Create[###entityName###]CommandHandler(IMediator mediator, ICoreDBContext context, Serilog.ILogger logger)
         {
            _mediator = mediator;
            _context = context;
+           _logger = logger;
         }
 
         public async Task<Application.Model.[###moduleName###].[###entityName###]> Handle(Create[###entityName###]Command request, CancellationToken cancellationToken)

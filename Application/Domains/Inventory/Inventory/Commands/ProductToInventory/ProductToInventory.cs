@@ -14,6 +14,7 @@ using System.Linq;
 
 using Application.Domains.Inventory.Inventory.Commands.CreateInventory;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
 {
@@ -32,17 +33,21 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
 
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
+        private readonly Serilog.ILogger _logger;
 
-        public ProductToInventoryCommandHandler(IMediator mediator, ICoreDBContext context)
+        public ProductToInventoryCommandHandler(IMediator mediator, ICoreDBContext context, Serilog.ILogger logger)
         {
             _mediator = mediator;
             _context = context;
+            _logger = logger;
         }
 
         public async Task<Application.Model.Inventory.Inventory> Handle(ProductToInventoryCommand request, CancellationToken cancellationToken)
         {
 
             Application.Model.Inventory.Inventory _inventory;
+
+//            _logger("Start Create Inventory With Code)
 
             if (request.Product.IsSingle == true)
             {

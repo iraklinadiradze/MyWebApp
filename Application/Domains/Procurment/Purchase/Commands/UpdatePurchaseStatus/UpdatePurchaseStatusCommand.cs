@@ -11,6 +11,9 @@ using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 using Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseDetailStatusCommand;
+using Microsoft.Extensions.Logging;
+using Serilog;
+
 
 namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusCommand
 {
@@ -26,16 +29,23 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
+        private readonly Serilog.ILogger _logger;
 
-        public UpdatePurchaseStatusCommandHandler(IMediator mediator, ICoreDBContext context)
+        public UpdatePurchaseStatusCommandHandler(IMediator mediator, ICoreDBContext context, Serilog.ILogger logger)
         {
             _mediator = mediator;
             _context = context;
+            _logger = logger;
         }
 
         public async Task<int> Handle(UpdatePurchaseStatusCommand request, CancellationToken cancellationToken)
         {
+
+            _logger.Information("Request: {@request}", request);
+
             var purchase = await _context.Purchase.FindAsync(request.Id);
+
+            _logger.Information("Purchase: {@purchase}", purchase);
 
             if (
                 (new PurchaseAction[]{

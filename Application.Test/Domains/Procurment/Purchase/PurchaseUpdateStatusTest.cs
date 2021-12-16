@@ -32,12 +32,14 @@ namespace Application.Test.Domains.Procurment.Purchase
         [Fact]
         public void CheckPurchaseTest1()
         {
-            var _testContext = new TestContext.TestContext();
+            var _testContext = new TestContext.TestContext(_testOutputHelper);
+
+            _testContext._Logger.Error("Errorrrrrrrrr");
 
             Application.Model.Procurment.Purchase _purchase = _testContext._dbContext.Purchase.FirstOrDefault();
-            _purchase.PurchaseName = "DDDDDDDD";
-            _testContext._dbContext.Purchase.Update(_purchase);
 
+            _purchase.PurchaseName = "DDDDDDDD1213213123";
+            _testContext._dbContext.Purchase.Update(_purchase);
 
             Application.Model.Procurment.Purchase _purchase1 = (from e in _testContext._dbContext.Purchase
                                                                select e).FirstOrDefault();
@@ -56,7 +58,7 @@ namespace Application.Test.Domains.Procurment.Purchase
         {
 //            return;
 
-            var _testContext = new TestContext.TestContext();
+            var _testContext = new TestContext.TestContext(_testOutputHelper);
 
             Application.Model.Procurment.Purchase _purchase = _testContext._dbContext.Purchase.FirstOrDefault();
 
@@ -88,7 +90,7 @@ namespace Application.Test.Domains.Procurment.Purchase
         {
 //            return;
 
-            var _testContext = new TestContext.TestContext();
+            var _testContext = new TestContext.TestContext(_testOutputHelper);
 
             Application.Model.Procurment.Purchase _purchase = _testContext._dbContext.Purchase.FirstOrDefault();
 
@@ -115,7 +117,7 @@ namespace Application.Test.Domains.Procurment.Purchase
         [Fact]
         public async void CheckPurchaseFinTest()
         {
-            var _testContext = new TestContext.TestContext();
+            var _testContext = new TestContext.TestContext(_testOutputHelper);
 
             Application.Model.Procurment.Purchase _purchase = _testContext._dbContext.Purchase.FirstOrDefault();
 
