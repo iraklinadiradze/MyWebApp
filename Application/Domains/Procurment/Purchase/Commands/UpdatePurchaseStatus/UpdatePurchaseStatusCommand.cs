@@ -17,7 +17,7 @@ using Serilog;
 
 namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusCommand
 {
-    public class UpdatePurchaseStatusCommand : IRequest<int>
+    public class UpdatePurchaseStatusCommand : IRequest<Application.Model.Procurment.Purchase>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public int Id { get; set; }
@@ -25,7 +25,7 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
         public PurchaseAction PurchaseAction { get; set; }
     }
 
-    public class UpdatePurchaseStatusCommandHandler : IRequestHandler<UpdatePurchaseStatusCommand, int>
+    public class UpdatePurchaseStatusCommandHandler : IRequestHandler<UpdatePurchaseStatusCommand, Application.Model.Procurment.Purchase>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -38,14 +38,19 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
             _logger = logger;
         }
 
-        public async Task<int> Handle(UpdatePurchaseStatusCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.Purchase> Handle(UpdatePurchaseStatusCommand request, CancellationToken cancellationToken)
         {
 
-            _logger.Information("Request: {@request}", request);
+            _logger.Information("Request UpdatePurchaseStatusCommandHandler: {@Request}", request);
 
             var purchase = await _context.Purchase.FindAsync(request.Id);
 
-            _logger.Information("Purchase: {@purchase}", purchase);
+            //            _logger.Information("Purchase: Id = {Id}; TransDate = {TransDate}; "
+            //                , purchase.Id, purchase.TransDate, purchase.QtyPosted, purchase.FinPosted,
+            //                purchase.Posted
+            //             );
+
+            _logger.Information("Purchase: {@Purchase}", purchase);
 
             if (
                 (new PurchaseAction[]{
@@ -60,6 +65,10 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                 )
             {
                 purchase.QtyPosted = false;
+            }
+            else
+            {
+//                throw new Exception("Purchase #{purchase.id} is already Unposted");
             }
 
             if (
@@ -77,8 +86,6 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                 purchase.FinPosted = false;
             }
 
-            //            await _context.SaveChangesAsync(cancellationToken);
-
             // if action requires iteration through details
             if (
                 (new PurchaseAction[]{
@@ -93,6 +100,8 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                 (request.PurchaseDetailId == null)
                 )
             {
+
+                _logger.Information("Start Purchase Detail Post/Unpost");
 
                 foreach (
                     var purchaseDetail in _context.PurchaseDetail.Where(q =>
@@ -154,6 +163,8 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                        )
                         detailFinPost = false;
 
+                    _logger.Information("Request: {@Request}", request);
+
                     var _result = await _mediator.Send(
                         new UpdatePurchaseDetailStatusCommand
                         {
@@ -165,9 +176,11 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                         );
                 }
 
+                _logger.Information("End Purchase Detail Post/Unpost");
+
             }
 
-            var q = (from x in _context.PurchaseDetail
+            var finalPurchaseStatus = (from x in _context.PurchaseDetail
                      where x.PurchaseId == purchase.Id
                      group x by 0 into y
                      select new
@@ -178,14 +191,19 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                          qtyPostedNew = (bool)(y.Min(z => z.QtyPosted ? 1 : 0) == 0) ? true : false
                      }).First();
 
-            purchase.FinPostStarted = q.finPostStartedNew;
-            purchase.QtyPostStarted = q.qtyPostStartedNew;
-            purchase.FinPosted = q.finPostedNew;
-            purchase.QtyPosted = q.qtyPostedNew;
+
+            purchase.FinPostStarted = finalPurchaseStatus.finPostStartedNew;
+            purchase.QtyPostStarted = finalPurchaseStatus.qtyPostStartedNew;
+            purchase.FinPosted = finalPurchaseStatus.finPostedNew;
+            purchase.QtyPosted = finalPurchaseStatus.qtyPostedNew;
+
+            _logger.Information("Purchase Result Status: {@ResultStatus}", finalPurchaseStatus);
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return 5;
+            _logger.Information("Final Purchase Result: {@Purchase}", purchase);
+
+            return purchase;
         }
     }
 

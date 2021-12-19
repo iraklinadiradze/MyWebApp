@@ -47,13 +47,15 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
 
             Application.Model.Inventory.Inventory _inventory;
 
-//            _logger("Start Create Inventory With Code)
+            _logger.Information("Request: {@Request}", request);
 
             if (request.Product.IsSingle == true)
             {
                 _inventory = (from x in _context.Inventory
                               where x.InventoryCode == request.InventoryCode
                               select x).First();
+
+                _logger.Information("Product is Single, Related Found Inventory Is:{@Inventory} ", _inventory);
 
                 if (
                     (_inventory != null)
@@ -89,13 +91,14 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
                               )
                               select x
                               ).FirstOrDefaultAsync();
+
+                _logger.Information("Product is not Single, Related Found Inventory Is:{@Inventory} ", _inventory);
             }
 
             var inventory = new Application.Model.Inventory.Inventory();
 
             if (_inventory == null)
             {
-
                 inventory.IsSingle = request.Product.IsSingle;
                 inventory.IsWholeQuantity = request.Product.IsWholeQuantity;
                 inventory.ProductUnitId = request.Product.ProductUnitId;
@@ -107,24 +110,17 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
 
                 await _context.Inventory.AddAsync(inventory);
 
-//                inventory = await _mediator.Send(
-//                    new CreateInventoryCommand { SenderId = ModuleEnum.mdUndefined, Inventory = inventory }
-//                    );
+                _logger.Information("Create Mew Inventory");
 
             }
             else
             {
                 inventory = _inventory;
+
+                _logger.Information("Get Existing Inventory", inventory);
             }
 
-//            if (
-//                _context.ChangeTracker.Entries()
-//                      .Any(e => e.State == EntityState.Added
-//                             || e.State == EntityState.Deleted
-//                             || e.State == EntityState.Modified)
-//          ) ;
-
-//            _context.SaveChangesAsync(cancellationToken);
+            _logger.Information("Result Inventory Is:{@Inventory} ", inventory);
 
             return inventory;
         }

@@ -33,8 +33,10 @@ namespace Application.Model.Procurment
         [MaxLength(40)]
         public string InvoiceNumber { get; set; }
 
+        [ForeignKey("Client")]
         public int ClientId { get; set; }
 
+        [ForeignKey("Currency")]
         public int CurrencyId { get; set; }
 
         public decimal xrate { get; set; }
@@ -70,11 +72,9 @@ namespace Application.Model.Procurment
         public bool Posted { get; set; }
 
 
-        [ForeignKey("ClientId")]
-        public virtual Client.Client Client{ get; set; }
+//        public virtual Client.Client Client{ get; set; }
 
-        [ForeignKey("CurrencyId")]
-        public virtual Currency Currency { get; set; }
+  //      public virtual Currency Currency { get; set; }
 
 
     }

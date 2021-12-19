@@ -10,7 +10,7 @@ namespace Application.Model.Product
     {
         public Product()
         {
-            ProductFeature = new HashSet<ProductFeature>();
+  //          ProductFeature = new HashSet<ProductFeature>();
         }
 
         [Key]
@@ -45,11 +45,11 @@ namespace Application.Model.Product
         [ForeignKey("ProductLabel")]
         public int ProductLabelId { get; set; }
 
-        public virtual ProductGroup ProductGroup { get; set; }
-        public virtual ProductUnit ProductUnit { get; set; }
-        public virtual ProductLabel ProductLabel { get; set; }
+//        public virtual ProductGroup ProductGroup { get; set; }
+//        public virtual ProductUnit ProductUnit { get; set; }
+//        public virtual ProductLabel ProductLabel { get; set; }
         
-        public virtual ICollection<ProductFeature> ProductFeature { get; set; }
+//        public virtual ICollection<ProductFeature> ProductFeature { get; set; }
     }
 
 }

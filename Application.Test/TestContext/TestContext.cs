@@ -27,11 +27,14 @@ namespace Application.Test.TestContext
 
         public ILogger _Logger;
 
+        public ITestOutputHelper _testOutputHelper;
+
         public DbContextOptionsBuilder<CoreDBContext> _builder { get; set; }
 
-        public TestContext(ITestOutputHelper _testOutputHelper)
-        {
+        public Container _container;
 
+        public TestContext()
+        {
             var builder = new DbContextOptionsBuilder<CoreDBContext>();
             builder.UseInMemoryDatabase(databaseName: "LibraryDbInMemory");
 
@@ -41,12 +44,7 @@ namespace Application.Test.TestContext
             _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
 
-
-            
-            //            _mediator = new Mock<IMediator>();
-
             doMakeSeeding();
-
 
             var container = new Container(cfg =>
             {
@@ -54,8 +52,8 @@ namespace Application.Test.TestContext
                 {
                     scanner.AssemblyContainingType<UpdatePurchaseStatusCommandHandler>();
                     scanner.AssemblyContainingType<Serilog.ILogger>();
-                    //                    scanner.AssemblyContainingType<UpdatePurchaseDetailStatusCommandHandler>();
                     scanner.AssemblyContainingType<ProductToInventoryCommandHandler>();
+                    //                    scanner.AssemblyContainingType<UpdatePurchaseDetailStatusCommandHandler>();
                     //                   scanner.AssemblyContainingType<ICoreDBContext>();
                     //                    scanner.AssemblyContainingType<CoreDBContext>();
                     //                    scanner.AssembliesAndExecutablesFromApplicationBaseDirectory();
@@ -69,31 +67,37 @@ namespace Application.Test.TestContext
                 cfg.For<ServiceFactory>().Use<ServiceFactory>(ctx => t => ctx.GetInstance(t));
                 cfg.For<IMediator>().Use<Mediator>();
                 cfg.For<ICoreDBContext>().Use<CoreDBContext>(_dbContext);
-//                cfg.For<typeof(IPipelineBehavior<IRequest, MediatR.IREs>)>().Use<typeof(AppLoggingBehaviour<,>)>();
-
-                
-
-                //                cfg.For< IPipelineBehavior>().Use<AppLoggingBehaviour>();
-
-                //                cfg.For<IPipelineBehavior>().Use< Application.Test.Pipelines.AppLoggingBehaviour<,>  >();
-
-
-                var outtemplate ="{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] [{SourceContext}] {Message}{NewLine}{Exception}";
+                cfg.For(typeof(IPipelineBehavior<,>)).Add(typeof(AppLoggingBehaviour<,>));
 
                 Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
                 Serilog.Debugging.SelfLog.Enable(Console.Error);
 
-                _Logger = new LoggerConfiguration()
-                    .MinimumLevel.Verbose()
-                    .WriteTo.TestOutput( _testOutputHelper, Serilog.Events.LogEventLevel.Verbose, outputTemplate: outtemplate)
-                    .CreateLogger();
 
-                cfg.For<ILogger>().Use<ILogger>(_Logger);
+//                _testOutputHelper = testOutputHelper;
+
+//                cfg.For<ILogger>().Use<ILogger>(_Logger);
 
             });
 
+            _container = container;
+
             var mediator = container.GetInstance<IMediator>();
             _mediator = mediator;
+
+        }
+
+        public void InjectLogger(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+
+            var outtemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] [{SourceContext}] {Message}{NewLine}{Exception}";
+
+            _Logger = new LoggerConfiguration()
+            .MinimumLevel.Verbose()
+            .WriteTo.TestOutput(testOutputHelper, Serilog.Events.LogEventLevel.Verbose, outputTemplate: outtemplate)
+            .CreateLogger();
+
+            _container.Inject<ILogger>(_Logger);
 
         }
 
@@ -101,7 +105,6 @@ namespace Application.Test.TestContext
         {
 
             _dbContext.Dispose();
-//            throw new NotImplementedException();
         }
 
         public void doMakeSeeding()
@@ -211,7 +214,6 @@ namespace Application.Test.TestContext
 
             _dbContext.ProductCategory.AddRange(productCategory1, productCategory2, productCategory3);
             _dbContext.SaveChanges();
-
 
 
             // Product Group Seeding

@@ -21,12 +21,12 @@ namespace Application.Test.Pipelines
         {
             string requestName = typeof(TRequest).Name;
             string unqiueId = Guid.NewGuid().ToString();
-            _logger.Information($"Begin Request Id:{unqiueId}, request name:{requestName}");
+//            _logger.Information($"Begin Request Id:{unqiueId}, request name:{requestName}");
             var timer = new Stopwatch();
             timer.Start();
             var response = await next();
             timer.Stop();
-            _logger.Information($"Begin Request Id:{unqiueId}, request name:{requestName}, total request time:{timer.ElapsedMilliseconds}");
+ //           _logger.Information($"Begin Request Id:{unqiueId}, request name:{requestName}, total request time:{timer.ElapsedMilliseconds}");
             return response;
         }
 

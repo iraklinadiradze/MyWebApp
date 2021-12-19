@@ -36,15 +36,19 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
 
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
+        private readonly Serilog.ILogger _logger;
 
-        public UpdatePurchaseDetailStatusCommandHandler(IMediator mediator, ICoreDBContext context)
+        public UpdatePurchaseDetailStatusCommandHandler(IMediator mediator, ICoreDBContext context, Serilog.ILogger logger)
         {
             _mediator = mediator;
             _context = context;
+            _logger = logger;
         }
 
         public async Task<Application.Model.Procurment.PurchaseDetail> Handle(UpdatePurchaseDetailStatusCommand request, CancellationToken cancellationToken)
         {
+
+            _logger.Information("Request: {@Request}", request);
 
             Application.Model.Inventory.Inventory inventory;
             Application.Model.Inventory.InventoryChange _inventoryChange;
@@ -114,13 +118,20 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
             }
 
             request.PurchaseDetail.Posted = request.PurchaseDetail.QtyPosted && request.PurchaseDetail.FinPosted;
-  
-            _context.PurchaseDetail.Update(request.PurchaseDetail);
 
+            _logger.Information("Request Result: {@Request}", request);
+
+            _context.PurchaseDetail.Update(request.PurchaseDetail);
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return await _context.PurchaseDetail.FindAsync(request.PurchaseDetail.Id);
+            _logger.Information("Request Result: {@Request}", request);
+
+            var result = await _context.PurchaseDetail.FindAsync(request.PurchaseDetail.Id);
+
+            _logger.Information("Result: {@Result}", result);
+
+            return result;
         }
 
     }

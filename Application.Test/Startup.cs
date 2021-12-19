@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Formatting.Compact;
+using Serilog.Sinks.InMemory;
 using Xunit.Abstractions;
 using Xunit.DependencyInjection;
 
@@ -29,19 +31,24 @@ namespace Application.Test
 
         public void Configure(ILoggerFactory loggerFactory, ITestOutputHelperAccessor accessor)
         {
+            return;
+
             _testOutputHelper = accessor.Output;
         }
 
         public void ConfigureServices(IServiceCollection services, HostBuilderContext context)
         {
+            return;
 
-            var outtemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] [{SourceContext}] {NewLine}{Message}{NewLine}{Exception}";
+            var outtemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] [{SourceContext}.{Method}] {TestFunction} {NewLine}{Message:j}{NewLine}{Exception}{NewLine}";
 
            Serilog.ILogger _Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
                 .MinimumLevel.Verbose()
-                .WriteTo.Console()
-                .WriteTo.File("C:\\Apps\\MyWebApp\\Application.Test\\Log.txt", outputTemplate: outtemplate )
-//                .WriteTo.TestOutput(new tes)
+//                .WriteTo.Console()
+//                .WriteTo.File(new CompactJsonFormatter(),"C:\\Apps\\MyWebApp\\Application.Test\\Log.txt")
+//                  .WriteTo.File("C:\\Apps\\MyWebApp\\Application.Test\\Log.txt", outputTemplate: outtemplate )
+                  .WriteTo.InMemory(outputTemplate: "{Timestamp:HH:mm:ss} {Level:u3}] {NewLine} {Message:lj}{NewLine}{Exception}")
                 .CreateLogger();
 
             services.AddSingleton<Serilog.ILogger>(_Logger);
@@ -52,9 +59,6 @@ namespace Application.Test
             services.AddSingleton<ICoreDBContext, CoreDBContext>();
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AppLoggingBehaviour<,>));
-
-//            AppLoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-
 
             _services = services;
         }

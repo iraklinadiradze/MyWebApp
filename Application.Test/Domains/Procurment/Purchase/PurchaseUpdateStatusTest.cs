@@ -1,8 +1,14 @@
-﻿using Application.Domains.Procurment.Purchase;
+﻿using Application.Common.Interfaces;
+using Application.Domains.Procurment.Purchase;
 using Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusCommand;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Context;
+using Serilog.Sinks.InMemory;
 using System;
 using System.Linq;
+using System.Threading;
 using Xunit;
 using Xunit.Abstractions;
 // using System.ComponentModel;
@@ -14,40 +20,51 @@ using Xunit.Abstractions;
 namespace Application.Test.Domains.Procurment.Purchase
 {
 
-    public class PurchaseUpdateStatusTest //: IClassFixture<Application.Test.TestContext.TestContext>
+    [Collection("Sequential")]
+    public class PurchaseUpdateStatusTest : IClassFixture<Application.Test.TestContext.TestContext>
     {
 
-        private readonly ITestOutputHelper _testOutputHelper;
+        //        private readonly ITestOutputHelper _testOutputHelper;
 
-//        Application.Test.TestContext.TestContext _testContext;
+        //        Application.Test.TestContext.TestContext _testContext;
 
-        public PurchaseUpdateStatusTest( //Application.Test.TestContext.TestContext testContext, 
-            ITestOutputHelper testOutputHelper)
+        ICoreDBContext _dbContext { get; set; }
+        IMediator _mediator { get; set; }
+
+        ILogger _Logger;
+
+        ITestOutputHelper _testoutputHelper;
+
+        public PurchaseUpdateStatusTest(Application.Test.TestContext.TestContext testContext, ITestOutputHelper testoutputHelper)
         {
-//            _testContext = testContext;
-            _testOutputHelper = testOutputHelper;
+            testContext.InjectLogger(testoutputHelper);
+
+            _dbContext = testContext._dbContext;
+            _mediator = testContext._mediator;
+            _Logger = testContext._Logger;
+            _testoutputHelper = testoutputHelper;
         }
 
 
         [Fact]
         public void CheckPurchaseTest1()
         {
-            var _testContext = new TestContext.TestContext(_testOutputHelper);
+            //          var _testContext = new TestContext.TestContext(_testOutputHelper);
+//            InMemorySink.Instance.Dispose();
 
-            _testContext._Logger.Error("Errorrrrrrrrr");
+            LogContext.PushProperty("TestFunction", "CheckPurchaseTest1");
+            _Logger.Information("Start CheckPurchaseTest1");
 
-            Application.Model.Procurment.Purchase _purchase = _testContext._dbContext.Purchase.FirstOrDefault();
+            Application.Model.Procurment.Purchase _purchase = _dbContext.Purchase.FirstOrDefault();
 
             _purchase.PurchaseName = "DDDDDDDD1213213123";
-            _testContext._dbContext.Purchase.Update(_purchase);
+            _dbContext.Purchase.Update(_purchase);
 
-            Application.Model.Procurment.Purchase _purchase1 = (from e in _testContext._dbContext.Purchase
+            Application.Model.Procurment.Purchase _purchase1 = (from e in _dbContext.Purchase
                                                                select e).FirstOrDefault();
 
-//            var i = await _testContext._dbContext.Inventory.ToListAsync();
-//            var ic = await _testContext._dbContext.InventoryChange.ToListAsync();
-
-//            var c = await _testContext._dbContext.Currency.ToListAsync();
+            _Logger.Information("End CheckPurchaseTest1");
+            _Logger.Information("");
 
             Assert.Equal(_purchase.PurchaseName, _purchase1.PurchaseName );
         }
@@ -56,11 +73,13 @@ namespace Application.Test.Domains.Procurment.Purchase
         [Fact]
         public async void CheckPurchaseFullTest()
         {
-//            return;
 
-            var _testContext = new TestContext.TestContext(_testOutputHelper);
+//            InMemorySink.Instance.Dispose();
 
-            Application.Model.Procurment.Purchase _purchase = _testContext._dbContext.Purchase.FirstOrDefault();
+            LogContext.PushProperty("TestFunction", "CheckPurchaseFullTest");
+            _Logger.Information("Start CheckPurchaseFullTest");
+
+            Application.Model.Procurment.Purchase _purchase = _dbContext.Purchase.FirstOrDefault();
 
             UpdatePurchaseStatusCommand _updatePurchaseStatusCommand = new UpdatePurchaseStatusCommand { 
                 Id = _purchase.Id, 
@@ -69,18 +88,16 @@ namespace Application.Test.Domains.Procurment.Purchase
                 PurchaseAction = PurchaseAction.paFullPost 
             };
 
-            var result = await _testContext._mediator.Send(_updatePurchaseStatusCommand);
+            var result = await _mediator.Send(_updatePurchaseStatusCommand);
 
-            await _testContext._dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(CancellationToken.None);
 
-            var i = await _testContext._dbContext.Inventory.ToListAsync();
-            var ic = await _testContext._dbContext.InventoryChange.ToListAsync();
+            _Logger.Information("End CheckPurchaseFullTest");
+            _Logger.Information("");
+            
+            var i = await _dbContext.Inventory.ToListAsync();
+            var ic = await _dbContext.InventoryChange.ToListAsync();
 
-            //            _testOutputHelper.WriteLine(i[0].Id.ToString());
-            //            _testOutputHelper.WriteLine("");
-            //            _testOutputHelper.WriteLine(ic[0].Id.ToString());
-
-        //    Assert.Equal(6, i.Count());
             Assert.Equal(6, i.Count());
         }
 
@@ -88,28 +105,40 @@ namespace Application.Test.Domains.Procurment.Purchase
         [Fact]
         public async void CheckPurchaseQtyTest()
         {
-//            return;
-
-            var _testContext = new TestContext.TestContext(_testOutputHelper);
-
-            Application.Model.Procurment.Purchase _purchase = _testContext._dbContext.Purchase.FirstOrDefault();
-
-            UpdatePurchaseStatusCommand _updatePurchaseStatusCommand = new UpdatePurchaseStatusCommand
+ 
+            try
             {
-                Id = _purchase.Id,
-                SenderId = 0,
-                PurchaseDetailId = null,
-                PurchaseAction = PurchaseAction.paQtyPost
-            };
 
-            var result = await _testContext._mediator.Send(_updatePurchaseStatusCommand);
+                LogContext.PushProperty("TestFunction", "CheckPurchaseQtyTest");
+                _Logger.Information("Start CheckPurchaseQtyTest");
 
-            await _testContext._dbContext.SaveChangesAsync();
+                Application.Model.Procurment.Purchase _purchase = _dbContext.Purchase.FirstOrDefault();
 
-            var i = await _testContext._dbContext.Inventory.ToListAsync();
-            var ic = await _testContext._dbContext.InventoryChange.ToListAsync();
+                UpdatePurchaseStatusCommand _updatePurchaseStatusCommand = new UpdatePurchaseStatusCommand
+                {
+                    Id = _purchase.Id,
+                    SenderId = 0,
+                    PurchaseDetailId = null,
+                    PurchaseAction = PurchaseAction.paQtyPost
+                };
 
-            Assert.Equal(6, i.Count());
+                var result = await _mediator.Send(_updatePurchaseStatusCommand);
+
+                await _dbContext.SaveChangesAsync(CancellationToken.None);
+
+                _Logger.Information("End CheckPurchaseQtyTest");
+                }
+                catch (Exception ex)
+                {
+                    _Logger.Error("{ErrorMessage}", ex.Message);
+                    _Logger.Error("{StackTrace}", ex.StackTrace);
+                }
+
+
+            var i = await _dbContext.Inventory.ToListAsync();
+    //            var ic = await _dbContext.InventoryChange.ToListAsync();
+
+                Assert.Equal(6, i.Count() );
 
         }
 
@@ -117,9 +146,11 @@ namespace Application.Test.Domains.Procurment.Purchase
         [Fact]
         public async void CheckPurchaseFinTest()
         {
-            var _testContext = new TestContext.TestContext(_testOutputHelper);
 
-            Application.Model.Procurment.Purchase _purchase = _testContext._dbContext.Purchase.FirstOrDefault();
+            LogContext.PushProperty("TestFunction", "CheckPurchaseFinTest");
+            _Logger.Information("Start CheckPurchaseFinTest");
+
+            Application.Model.Procurment.Purchase _purchase = _dbContext.Purchase.FirstOrDefault();
 
             UpdatePurchaseStatusCommand _updatePurchaseStatusCommand = new UpdatePurchaseStatusCommand
             {
@@ -129,11 +160,7 @@ namespace Application.Test.Domains.Procurment.Purchase
                 PurchaseAction = PurchaseAction.paQtyPost
             };
 
-            var result = await _testContext._mediator.Send(_updatePurchaseStatusCommand);
-
-            await _testContext._dbContext.SaveChangesAsync();
-
-//            return;
+            var result = await _mediator.Send(_updatePurchaseStatusCommand);
 
             UpdatePurchaseStatusCommand _updatePurchaseStatusCommand1 = new UpdatePurchaseStatusCommand
             {
@@ -143,12 +170,14 @@ namespace Application.Test.Domains.Procurment.Purchase
                 PurchaseAction = PurchaseAction.paFinPost
             };
 
-            var result1 = await _testContext._mediator.Send(_updatePurchaseStatusCommand1);
+            var result1 = await _mediator.Send(_updatePurchaseStatusCommand1);
 
-            await _testContext._dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(CancellationToken.None);
 
-            var i = await _testContext._dbContext.Inventory.ToListAsync();
-            var ic = await _testContext._dbContext.InventoryChange.ToListAsync();
+            _Logger.Information("End CheckPurchaseFinTest");
+
+            var i = await _dbContext.Inventory.ToListAsync();
+            var ic = await _dbContext.InventoryChange.ToListAsync();
 
             Assert.Equal(6, i.Count());
 

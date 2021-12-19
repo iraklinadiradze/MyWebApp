@@ -44,8 +44,8 @@ namespace Application.Model.Inventory
         public long? EntityForeignId { get; set; }
         public string EntityProcCode { get; set; }
 
-        public virtual Product.Product Product { get; set; }
-        public virtual ProductUnit ProductUnit { get; set; }
+//        public virtual Product.Product Product { get; set; }
+//        public virtual ProductUnit ProductUnit { get; set; }
 
         //      public virtual ICollection<MovementDetail> MovementDetails { get; set; }
         //        public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }

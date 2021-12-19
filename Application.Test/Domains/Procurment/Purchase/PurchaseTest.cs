@@ -19,6 +19,7 @@ using System.Threading;
 
 namespace Application.Test.Domains.Procurment.Purchase
 {
+    [Collection("Sequential")]
     public class PurchaseTest
     {
 
@@ -759,6 +760,7 @@ namespace Application.Test.Domains.Procurment.Purchase
             await _dbContext.SaveChangesAsync(CancellationToken.None);
 
             _Logger.Information("End DDDTest");
+            _Logger.Information("");
 
             var i = await _dbContext.Inventory.ToListAsync();
             var ic = await _dbContext.InventoryChange.ToListAsync();

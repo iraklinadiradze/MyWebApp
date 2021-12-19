@@ -28,8 +28,10 @@ namespace Application.Model.Procurment
         [FilterParam(equals = true, useInJoin = true)]
         public int Id { get; set; }
 
+        [ForeignKey("Purchase")]
         public int PurchaseId { get; set; }
 
+        [ForeignKey("Product")]
         public int ProductId { get; set; }
 
         [MaxLength(30)]
@@ -40,6 +42,7 @@ namespace Application.Model.Procurment
 
         public int PurchaseDraftId { get; set; }
 
+        [ForeignKey("Location")]
         public int LocationId { get; set; }
 
         public decimal QtyInvoiced { get; set; }
@@ -54,12 +57,14 @@ namespace Application.Model.Procurment
         public decimal CostCalculated { get; set; }
         public decimal CostCalculatedEqu { get; set; }
 
+        [ForeignKey("PurchaseDetailPostType")]
         public int PurchaseDetailPostTypeId { get; set; }
 
         public bool QtyPosted { get; set; }
         public bool FinPosted { get; set; }
         public bool Posted { get; set; }
 
+        [ForeignKey("Inventory")]
         public long InventoryId { get; set; }
         public int GlAccountId { get; set; }
         public int ProjectId { get; set; }
@@ -70,20 +75,15 @@ namespace Application.Model.Procurment
         public bool Allocated{ get; set; }
         public bool StockProductPerProcess { get; set; }
 
-        [ForeignKey("PurchaseId")]
-        public virtual Purchase Purchase { get; set; }
+//        public virtual Purchase Purchase { get; set; }
 
-        [ForeignKey("ProductId")]
-        public virtual Product.Product Product { get; set; }
+//        public virtual Product.Product Product { get; set; }
 
-        [ForeignKey("LocationId")]
-        public virtual Location Location { get; set; }
+//        public virtual Location Location { get; set; }
 
-        [ForeignKey("InventoryId")]
-        public virtual Inventory.Inventory Inventory { get; set; }
+//        public virtual Inventory.Inventory Inventory { get; set; }
 
-        [ForeignKey("PurchaseDetailPostTypeId")]
-        public virtual PurchaseDetailPostType PurchaseDetailPostType { get; set; }
+//        public virtual PurchaseDetailPostType PurchaseDetailPostType { get; set; }
 
 
     }
