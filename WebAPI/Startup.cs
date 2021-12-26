@@ -21,6 +21,9 @@ using System.Text;
 using Serilog;
 using MediatR;
 using System.Reflection;
+using System.Resources;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 namespace WebAPIs
 {
@@ -41,8 +44,13 @@ namespace WebAPIs
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AppLoggingBehaviour<,>));
 
-
             services.AddControllers();
+
+            var baseName = "Resources";
+            services.AddSingleton(new ResourceManager(baseName, Assembly.GetExecutingAssembly()));
+
+            // Using IStringLocalizer
+            services.AddLocalization();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(Options=>
              {
@@ -78,6 +86,19 @@ namespace WebAPIs
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            var supportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("fr-FR") };
+            var requestLocalizationOptions = new RequestLocalizationOptions
+            {
+                // For culture-specific formatting of numbers, dates, etc.
+                SupportedCultures = supportedCultures,
+                // For l10n of UI-related elements, e.g., strings.
+                SupportedUICultures = supportedCultures,
+            };
+
+            requestLocalizationOptions.DefaultRequestCulture = new RequestCulture("en-US");
+
+            app.UseRequestLocalization(requestLocalizationOptions);
 
             app.UseHttpsRedirection();
 

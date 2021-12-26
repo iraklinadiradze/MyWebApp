@@ -53,6 +53,19 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
             Application.Model.Inventory.Inventory inventory;
             Application.Model.Inventory.InventoryChange _inventoryChange;
 
+            if (request.doCostPost)
+            {
+                if ( (!request.PurchaseDetail.QtyPosted) && (!request.doQtyPost))
+                    throw new InvalidOperationException("PurchaseDetailQtyShouldBePosted");
+            }
+
+            if (!request.doQtyPost)
+            {
+                if ((request.PurchaseDetail.FinPosted) && (request.doCostPost))
+                    throw new InvalidOperationException("PurchaseDetailFinShouldBeUnposted");
+            }
+
+
             inventory = await _mediator.Send(
                             new ProductToInventoryCommand {
                                 SenderId = ModuleEnum.mdPurchaseDetail,

@@ -50,25 +50,90 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
             //                purchase.Posted
             //             );
 
-            _logger.Information("Purchase: {@Purchase}", purchase);
+            _logger.Information("Purchase Retrieved: {@Purchase}", purchase);
+
+
+            // Validate Post Actions
+
+            if (request.PurchaseAction == PurchaseAction.paFullPost)
+            {
+                if (purchase.Posted)
+                    throw new InvalidOperationException("PurchaseIsAlreadyPosted");
+            }
+
+            if (request.PurchaseAction == PurchaseAction.paQtyPost)
+            {
+                if (purchase.QtyPosted)
+                    throw new InvalidOperationException("PurchaseIsAlreadyQtyPosted");
+            }
+
+            if (request.PurchaseAction == PurchaseAction.paFinPost)
+            {
+                if (purchase.FinPosted)
+                    throw new InvalidOperationException("PurchaseIsAlreadyFinPosted");
+
+                if ((!purchase.QtyPosted) && (request.PurchaseDetailId == null))
+                    throw new InvalidOperationException("PurchaseQtyShouldBePosted");
+            }
+
+
+            // Validate Unpost Actions
+
+            if (request.PurchaseAction == PurchaseAction.paFullUnpost)
+            {
+                if (!purchase.Posted)
+                    throw new InvalidOperationException("PurchaseIsAlreadyUnposted");
+            }
+
+            if (request.PurchaseAction == PurchaseAction.paFinUnpost)
+            {
+                if (!purchase.FinPosted)
+                    throw new InvalidOperationException("PurchaseIsAlreadyFinUnposted");
+            }
+
+            if (request.PurchaseAction == PurchaseAction.paQtyUnpost)
+            {
+                if (!purchase.QtyPosted)
+                    throw new InvalidOperationException("PurchaseIsAlreadyQtyUnposted");
+
+                if ((purchase.FinPosted) && (request.PurchaseDetailId == null))
+                    throw new InvalidOperationException("PurchaseFinShouldBeUnposted");
+            }
+
+            /*
+            if (request.PurchaseAction == PurchaseAction.paFullUnpostWithDetails)
+            {
+
+            }
+
+            if (request.PurchaseAction == PurchaseAction.paQtyUnpostWithDetails)
+            {
+
+            }
+
+            if (request.PurchaseAction == PurchaseAction.paFinUnpostWithDetails)
+            {
+
+            }
+            */
+
 
             if (
                 (new PurchaseAction[]{
                 PurchaseAction.paFullUnpost,
                 PurchaseAction.paQtyUnpost,
-                PurchaseAction.paQtyUnpostWithDetails
+                PurchaseAction.paQtyUnpostWithDetails,
+                PurchaseAction.paFullUnpostWithDetails
                 }).Any(q => q == request.PurchaseAction)
                 &&
-                (request.PurchaseDetailId == null)
-                &&
+                //                (request.PurchaseDetailId == null)
+                //                &&
                 (purchase.QtyPosted)
                 )
             {
                 purchase.QtyPosted = false;
-            }
-            else
-            {
-//                throw new Exception("Purchase #{purchase.id} is already Unposted");
+                purchase.Posted = false;
+                _context.Purchase.Update(purchase);
             }
 
             if (
@@ -76,14 +141,17 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                 PurchaseAction.paFullUnpost,
                 PurchaseAction.paFinUnpost,
                 PurchaseAction.paFullUnpostWithDetails,
+                PurchaseAction.paFinUnpostWithDetails
                 }).Any(q => q == request.PurchaseAction)
                 &&
-                (request.PurchaseDetailId == null)
-                &&
+                //                (request.PurchaseDetailId == null)
+                //                &&
                 (purchase.FinPosted)
                 )
             {
                 purchase.FinPosted = false;
+                purchase.Posted = false;
+                _context.Purchase.Update(purchase);
             }
 
             // if action requires iteration through details
@@ -111,8 +179,72 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                     )
                 )
                 {
-                    bool detailQtyPost = false;
-                    bool detailFinPost = false;
+
+                    if (
+                        (request.PurchaseAction == PurchaseAction.paFullPost)
+                        &&
+                        (request.PurchaseDetailId != null)
+                       )
+                    {
+                        if (purchaseDetail.Posted)
+                            throw new InvalidOperationException("PurchaseDetailIsAlreadyPosted");
+                    }
+
+                    if (
+                        (request.PurchaseAction == PurchaseAction.paQtyPost)
+                        &&
+                        (request.PurchaseDetailId != null)
+                       )
+                    {
+                        if (purchaseDetail.QtyPosted)
+                            throw new InvalidOperationException("PurchaseDetailQtyIsAlreadyPosted");
+                    }
+
+                    if (request.PurchaseAction == PurchaseAction.paFinPost)
+                    {
+                        if ((purchaseDetail.FinPosted) && (request.PurchaseDetailId != null))
+                            throw new InvalidOperationException("PurchaseDetailFinIsAlreadyPosted");
+
+                        if (!purchaseDetail.QtyPosted)
+                            throw new InvalidOperationException("PurchaseDetailQtyShouldBePosted");
+                    }
+
+                    if (
+                        (request.PurchaseAction == PurchaseAction.paFullUnpost)
+                        ||
+                        (request.PurchaseAction == PurchaseAction.paFullUnpostWithDetails)
+                       )
+                    {
+                        if ((!purchaseDetail.Posted) && (request.PurchaseDetailId != null))
+                            throw new InvalidOperationException("PurchaseDetailIsAlreadyUnposted");
+                    }
+
+                    if (
+                        (request.PurchaseAction == PurchaseAction.paQtyUnpost)
+                        ||
+                        (request.PurchaseAction == PurchaseAction.paQtyUnpostWithDetails)
+                       )
+                    {
+                        if ((!purchaseDetail.QtyPosted) && (request.PurchaseDetailId != null))
+                            throw new InvalidOperationException("PurchaseDetailQtyIsAlreadyUnposted");
+
+                        if (!purchaseDetail.FinPosted)
+                            throw new InvalidOperationException("PurchaseDetailFinShouldBeUnposted");
+                    }
+
+                    if (
+                        (request.PurchaseAction == PurchaseAction.paFinUnpost)
+                        ||
+                        (request.PurchaseAction == PurchaseAction.paFinUnpostWithDetails)
+                       )
+                    {
+                        if ((!purchaseDetail.FinPosted) && (request.PurchaseDetailId != null))
+                            throw new InvalidOperationException("PurchaseDetailFinIsAlreadyUnposted");
+                    }
+
+
+                    bool detailQtyPostAction = false;
+                    bool detailFinPostAction = false;
 
                     if (
                         (!purchaseDetail.QtyPosted)
@@ -123,7 +255,9 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                         (request.PurchaseAction == PurchaseAction.paQtyPost)
                         )
                        )
-                        detailQtyPost = true;
+                    {
+                        detailQtyPostAction = true;
+                    }
 
                     if (
                         (purchaseDetail.QtyPosted)
@@ -134,7 +268,7 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                         (request.PurchaseAction == PurchaseAction.paQtyUnpostWithDetails)
                         )
                        )
-                        detailQtyPost = false;
+                        detailQtyPostAction = false;
 
                     if (
                         (!purchaseDetail.FinPosted)
@@ -146,34 +280,39 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                         )
                        )
                     {
-                        detailFinPost = true;
-                        detailQtyPost = true;
+                        detailFinPostAction = true;
                     }
 
-                        if (
-                        (purchaseDetail.FinPosted)
-                        &&
-                        (
-                        (request.PurchaseAction == PurchaseAction.paFinUnpostWithDetails)
+                    if (
+                    (purchaseDetail.FinPosted)
+                    &&
+                    (
+                    (request.PurchaseAction == PurchaseAction.paFinUnpostWithDetails)
+                    ||
+                    (request.PurchaseAction == PurchaseAction.paFullUnpostWithDetails)
+                    //                    ||
+                    //                    (request.PurchaseAction == PurchaseAction.paQtyUnpostWithDetails)
+                    )
+                   )
+                        detailFinPostAction = false;
+
+                    if (
+                        (purchaseDetail.QtyPosted != detailQtyPostAction)
                         ||
-                        (request.PurchaseAction == PurchaseAction.paFullUnpostWithDetails)
-                        ||
-                        (request.PurchaseAction == PurchaseAction.paQtyUnpostWithDetails)
+                        (purchaseDetail.FinPosted != detailFinPostAction)
                         )
-                       )
-                        detailFinPost = false;
-
-                    _logger.Information("Request: {@Request}", request);
-
-                    var _result = await _mediator.Send(
+                    {
+                        var _result = await _mediator.Send(
                         new UpdatePurchaseDetailStatusCommand
                         {
                             PurchaseDetail = purchaseDetail,
                             TransDate = purchase.TransDate,
-                            doQtyPost = detailQtyPost,
-                            doCostPost = detailFinPost
+                            doQtyPost = detailQtyPostAction,
+                            doCostPost = detailFinPostAction
                         }
                         );
+                    }
+
                 }
 
                 _logger.Information("End Purchase Detail Post/Unpost");
@@ -181,15 +320,15 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
             }
 
             var finalPurchaseStatus = (from x in _context.PurchaseDetail
-                     where x.PurchaseId == purchase.Id
-                     group x by 0 into y
-                     select new
-                     {
-                         finPostStartedNew = (bool)(y.Sum(z => z.FinPosted ? 1 : 0) > 0) ? true : false,
-                         qtyPostStartedNew = (bool)(y.Sum(z => z.QtyPosted ? 1 : 0) > 0) ? true : false,
-                         finPostedNew = (bool)(y.Min(z => z.FinPosted ? 1 : 0) == 0) ? true : false,
-                         qtyPostedNew = (bool)(y.Min(z => z.QtyPosted ? 1 : 0) == 0) ? true : false
-                     }).First();
+                                       where x.PurchaseId == purchase.Id
+                                       group x by 0 into y
+                                       select new
+                                       {
+                                           finPostStartedNew = (bool)(y.Sum(z => z.FinPosted ? 1 : 0) > 0) ? true : false,
+                                           qtyPostStartedNew = (bool)(y.Sum(z => z.QtyPosted ? 1 : 0) > 0) ? true : false,
+                                           finPostedNew = (bool)(y.Min(z => z.FinPosted ? 1 : 0) == 0) ? true : false,
+                                           qtyPostedNew = (bool)(y.Min(z => z.QtyPosted ? 1 : 0) == 0) ? true : false
+                                       }).First();
 
 
             purchase.FinPostStarted = finalPurchaseStatus.finPostStartedNew;
