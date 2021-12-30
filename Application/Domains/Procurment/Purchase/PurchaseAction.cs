@@ -9,13 +9,13 @@ namespace Application.Domains.Procurment.Purchase
         paFullPost,
 
         paQtyPost,
-        paFinPost,
+        paCostPost,
 
         paFullUnpost,
         paFullUnpostWithDetails,
 
-        paFinUnpost,
-        paFinUnpostWithDetails,
+        paCostUnpost,
+        paCostUnpostWithDetails,
 
         paQtyUnpost,
         paQtyUnpostWithDetails,

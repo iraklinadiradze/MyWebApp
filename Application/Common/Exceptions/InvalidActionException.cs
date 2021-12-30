@@ -6,9 +6,14 @@ namespace Application.Common.Exceptions
 {
     public class InvalidActionException : Exception
     {
-        public InvalidActionException(string operation, string state , string entityType, string key)
-            : base($"Can not make , because ({key}) was not found.")
+        public long? Key { get; }
+        public ModuleEnum EntityId { get; }
+
+        public InvalidActionException(string operation, ModuleEnum entityId, long? key)
+            : base(operation)
         {
+            Key = key;
+            EntityId = entityId;
         }
     }
 

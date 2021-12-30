@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 using MediatR;
-using Application.Model.Procurment;
-using Application;
 using Application.Common.Interfaces;
 using Application.Common;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Linq;
 
 using Application.Domains.Inventory.Inventory.Commands.ProductToInventory;
-using Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd;
+using Application.Domains.Inventory.InventoryChange.Commands.ChangeInventoryStockLevel;
 using Application.Domains.Inventory.Inventory.Commands.ChangeInventoryRemove;
 using Application.Domains.Inventory.InventoryChangeType.Common;
-
+using Application.Common.Exceptions;
 
 namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseDetailStatusCommand
 {
@@ -24,9 +18,9 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
         //        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public Application.Model.Procurment.PurchaseDetail PurchaseDetail { get; set; }
         public bool doQtyPost { get; set; }
-        public bool doQtyUnPost { get; set; }
+//        public bool doQtyUnPost { get; set; }
         public bool doCostPost { get; set; }
-        public bool doCostUnPost { get; set; }
+ //       public bool doCostUnPost { get; set; }
         public DateTime TransDate { get; set; }
         public DateTime TimeSequence { get; set; }
     }
@@ -50,21 +44,20 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
 
             _logger.Information("Request: {@Request}", request);
 
-            Application.Model.Inventory.Inventory inventory;
-            Application.Model.Inventory.InventoryChange _inventoryChange;
-
             if (request.doCostPost)
             {
                 if ( (!request.PurchaseDetail.QtyPosted) && (!request.doQtyPost))
-                    throw new InvalidOperationException("PurchaseDetailQtyShouldBePosted");
+                    throw new InvalidActionException("Purchase Detail Qty Should Be Posted", ModuleEnum.mdPurchaseDetail, request.PurchaseDetail.Id);
             }
 
             if (!request.doQtyPost)
             {
-                if ((request.PurchaseDetail.FinPosted) && (request.doCostPost))
-                    throw new InvalidOperationException("PurchaseDetailFinShouldBeUnposted");
+                if ((request.PurchaseDetail.CostPosted) && (request.doCostPost))
+                    throw new InvalidActionException("Purchase Detail Cost Should Be Unposted", ModuleEnum.mdPurchaseDetail, request.PurchaseDetail.Id);
             }
 
+
+            Application.Model.Inventory.Inventory inventory;
 
             inventory = await _mediator.Send(
                             new ProductToInventoryCommand {
@@ -77,12 +70,12 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
                             }
                             );
 
+            Application.Model.Inventory.InventoryChange _inventoryChange;
 
             if (request.doQtyPost || request.doCostPost)
             {
-
                     _inventoryChange = await _mediator.Send(
-                        new ChangeInventoryAddCommand
+                        new ChangeInventoryStockLevelCommand
                         {
                             SenderId = ModuleEnum.mdPurchaseDetail,
                             SenderReferenceId = request.PurchaseDetail.Id,
@@ -104,41 +97,17 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
                     request.PurchaseDetail.QtyPosted = true;
 
                 if (request.doCostPost)
-                    request.PurchaseDetail.FinPosted = true;
+                    request.PurchaseDetail.CostPosted = true;
             }
 
-            if (request.doQtyUnPost || request.doCostUnPost)
-            {
 
-                    _inventoryChange = await _mediator.Send(
-                        new ChangeInventoryRemoveCommand
-                        {
-                            SenderId = ModuleEnum.mdPurchaseDetail,
-                            SenderReferenceId = request.PurchaseDetail.Id,
-                            InventoryId = inventory.Id,
-                            doChangeCost = request.doCostUnPost,
-                            doChangeQty = request.doQtyUnPost
-                        }
-                    );
-
-
-                if (request.doQtyUnPost)
-                    request.PurchaseDetail.QtyPosted = false;
-
-                if (request.doCostUnPost)
-                    request.PurchaseDetail.FinPosted = false;
-
-            }
-
-            request.PurchaseDetail.Posted = request.PurchaseDetail.QtyPosted && request.PurchaseDetail.FinPosted;
+            request.PurchaseDetail.Posted = request.PurchaseDetail.QtyPosted && request.PurchaseDetail.CostPosted;
 
             _logger.Information("Request Result: {@Request}", request);
 
             _context.PurchaseDetail.Update(request.PurchaseDetail);
 
             await _context.SaveChangesAsync(cancellationToken);
-
-            _logger.Information("Request Result: {@Request}", request);
 
             var result = await _context.PurchaseDetail.FindAsync(request.PurchaseDetail.Id);
 

@@ -504,7 +504,7 @@ namespace Application.Test.Domains.Procurment.Purchase
                     Note = $"Purchase 1 from vendor:{client1.Name} ",
                     PurchaseName = $"Delivery of Ordered Purchase: Order Number1",
                     xrate = 1,
-                    FinPosted = false,
+                    CostPosted = false,
                     QtyPosted = false,
                     Allocated = false,
                     FinPostStarted = false,
@@ -539,7 +539,7 @@ namespace Application.Test.Domains.Procurment.Purchase
                     CostInvoicedWithoutVat = 2000,
 
                     QtyPosted = false,
-                    FinPosted = false,
+                    CostPosted = false,
 
                     Allocated = false,
 
@@ -573,7 +573,7 @@ namespace Application.Test.Domains.Procurment.Purchase
                     CostInvoicedWithoutVat = 3200,
 
                     QtyPosted = false,
-                    FinPosted = false,
+                    CostPosted = false,
 
                     Allocated = false,
 
@@ -607,7 +607,7 @@ namespace Application.Test.Domains.Procurment.Purchase
                     CostInvoicedWithoutVat = 2200,
 
                     QtyPosted = false,
-                    FinPosted = false,
+                    CostPosted = false,
 
                     Allocated = false,
 
@@ -641,7 +641,7 @@ namespace Application.Test.Domains.Procurment.Purchase
                     CostInvoicedWithoutVat = 6600,
 
                     QtyPosted = false,
-                    FinPosted = false,
+                    CostPosted = false,
 
                     Allocated = false,
 
@@ -675,7 +675,7 @@ namespace Application.Test.Domains.Procurment.Purchase
                     CostInvoicedWithoutVat = 28000,
 
                     QtyPosted = false,
-                    FinPosted = false,
+                    CostPosted = false,
 
                     Allocated = false,
 
@@ -709,7 +709,7 @@ namespace Application.Test.Domains.Procurment.Purchase
                     CostInvoicedWithoutVat = 13700,
 
                     QtyPosted = false,
-                    FinPosted = false,
+                    CostPosted = false,
 
                     Allocated = false,
 

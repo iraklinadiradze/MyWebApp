@@ -64,7 +64,7 @@ namespace Application.Domains.Procurment.PurchaseDetail.Queries.GetPurchaseDetai
                              CostInvoiced = e.CostInvoiced,
                              CostInvoicedEqu = e.CostInvoicedEqu,
                              CostInvoicedWithoutVat = e.CostInvoicedWithoutVat,
-                             FinPosted = e.FinPosted,
+                             CostPosted = e.CostPosted,
                              FinalCost = e.FinalCost,
                              GlAccountId = e.GlAccountId,
                              InventoryCode = e.InventoryCode,

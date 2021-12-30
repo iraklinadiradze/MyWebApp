@@ -167,7 +167,7 @@ namespace Application.Test.Domains.Procurment.Purchase
                 Id = _purchase.Id,
                 SenderId = 0,
                 PurchaseDetailId = null,
-                PurchaseAction = PurchaseAction.paFinPost
+                PurchaseAction = PurchaseAction.paCostPost
             };
 
             var result1 = await _mediator.Send(_updatePurchaseStatusCommand1);

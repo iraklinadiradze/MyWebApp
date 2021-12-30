@@ -61,7 +61,7 @@ namespace Application.Model.Procurment
         public int PurchaseDetailPostTypeId { get; set; }
 
         public bool QtyPosted { get; set; }
-        public bool FinPosted { get; set; }
+        public bool CostPosted { get; set; }
         public bool Posted { get; set; }
 
         [ForeignKey("Inventory")]

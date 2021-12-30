@@ -65,7 +65,7 @@ namespace Application.Model.Procurment
 
         public bool QtyPostStarted { get; set; }
 
-        public bool FinPosted { get; set; }
+        public bool CostPosted { get; set; }
 
         public bool QtyPosted { get; set; }
 

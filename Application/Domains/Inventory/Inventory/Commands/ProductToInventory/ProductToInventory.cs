@@ -15,6 +15,7 @@ using System.Linq;
 using Application.Domains.Inventory.Inventory.Commands.CreateInventory;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Application.Common.Exceptions;
 
 namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
 {
@@ -55,7 +56,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
                               where x.InventoryCode == request.InventoryCode
                               select x).First();
 
-                _logger.Information("Product is Single, Related Found Inventory Is:{@Inventory} ", _inventory);
+                _logger.Information("Product is Single, Related Inventory Found Is:{@Inventory} ", _inventory);
 
                 if (
                     (_inventory != null)
@@ -67,10 +68,9 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
                     )
                    )
                 {
-                    throw new Exception($"Inventory with Code {request.Product.ProductCode} already exists");
+                    throw new InventoryUniqueException(request.InventoryCode, _inventory);
                 }
 
-                // inventory.IsWholeQuantity = true;
             }
             else
             {
@@ -108,9 +108,10 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
                 inventory.ProductId = request.Product.Id;
                 inventory.StartDate = request.StartDate;
 
+                _logger.Information("Create Mew Inventory");
+
                 await _context.Inventory.AddAsync(inventory);
 
-                _logger.Information("Create Mew Inventory");
 
             }
             else

@@ -16,11 +16,11 @@ using Microsoft.EntityFrameworkCore;
 using Application.Domains.Inventory.InventoryChangeType.Common;
 
 using Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseDetailStatusCommand;
+using Application.Common.Exceptions;
 
-
-namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
+namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventoryStockLevel
 {
-    public class ChangeInventoryAddCommand : IRequest<Application.Model.Inventory.InventoryChange>
+    public class ChangeInventoryStockLevelCommand : IRequest<Application.Model.Inventory.InventoryChange>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public int SenderReferenceId { get; set; }
@@ -37,13 +37,13 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
         public decimal CostDecrease { get; set; }
     }
 
-    public class ChangeInventoryAddCommandHandler : IRequestHandler<ChangeInventoryAddCommand, Application.Model.Inventory.InventoryChange>
+    public class ChangeInventoryStockLevelCommandHandler : IRequestHandler<ChangeInventoryStockLevelCommand, Application.Model.Inventory.InventoryChange>
     {
 
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
 
-        public ChangeInventoryAddCommandHandler(IMediator mediator, ICoreDBContext context)
+        public ChangeInventoryStockLevelCommandHandler(IMediator mediator, ICoreDBContext context)
         {
             _mediator = mediator;
             _context = context;
@@ -54,7 +54,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
          * 
          */
 
-        public async Task<Application.Model.Inventory.InventoryChange> Handle(ChangeInventoryAddCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.InventoryChange> Handle(ChangeInventoryStockLevelCommand request, CancellationToken cancellationToken)
         {
 
             if (
@@ -64,7 +64,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                 &&
                 (request.QtyDecrease != Math.Floor(request.QtyDecrease))
                 )
-                throw new Exception($"Inventory {request.Inventory.Id} is not splitable type and may be changed only by whole Number");
+                throw new InvalidActionException("Inventory is not splitable type and may be changed only by whole Number", ModuleEnum.mdInventory, request.Inventory.Id);
 
             if (
                 (request.Inventory.IsSingle == true)
@@ -73,11 +73,10 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                 &&
                 ((request.QtyDecrease != 1) || (request.QtyDecrease != 0))
                 )
-                throw new Exception($"Inventory {request.Inventory.Id} is single type and may be changed only by 1");
+                throw new InvalidActionException("Inventory is single type and may be changed only by 1", ModuleEnum.mdInventory, request.Inventory.Id);
 
 
             Application.Model.Inventory.InventoryChange maxInventoryChange = null;
-
             Application.Model.Inventory.InventoryChange _inventoryChangeNew = null;
             Application.Model.Inventory.InventoryChange _inventoryChangeOld = null;
 
@@ -224,7 +223,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
 
                 if (_inventoryChangeNew.QtyBalance < 0)
                 {
-                    throw new Exception($"Inventory {request.Inventory.Id} Goes below Zero in {request.TransDate} for location {request.LocationId}");
+                    throw new InventoryNotEnoughQtyException(request.Inventory, _inventoryChangeNew.LocationId, _inventoryChangeNew.TransDate);
                 }
 
             }
@@ -304,7 +303,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ChangeInventoryAdd
                             {
                                 PurchaseDetail = _purchaseDetail,
                                 TransDate = invetoryChangeToRecalculate.TransDate,
-                                doCostPost = _purchaseDetail.FinPosted,
+                                doCostPost = _purchaseDetail.CostPosted,
                                 doQtyPost = _purchaseDetail.QtyPosted
                             }
                          ); ;

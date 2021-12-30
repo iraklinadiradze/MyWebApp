@@ -117,28 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PurchaseFinShouldBeUnposted" xml:space="preserve">
-    <value />
+  <data name="Inventory is not splitable type and may be changed only by whole Number" xml:space="preserve">
+    <value>ინვენტარი არაა გახლეჩადი და შეიძლება შეიცვალოს მარტო მთელი რაოდენობით</value>
   </data>
-  <data name="PurchaseIsAlreadyFinPosted" xml:space="preserve">
-    <value />
+  <data name="Inventory is single type and may be changed only by 1" xml:space="preserve">
+    <value>ინვენტარი არის ერტეულოვანი და შეიძლებ შეიცვალოს მარტო 1-ით</value>
   </data>
-  <data name="PurchaseIsAlreadyFinUnposted" xml:space="preserve">
-    <value />
+  <data name="Purchase Cost Is Already Posted" xml:space="preserve">
+    <value>შესყიდვის ღირებულება უკვე დაპოსტილია</value>
   </data>
-  <data name="PurchaseIsAlreadyPosted" xml:space="preserve">
+  <data name="Purchase Cost Is Already Unposted" xml:space="preserve">
+    <value>შესყიდვის ღირებულება უკვე განპოსტილია</value>
+  </data>
+  <data name="Purchase Cost Should Be Unposted" xml:space="preserve">
+    <value>შესყიდვის დეტალი ღირებულება უნდა იყოს განპოსტილი</value>
+  </data>
+  <data name="Purchase Detail Cost Is Already Posted" xml:space="preserve">
+    <value>შესყიდვის დეტალის ღირებულება უკვე დაპოსტილია</value>
+  </data>
+  <data name="Purchase Detail Cost Is Already Unposted" xml:space="preserve">
+    <value>შესყიდვის დეტალის ღირებულება უკვე განპოსტილია</value>
+  </data>
+  <data name="Purchase Detail Cost Should Be Unposted" xml:space="preserve">
+    <value>შესყიდვის დეტალი უნდა იყოს უკვე განპოსტილია</value>
+  </data>
+  <data name="Purchase Detail Is Already Posted" xml:space="preserve">
+    <value>შესყიდვის დეტალი უკვე დაპოსტილია</value>
+  </data>
+  <data name="Purchase Detail Is Already Unposted" xml:space="preserve">
+    <value>შესყიდვის დეტალი უკვე განპოსტილია</value>
+  </data>
+  <data name="Purchase Detail Qty Is Already Posted" xml:space="preserve">
+    <value>შესყიდვის დეტალი რაოდენობრივად უკვე დაპოსტილია</value>
+  </data>
+  <data name="Purchase Detail Qty Is Already Unposted" xml:space="preserve">
+    <value>შესყიდვის დეტალი რაოდენობრივად უკვე განპოსტილია</value>
+  </data>
+  <data name="Purchase Detail Qty Should Be Posted" xml:space="preserve">
+    <value>შესყიდვის დეტალი უნდა იყოს რაოდენობრივად დაპოსტილი</value>
+  </data>
+  <data name="Purchase Is Already Posted" xml:space="preserve">
     <value>შესყიდვა უკვე დაპოსტილია</value>
   </data>
-  <data name="PurchaseIsAlreadyQtyPosted" xml:space="preserve">
-    <value />
+  <data name="Purchase Is Already Qty Posted" xml:space="preserve">
+    <value>შესყიდვა რაოდენობრივად უკვე დაპოსტილია</value>
   </data>
-  <data name="PurchaseIsAlreadyQtyUnposted" xml:space="preserve">
-    <value />
+  <data name="Purchase Is Already Qty Unposted" xml:space="preserve">
+    <value>შესყიდვა რაოდენობრივად უკვე განპოსტილია</value>
   </data>
-  <data name="PurchaseIsAlreadyUnposted" xml:space="preserve">
+  <data name="Purchase Is Already Unposted" xml:space="preserve">
     <value>შესყიდვა უკვე განპოსტილია</value>
   </data>
-  <data name="PurchaseQtyShouldBePosted" xml:space="preserve">
-    <value />
+  <data name="Purchase Qty Should Be Posted" xml:space="preserve">
+    <value>შესყიდვა რაოდენობრივად უნდა იყოს დაპოსტილი</value>
   </data>
 </root>

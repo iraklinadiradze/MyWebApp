@@ -6,10 +6,15 @@ namespace Application.Common.Exceptions
 {
     public class NotFoundException : Exception
     {
-        public NotFoundException(string name, object key)
-            : base($"Entity \"{name}\" ({key}) was not found.")
+        object _key;
+
+        public NotFoundException(string messageTemplate, object key)
+            : base(messageTemplate)
+//            : base($"Entity \"{name}\" ({key}) was not found.")
         {
+            _key = key;
         }
+
     }
 
 }
