@@ -11,11 +11,6 @@ using System.Linq;
 using System.Threading;
 using Xunit;
 using Xunit.Abstractions;
-// using System.ComponentModel;
-// using Shouldly;
-// MediatR.Extensions.Microsoft.DependencyInjection;
-
-// using SimpleInjector;
 
 namespace Application.Test.Domains.Procurment.Purchase
 {

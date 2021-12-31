@@ -293,7 +293,7 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                         (purchaseDetail.QtyPosted != detailQtyPostAction)
                         ||
                         (purchaseDetail.CostPosted != detailCostPostAction)
-                        )
+                       )
                     {
                         var _result = await _mediator.Send(
                         new UpdatePurchaseDetailStatusCommand

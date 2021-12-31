@@ -29,12 +29,13 @@ namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventory
         public InventoryChangeTypeEnum InventoryChangeTypeId { get; set; }
         public DateTime TransDate { get; set; }
         public DateTime TimeSequence { get; set; }
-        public bool doChangeQty { get; set; }
-        public bool doChangeCost { get; set; }
         public decimal QtyIncrease { get; set; }
         public decimal QtyDecrease { get; set; }
         public decimal CostIncrease { get; set; }
         public decimal CostDecrease { get; set; }
+
+        //        public bool doChangeQty { get; set; }
+        //        public bool doChangeCost { get; set; }
     }
 
     public class ChangeInventoryStockLevelCommandHandler : IRequestHandler<ChangeInventoryStockLevelCommand, Application.Model.Inventory.InventoryChange>
@@ -49,10 +50,11 @@ namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventory
             _context = context;
         }
 
-
         /*
          * 
-         */
+         * 
+         * 
+        */
 
         public async Task<Application.Model.Inventory.InventoryChange> Handle(ChangeInventoryStockLevelCommand request, CancellationToken cancellationToken)
         {
@@ -76,8 +78,6 @@ namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventory
                 throw new InvalidActionException("Inventory is single type and may be changed only by 1", ModuleEnum.mdInventory, request.Inventory.Id);
 
 
-            Application.Model.Inventory.InventoryChange maxInventoryChange = null;
-            Application.Model.Inventory.InventoryChange _inventoryChangeNew = null;
             Application.Model.Inventory.InventoryChange _inventoryChangeOld = null;
 
             _inventoryChangeOld = await (from e in _context.InventoryChange
@@ -88,7 +88,6 @@ namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventory
                                         )
                                          select e).FirstOrDefaultAsync();
 
-            //            bool inventoryChangeExists = _inventoryChangeOld != null;
 
             bool isInventoryChangeOldDelete = (
                                                 (request.CostDecrease == 0)
@@ -109,8 +108,14 @@ namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventory
                                                       (_inventoryChangeOld.LocationId != request.LocationId)
                                                       ||
                                                       (_inventoryChangeOld.TransDate != request.TransDate)
+                                                      ||
+                                                      (_inventoryChangeOld.TimeSequence != request.TimeSequence)
                                                    )
                                               );
+
+
+            Application.Model.Inventory.InventoryChange _inventoryChangeNew = null;
+            Application.Model.Inventory.InventoryChange maxInventoryChange = null;
 
             if (
                 (_inventoryChangeOld != null)
@@ -120,7 +125,9 @@ namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventory
                 (_inventoryChangeOld.LocationId == request.LocationId)
                 &&
                 (_inventoryChangeOld.TransDate == request.TransDate)
-                )
+                &&
+                (_inventoryChangeOld.TimeSequence == request.TimeSequence)
+               )
             {
                 _inventoryChangeNew = _inventoryChangeOld;
 
@@ -170,7 +177,7 @@ namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventory
                                                  &&
                                                  (e.LocationId == request.LocationId)
                                                )
-                                                orderby e.TransDate descending
+                                                orderby e.TransDate descending, e.TimeSequence descending
                                                 select e).FirstOrDefaultAsync();
                 }
 
@@ -228,21 +235,37 @@ namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventory
 
             }
 
-            Application.Model.Inventory.InventoryChange _invetoryChangeToRecalculateOld = null;
+            Application.Model.Inventory.InventoryChange _inventoryChangeToRecalculateOld = null;
 
             if (_inventoryChangeOld != null)
             {
-                _invetoryChangeToRecalculateOld = await _context.InventoryChange.Where(p => p.ParentInventoryChangeId == _inventoryChangeOld.Id).FirstOrDefaultAsync();
+                _inventoryChangeToRecalculateOld = await _context.InventoryChange.Where(p => p.ParentInventoryChangeId == _inventoryChangeOld.Id).FirstOrDefaultAsync();
 
-                if (_invetoryChangeToRecalculateOld != null)
+                if (_inventoryChangeToRecalculateOld != null)
                 {
                     if (isInventoryChangeOldDelete)
                     {
-                        _invetoryChangeToRecalculateOld.ParentInventoryChangeId = _inventoryChangeOld.ParentInventoryChangeId;
+                        _inventoryChangeToRecalculateOld.ParentInventoryChangeId = _inventoryChangeOld.ParentInventoryChangeId;
                         _context.InventoryChange.Remove(_inventoryChangeOld);
+
+                        if (
+                           (request.CostDecrease == 0)
+                           &&
+                           (request.CostIncrease == 0)
+                           &&
+                           (request.QtyDecrease == 0)
+                           &&
+                           (request.QtyIncrease == 0)
+                           &&
+                           (request.Inventory.IsSingle==true)
+                           )
+                        {
+                            _context.Inventory.Remove(request.Inventory);
+                        }
+
                     }
 
-                    AffectedInventoryChangeListAdd(_invetoryChangeToRecalculateOld);
+                    AffectedInventoryChangeListAdd(_inventoryChangeToRecalculateOld);
                 }
             }
 
@@ -274,7 +297,7 @@ namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventory
                 }
 
                 if (_invetoryChangeToRecalculateNew != null)
-                    if (_invetoryChangeToRecalculateNew.Id != _invetoryChangeToRecalculateOld.Id)
+                    if (_invetoryChangeToRecalculateNew.Id != _inventoryChangeToRecalculateOld.Id)
                         AffectedInventoryChangeListAdd(_invetoryChangeToRecalculateNew);
 
             }
@@ -312,7 +335,6 @@ namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventory
                 }
 
             }
-
 
             return _inventoryChangeNew;
         }

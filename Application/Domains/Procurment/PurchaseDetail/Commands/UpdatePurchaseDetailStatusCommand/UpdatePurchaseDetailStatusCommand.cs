@@ -72,8 +72,6 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
 
             Application.Model.Inventory.InventoryChange _inventoryChange;
 
-            if (request.doQtyPost || request.doCostPost)
-            {
                     _inventoryChange = await _mediator.Send(
                         new ChangeInventoryStockLevelCommand
                         {
@@ -87,18 +85,15 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
                             QtyDecrease = 0,
                             QtyIncrease = request.doQtyPost ? request.PurchaseDetail.FinalQty:0,
                             InventoryChangeTypeId = InventoryChangeTypeEnum.ictPurchase,
-                            doChangeCost = request.doCostPost,
-                            doChangeQty = request.doQtyPost,
+//                            doChangeCost = request.doCostPost,
+//                            doChangeQty = request.doQtyPost,
                             TimeSequence = request.TimeSequence
                         }
                     );
 
-                if (request.doQtyPost)
-                    request.PurchaseDetail.QtyPosted = true;
+                    request.PurchaseDetail.QtyPosted = request.doQtyPost;
 
-                if (request.doCostPost)
-                    request.PurchaseDetail.CostPosted = true;
-            }
+                    request.PurchaseDetail.CostPosted = request.doCostPost;
 
 
             request.PurchaseDetail.Posted = request.PurchaseDetail.QtyPosted && request.PurchaseDetail.CostPosted;
