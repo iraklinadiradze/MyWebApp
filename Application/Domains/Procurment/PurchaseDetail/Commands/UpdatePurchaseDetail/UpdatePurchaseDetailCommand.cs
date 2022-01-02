@@ -11,6 +11,7 @@ using Application;
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
 using Application.Common;
+using Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseSummary;
 
 namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseDetail
 {
@@ -42,6 +43,22 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
             {
                 throw new NotFoundException(nameof(PurchaseDetail), entity.Id);
             }
+
+            _ = await _mediator.Send(
+                new UpdatePurchaseSummaryCommand
+                {
+                    PurchaseDetail = _entity,
+                    isIncrease = false
+                }
+            );
+
+            _ = await _mediator.Send(
+                new UpdatePurchaseSummaryCommand
+                {
+                    PurchaseDetail = entity,
+                    isIncrease = true
+                }
+            );
 
             _context.PurchaseDetail.Update(entity); // Add(entity);
 

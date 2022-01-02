@@ -22,7 +22,7 @@ namespace Application.Domains.Inventory.Inventory.Commands.ProductToInventory
     public class ProductToInventoryCommand : IRequest<Application.Model.Inventory.Inventory>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public int SenderReferenceId { get; set; }
+        public long SenderReferenceId { get; set; }
         public Application.Model.Product.Product Product { get; set; }
         public bool StockProductPerProcess { get; set; }
         public DateTime StartDate { get; set; }

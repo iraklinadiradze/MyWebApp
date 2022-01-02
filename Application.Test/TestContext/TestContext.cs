@@ -17,6 +17,8 @@ using Xunit.Abstractions;
 using Serilog.Sinks;
 using System.Diagnostics;
 using Application.Test.Pipelines;
+using Application.Model.Procurment;
+using Application.Domains.Procurment.PurchaseDetail.Commands.CreatePurchaseDetail;
 
 namespace Application.Test.TestContext
 {
@@ -169,8 +171,41 @@ namespace Application.Test.TestContext
                     new Application.Model.Inventory.InventoryChangeType{ ChangeCode="PRD", ChangeName="ტრანსფორმაცია" , IsFinRelated= true, IsQtyRelated=false}
                 }
              );
+            _dbContext.SaveChanges();
+
+
+            _dbContext.PurchaseDetailPostType.AddRange(
+                new[]
+                {
+                    new Application.Model.Procurment.PurchaseDetailPostType{ Id=(int)PurchaseDetailPostTypeEnum.pdptInventory, Name="ინვენტარში ასახვა" } ,
+                    new Application.Model.Procurment.PurchaseDetailPostType{ Id=(int)PurchaseDetailPostTypeEnum.pdptCost, Name="ხარჯში ასახვა" } ,
+                    new Application.Model.Procurment.PurchaseDetailPostType{ Id=(int)PurchaseDetailPostTypeEnum.pdptInventory, Name="გადასანაწილებელ ხარჯში ასახვა" },
+                    new Application.Model.Procurment.PurchaseDetailPostType{ Id=(int)PurchaseDetailPostTypeEnum.pdptFinAcc, Name="ფინანსურ ანგარიშზე ასახვა" }
+                }
+             );
+            _dbContext.SaveChanges();
+
+
+            _dbContext.PurchaseAllocationSourceType.AddRange(
+                new[]
+                {
+                    new Application.Model.Procurment.PurchaseAllocationSourceType{ Id=(int)PurchaseDetailSourceTypeEnum.pdstAllocPurchCost, Name="გადასანაწილებელი შესყიდვა" } ,
+                    new Application.Model.Procurment.PurchaseAllocationSourceType{ Id=(int)PurchaseDetailSourceTypeEnum.pdstFinAccount, Name="ფინანსური ანგარიში" } ,
+                }
+             );
 
             _dbContext.SaveChanges();
+
+
+            _dbContext.PurchaseAllocationSchema.AddRange(
+                new[]
+                {
+                    new Application.Model.Procurment.PurchaseAllocationSchema{ Id=(int)PurchaseAllocationSchemaEnum.pasCostWeight, Name="გადანაწილება ღირებულებით" } 
+                }
+             );
+
+            _dbContext.SaveChanges();
+
 
             // Location Seeding
             Application.Model.Inventory.Location location1 =
@@ -733,7 +768,15 @@ namespace Application.Test.TestContext
 
                 };
 
-            _dbContext.PurchaseDetail.AddRange(purchaseDetail1, purchaseDetail2, purchaseDetail3, purchaseDetail4, purchaseDetail5, purchaseDetail6);
+            //            _dbContext.PurchaseDetail.AddRange(purchaseDetail1, purchaseDetail2, purchaseDetail3, purchaseDetail4, purchaseDetail5, purchaseDetail6);
+
+            _ = _mediator.Send(new CreatePurchaseDetailCommand{ PurchaseDetail = purchaseDetail1 });
+            _ = _mediator.Send(new CreatePurchaseDetailCommand { PurchaseDetail = purchaseDetail2 });
+            _ = _mediator.Send(new CreatePurchaseDetailCommand { PurchaseDetail = purchaseDetail3 });
+            _ = _mediator.Send(new CreatePurchaseDetailCommand { PurchaseDetail = purchaseDetail4 });
+            _ = _mediator.Send(new CreatePurchaseDetailCommand { PurchaseDetail = purchaseDetail5 });
+            _ = _mediator.Send(new CreatePurchaseDetailCommand { PurchaseDetail = purchaseDetail6 });
+
             _dbContext.SaveChanges();
 
         }

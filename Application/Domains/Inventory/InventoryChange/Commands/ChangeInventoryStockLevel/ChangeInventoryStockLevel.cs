@@ -23,7 +23,7 @@ namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventory
     public class ChangeInventoryStockLevelCommand : IRequest<Application.Model.Inventory.InventoryChange>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
-        public int SenderReferenceId { get; set; }
+        public long SenderReferenceId { get; set; }
         public Application.Model.Inventory.Inventory Inventory { get; set; }
         public int LocationId { get; set; }
         public InventoryChangeTypeEnum InventoryChangeTypeId { get; set; }

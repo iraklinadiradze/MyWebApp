@@ -63,7 +63,7 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<Purchase>> PostPurchase(Purchase Purchase)
         {
             //            _context.Purchase.Add(Purchase);
-            var result = await _mediator.Send(new CreatePurchaseCommand { Purchase = Purchase});
+            var result = await _mediator.Send(new AllocatePurchaseCommand { Purchase = Purchase});
 
             return result;
         }

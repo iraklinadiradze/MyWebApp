@@ -24,7 +24,7 @@ namespace Application.Domains.Procurment.PurchaseDetail.Queries.GetPurchaseDetai
 
         public class _Purchase
         {
-            public Int32 Id { get; set; }
+            public long Id { get; set; }
         }
 
         public class _PurchaseDetailPostType

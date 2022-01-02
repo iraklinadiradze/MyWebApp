@@ -25,7 +25,7 @@ namespace Application.Model.Procurment
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [FilterParam(equals = true, useInJoin = true)]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required(ErrorMessage = "Transaction Date Is Null")]
         public DateTime TransDate { get; set; }

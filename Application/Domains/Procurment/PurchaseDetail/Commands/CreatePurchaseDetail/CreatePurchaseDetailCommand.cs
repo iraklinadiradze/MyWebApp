@@ -8,6 +8,7 @@ using Application.Model.Procurment;
 using Application;
 using Application.Common.Interfaces;
 using Application.Common;
+using Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseSummary;
 
 namespace Application.Domains.Procurment.PurchaseDetail.Commands.CreatePurchaseDetail
 {
@@ -24,8 +25,8 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.CreatePurchaseD
 
         public CreatePurchaseDetailCommandHandler(IMediator mediator, ICoreDBContext context)
         {
-           _mediator = mediator;
-           _context = context;
+            _mediator = mediator;
+            _context = context;
         }
 
         public async Task<Application.Model.Procurment.PurchaseDetail> Handle(CreatePurchaseDetailCommand request, CancellationToken cancellationToken)
@@ -34,12 +35,20 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.CreatePurchaseD
 
             _context.PurchaseDetail.Add(entity);
 
+            _ = await _mediator.Send(
+                new UpdatePurchaseSummaryCommand
+                {
+                    PurchaseDetail = entity,
+                    isIncrease = true
+                }
+            );
+
             await _context.SaveChangesAsync(cancellationToken);
 
             //await _mediator.Publish(new CustomerCreated { CustomerId = entity.CustomerId }, cancellationToken);
 
             return entity;
-         }
+        }
 
     }
 

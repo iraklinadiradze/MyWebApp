@@ -24,17 +24,17 @@ namespace DataAccessLayer
         // public List<InventoryChange> CostAffectedInventoryChangeList { get; set; } = new List<InventoryChange>();
 
 
-        ///*
+        /*
         public CoreDBContext(DbContextOptions<CoreDBContext> dbContextOptions) : base(dbContextOptions)
         {
 //         return null;
         }
-        //*/
+        */
 
-       public CoreDBContext(DbContextOptions<DbContext> options)
-            : base(options)
-        {
-        }
+//       public CoreDBContext(DbContextOptions<DbContext> options)
+//            : base(options)
+//        {
+//        }
     
         // General Schema
         public virtual DbSet<Currency> Currency { get; set; }
@@ -112,7 +112,7 @@ namespace DataAccessLayer
             if (!optionsBuilder.IsConfigured)
             {
                 ///#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-        //        optionsBuilder.UseSqlServer("Server=.;Database=CoreDB;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Server=.;Database=CoreDB;Integrated Security=True");
 
             }
         }
@@ -121,6 +121,7 @@ namespace DataAccessLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            // return;
 
             //   WithMany
             // General Schema

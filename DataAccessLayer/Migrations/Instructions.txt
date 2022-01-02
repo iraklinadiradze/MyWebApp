@@ -1,11 +1,13 @@
-﻿# Locate Miggration Folder
+﻿# Install ef tools
+dotnet tool install --global dotnet-ef
+
 cd C:\Users\inadir\source\repos\MyWebApp\Application\Model
 
 # Create Migration From Command Console
 dotnet ef migrations add CreateCoreDB
 
 # Remove Migration From Command Console
-ef migrations remove
+dotnet ef migrations remove
 
 # Create Database From Command Console
 dotnet ef database update

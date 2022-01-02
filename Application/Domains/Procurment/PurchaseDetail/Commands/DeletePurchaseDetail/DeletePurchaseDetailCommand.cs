@@ -11,6 +11,7 @@ using Application;
 using Application.Common.Interfaces;
 using Application.Common.Exceptions;
 using Application.Common;
+using Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseSummary;
 
 namespace Application.Domains.Procurment.PurchaseDetail.Commands.DeletePurchaseDetail
 {
@@ -41,7 +42,16 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.DeletePurchaseD
                 throw new NotFoundException(nameof(PurchaseDetail), request.Id);
             }
 
-            _context.PurchaseDetail.Remove(_entity); 
+            _context.PurchaseDetail.Remove(_entity);
+
+            _ = await _mediator.Send(
+                new UpdatePurchaseSummaryCommand
+                {
+                    PurchaseDetail = _entity,
+                    isIncrease = false
+                }
+            );
+
 
             await _context.SaveChangesAsync(cancellationToken);
 

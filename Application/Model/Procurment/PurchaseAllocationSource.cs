@@ -23,11 +23,11 @@ namespace Application.Model.Procurment
         [FilterParam(equals = true, useInJoin = true)]
         public int Id { get; set; }
 
-        public int PurchaseId { get; set; }
+        public long PurchaseId { get; set; }
 
         public int PurchaseAllocationSourceTypeId { get; set; }
 
-        public int AllocPurchaseDetailId { get; set; }
+        public long AllocPurchaseDetailId { get; set; }
 
         public int GlAccountId { get; set; }
 

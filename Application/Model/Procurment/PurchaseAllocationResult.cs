@@ -25,7 +25,7 @@ namespace Application.Model.Procurment
 
         public int PurchaseAllocationSourceId { get; set; }
 
-        public int PurchaseDetailId { get; set; }
+        public long PurchaseDetailId { get; set; }
 
         public decimal Amount{ get; set; }
 

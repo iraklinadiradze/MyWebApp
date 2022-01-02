@@ -113,17 +113,17 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
 
 
             if (
-                (new PurchaseAction[]{
+            (new PurchaseAction[]{
                 PurchaseAction.paFullUnpost,
                 PurchaseAction.paQtyUnpost,
                 PurchaseAction.paQtyUnpostWithDetails,
                 PurchaseAction.paFullUnpostWithDetails
-                }).Any(q => q == request.PurchaseAction)
-                &&
-                //                (request.PurchaseDetailId == null)
-                //                &&
-                (purchase.QtyPosted)
-                )
+            }).Any(q => q == request.PurchaseAction)
+            &&
+            //                (request.PurchaseDetailId == null)
+            //                &&
+            (purchase.QtyPosted)
+            )
             {
                 purchase.QtyPosted = false;
                 purchase.Posted = false;
@@ -288,6 +288,7 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                     )
                    )
                         detailCostPostAction = false;
+
 
                     if (
                         (purchaseDetail.QtyPosted != detailQtyPostAction)

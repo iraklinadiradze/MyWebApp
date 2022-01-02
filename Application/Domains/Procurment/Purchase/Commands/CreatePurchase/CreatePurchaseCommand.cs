@@ -11,13 +11,13 @@ using Application.Common;
 
 namespace Application.Domains.Procurment.Purchase.Commands.CreatePurchase
 {
-    public class CreatePurchaseCommand : IRequest<Application.Model.Procurment.Purchase>
+    public class AllocatePurchaseCommand : IRequest<Application.Model.Procurment.Purchase>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public Application.Model.Procurment.Purchase Purchase { get; set; }
     }
 
-    public class CreatePurchaseCommandHandler : IRequestHandler<CreatePurchaseCommand, Application.Model.Procurment.Purchase>
+    public class CreatePurchaseCommandHandler : IRequestHandler<AllocatePurchaseCommand, Application.Model.Procurment.Purchase>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -28,7 +28,7 @@ namespace Application.Domains.Procurment.Purchase.Commands.CreatePurchase
            _context = context;
         }
 
-        public async Task<Application.Model.Procurment.Purchase> Handle(CreatePurchaseCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.Purchase> Handle(AllocatePurchaseCommand request, CancellationToken cancellationToken)
         {
             var entity = request.Purchase;
 

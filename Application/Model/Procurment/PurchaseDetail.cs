@@ -26,23 +26,19 @@ namespace Application.Model.Procurment
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [FilterParam(equals = true, useInJoin = true)]
-        public int Id { get; set; }
+        public long Id { get; set; }
+        public long PurchaseId { get; set; }
 
-        [ForeignKey("Purchase")]
-        public int PurchaseId { get; set; }
-
-        [ForeignKey("Product")]
         public int ProductId { get; set; }
 
         [MaxLength(30)]
         public string InventoryCode { get; set; }
 
         [MaxLength(8)]
-        public string PurchaseDraftVersion{ get; set; }
+        public string PurchaseDraftVersion { get; set; }
 
         public int PurchaseDraftId { get; set; }
 
-        [ForeignKey("Location")]
         public int LocationId { get; set; }
 
         public decimal QtyInvoiced { get; set; }
@@ -57,14 +53,12 @@ namespace Application.Model.Procurment
         public decimal CostCalculated { get; set; }
         public decimal CostCalculatedEqu { get; set; }
 
-        [ForeignKey("PurchaseDetailPostType")]
         public int PurchaseDetailPostTypeId { get; set; }
 
         public bool QtyPosted { get; set; }
         public bool CostPosted { get; set; }
         public bool Posted { get; set; }
 
-        [ForeignKey("Inventory")]
         public long InventoryId { get; set; }
         public int GlAccountId { get; set; }
         public int ProjectId { get; set; }
@@ -72,19 +66,25 @@ namespace Application.Model.Procurment
         public decimal AddCost { get; set; }
         public decimal FinalCost { get; set; }
         public decimal FinalQty { get; set; }
-        public bool Allocated{ get; set; }
+        public bool Allocated { get; set; }
         public bool StockProductPerProcess { get; set; }
 
-//        public virtual Purchase Purchase { get; set; }
 
-//        public virtual Product.Product Product { get; set; }
+        [ForeignKey("PurchaseId")]
+        public virtual Purchase Purchase { get; set; }
 
-//        public virtual Location Location { get; set; }
+        [ForeignKey("InventoryId")]
+        public virtual Inventory.Inventory Inventory { get; set; }
 
-//        public virtual Inventory.Inventory Inventory { get; set; }
+        [ForeignKey("ProductId")]
+        public virtual Product.Product Product { get; set; }
 
-//        public virtual PurchaseDetailPostType PurchaseDetailPostType { get; set; }
+        [ForeignKey("LocationId")]
+        public virtual Location Location { get; set; }
 
+
+        [ForeignKey("PurchaseDetailPostTypeId")]
+        public virtual PurchaseDetailPostType PurchaseDetailPostType { get; set; }
 
     }
 }
