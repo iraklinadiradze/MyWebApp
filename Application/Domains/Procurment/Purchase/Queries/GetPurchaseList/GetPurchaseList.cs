@@ -55,7 +55,7 @@ namespace Application.Domains.Procurment.Purchase.Queries.GetPurchaseList
                              Allocated = e.Allocated,
                              ClientId = e.ClientId,
                              CurrencyId = e.CurrencyId,
-                             FinPostStarted = e.FinPostStarted,
+                             CostPostStarted = e.CostPostStarted,
                              CostPosted = e.CostPosted,
                              InvoiceNumber = e.InvoiceNumber,
                              Note = e.Note,

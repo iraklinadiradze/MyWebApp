@@ -49,6 +49,15 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
 
             // Validate Post Actions
 
+            if (
+                (request.PurchaseAction == PurchaseAction.paCostPost)
+                ||
+                (request.PurchaseAction == PurchaseAction.paFullPost)
+               )
+                if (!purchase.Allocated)
+                    throw new InvalidActionException("Purchase Should Be Allocated", ModuleEnum.mdPurchase, purchase.Id);
+
+
             if (request.PurchaseAction == PurchaseAction.paFullPost)
             {
                 if (purchase.Posted)
@@ -318,14 +327,14 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                                        group x by 0 into y
                                        select new
                                        {
-                                           finPostStartedNew = (bool)(y.Sum(z => z.CostPosted ? 1 : 0) > 0) ? true : false,
+                                           CostPostStartedNew = (bool)(y.Sum(z => z.CostPosted ? 1 : 0) > 0) ? true : false,
                                            qtyPostStartedNew = (bool)(y.Sum(z => z.QtyPosted ? 1 : 0) > 0) ? true : false,
                                            CostPostedNew = (bool)(y.Min(z => z.CostPosted ? 1 : 0) == 0) ? true : false,
                                            qtyPostedNew = (bool)(y.Min(z => z.QtyPosted ? 1 : 0) == 0) ? true : false
                                        }).First();
 
 
-            purchase.FinPostStarted = finalPurchaseStatus.finPostStartedNew;
+            purchase.CostPostStarted = finalPurchaseStatus.CostPostStartedNew;
             purchase.QtyPostStarted = finalPurchaseStatus.qtyPostStartedNew;
             purchase.CostPosted = finalPurchaseStatus.CostPostedNew;
             purchase.QtyPosted = finalPurchaseStatus.qtyPostedNew;
