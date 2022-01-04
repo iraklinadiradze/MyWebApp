@@ -129,6 +129,9 @@
   <data name="Purchase Cost Is Already Unposted" xml:space="preserve">
     <value>შესყიდვის ღირებულება უკვე განპოსტილია</value>
   </data>
+  <data name="Purchase Cost Is Posted" xml:space="preserve">
+    <value>შესყიდვის ღირებულება დაპოსტილია</value>
+  </data>
   <data name="Purchase Cost Should Be Unposted" xml:space="preserve">
     <value>შესყიდვის დეტალი ღირებულება უნდა იყოს განპოსტილი</value>
   </data>
@@ -156,6 +159,9 @@
   <data name="Purchase Detail Qty Should Be Posted" xml:space="preserve">
     <value>შესყიდვის დეტალი უნდა იყოს რაოდენობრივად დაპოსტილი</value>
   </data>
+  <data name="Purchase Is Already Allocated" xml:space="preserve">
+    <value>შესყიდვაზე ხარჯები უკვე გადანაწილებულია</value>
+  </data>
   <data name="Purchase Is Already Posted" xml:space="preserve">
     <value>შესყიდვა უკვე დაპოსტილია</value>
   </data>
@@ -165,10 +171,16 @@
   <data name="Purchase Is Already Qty Unposted" xml:space="preserve">
     <value>შესყიდვა რაოდენობრივად უკვე განპოსტილია</value>
   </data>
+  <data name="Purchase Is Already Unallocated" xml:space="preserve">
+    <value>შესყიდვაზე ხარჯები გადანაწილება უკვე მოხსნილია</value>
+  </data>
   <data name="Purchase Is Already Unposted" xml:space="preserve">
     <value>შესყიდვა უკვე განპოსტილია</value>
   </data>
   <data name="Purchase Qty Should Be Posted" xml:space="preserve">
     <value>შესყიდვა რაოდენობრივად უნდა იყოს დაპოსტილი</value>
+  </data>
+  <data name="Purchase Should Be Allocated" xml:space="preserve">
+    <value>შესყიდვა უნდა იყოს გადანაწილებული</value>
   </data>
 </root>

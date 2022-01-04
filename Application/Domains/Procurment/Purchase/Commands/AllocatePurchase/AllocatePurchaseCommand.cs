@@ -48,62 +48,39 @@ namespace Application.Domains.Procurment.Purchase.Commands.AllocatePurchase
                 if (purchase.Allocated)
                     throw new InvalidActionException("Purchase Is Already Allocated", ModuleEnum.mdPurchase, purchase.Id);
 
-                decimal costToAllocateFromOtherPurchase = 0;
-                decimal costToAllocateFromFinAcc = 0;
-                decimal costToAllocate = 0;
 
-                decimal costAllocated = 0;
+                var relatedPurchases = from e in _context.PurchaseAllocationSource
+                                       join f in _context.PurchaseDetail
+                                       on e.AllocPurchaseDetailId equals f.Id
+                                       where
+                                           (e.PurchaseId == request.Id)
+                                       select new
+                                       {
+                                           PurchaseAllocationSourceId = e.Id,
+                                           PurchaseDetailToAllocate = f,
+                                           PurchaseAllocationSourceTypeId = e.PurchaseAllocationSourceTypeId
+                                       };
 
-                costToAllocateFromOtherPurchase = (from e in _context.PurchaseAllocationSource
-                                                   join f in _context.PurchaseDetail
-                                                   on e.AllocPurchaseDetailId equals f.Id
-                                                   where
-                                                       (e.PurchaseId == request.Id)
-                                                       &&
-                                                       (e.PurchaseAllocationSourceTypeId == (int)PurchaseDetailSourceTypeEnum.pdstAllocPurchCost)
-                                                   select f.FinalCost
-                        ).Sum();
 
-                costToAllocate = costToAllocateFromOtherPurchase + costToAllocateFromFinAcc;
-
-                Application.Model.Procurment.PurchaseDetail maxPurchaseDetail = null;
-
-                foreach (
-                    var purchaseDetail in _context.PurchaseDetail.Where(
-                        q => (q.PurchaseId == purchase.Id)
-                    )
-                )
+                foreach (var relatedPurchase in relatedPurchases)
                 {
-                    decimal addAmount = 0;
 
-                    addAmount = Decimal.Floor(purchaseDetail.CostCalculatedEqu / purchase.TotalCostInvoicedEqu * costToAllocate * 100) / 100;
-                    purchaseDetail.AddCost = addAmount;
-                    purchaseDetail.FinalCost = purchaseDetail.CostCalculatedEqu + addAmount;
+                    _logger.Information("Purchase Detail to be Allocated Retrieved: {@PurchaseDetails}", relatedPurchase);
 
-                    costAllocated = costAllocated + addAmount;
+                    if (relatedPurchase.PurchaseAllocationSourceTypeId == (int)PurchaseDetailSourceTypeEnum.pdstAllocPurchCost)
+                        _ = await _mediator.Send(new AllocateWeightedCostAverageCommand
+                        {
+                            SenderId = ModuleEnum.mdPurchase,
+                            Purchase = purchase,
+                            PurchaseAllocationSourceId = relatedPurchase.PurchaseAllocationSourceId,
+                            PurchaseDetail = relatedPurchase.PurchaseDetailToAllocate
+                        });
 
-                    if (maxPurchaseDetail == null)
-                    { maxPurchaseDetail = purchaseDetail; }
-                    else
-                    {
-                        if (purchaseDetail.CostCalculatedEqu > maxPurchaseDetail.CostCalculatedEqu)
-                            maxPurchaseDetail = purchaseDetail;
-                    }
-
-                    _context.PurchaseDetail.Update(purchaseDetail);
                 }
 
-                if (costAllocated != costToAllocate)
-                    if (maxPurchaseDetail != null)
-                    {
-                        maxPurchaseDetail.AddCost = maxPurchaseDetail.AddCost + costToAllocate - costAllocated;
-                        maxPurchaseDetail.FinalCost = maxPurchaseDetail.CostCalculatedEqu + maxPurchaseDetail.AddCost;
-                        _context.PurchaseDetail.Update(maxPurchaseDetail);
-                    }
-
                 purchase.Allocated = true;
-            }
 
+            }
             else
             {
                 if (!purchase.Allocated)
@@ -115,18 +92,36 @@ namespace Application.Domains.Procurment.Purchase.Commands.AllocatePurchase
                 if (purchase.CostPostStarted)
                     throw new InvalidActionException("Purchase Cost Is Posted", ModuleEnum.mdPurchase, purchase.Id);
 
-                purchase.Allocated = false;
 
+                var purchaseAllocationResult = from e in _context.PurchaseAllocationSource
+                                               join f in _context.PurchaseAllocationResult
+                                               on e.AllocPurchaseDetailId equals f.Id
+                                               where
+                                               (e.PurchaseId == request.Id)
+                                               &&
+                                               (e.Id == f.PurchaseAllocationSourceId)
+                                               select f;
+
+                foreach (var _purchaseAllocationResult in purchaseAllocationResult)
+                {
+                    _context.PurchaseAllocationResult.Remove(_purchaseAllocationResult);
+
+                    _logger.Information("Purchase Allocation Result Removed: {@PurchaseAllocationResult}", _purchaseAllocationResult);
+                }
+
+
+                purchase.Allocated = false;
             }
 
             _context.Purchase.Update(purchase);
+            _logger.Information("Purchase Updated: {@Purchase}", purchase);
 
             await _context.SaveChangesAsync(cancellationToken);
 
+            _logger.Information("Purchase Allocation Finished {Id}", purchase.Id);
 
             return request.Id;
         }
-
     }
 
 }

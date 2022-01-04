@@ -18,9 +18,9 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
         //        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public Application.Model.Procurment.PurchaseDetail PurchaseDetail { get; set; }
         public bool doQtyPost { get; set; }
-//        public bool doQtyUnPost { get; set; }
+        //        public bool doQtyUnPost { get; set; }
         public bool doCostPost { get; set; }
- //       public bool doCostUnPost { get; set; }
+        //       public bool doCostUnPost { get; set; }
         public DateTime TransDate { get; set; }
         public DateTime TimeSequence { get; set; }
     }
@@ -46,7 +46,7 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
 
             if (request.doCostPost)
             {
-                if ( (!request.PurchaseDetail.QtyPosted) && (!request.doQtyPost))
+                if ((!request.PurchaseDetail.QtyPosted) && (!request.doQtyPost))
                     throw new InvalidActionException("Purchase Detail Qty Should Be Posted", ModuleEnum.mdPurchaseDetail, request.PurchaseDetail.Id);
             }
 
@@ -59,41 +59,47 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
 
             Application.Model.Inventory.Inventory inventory;
 
-            inventory = await _mediator.Send(
-                            new ProductToInventoryCommand {
-                                SenderId = ModuleEnum.mdPurchaseDetail,
-                                SenderReferenceId = request.PurchaseDetail.Id,
-                                InventoryCode = request.PurchaseDetail.InventoryCode,
-                                StartDate =  request.TransDate,
-                                Product = await _context.Product.FindAsync(request.PurchaseDetail.ProductId),
-                                StockProductPerProcess = request.PurchaseDetail.StockProductPerProcess
-                            }
-                            );
+            if (request.PurchaseDetail.Product.IsTangible == true)
+            {
 
-            Application.Model.Inventory.InventoryChange _inventoryChange;
+                inventory = await _mediator.Send(
+                                new ProductToInventoryCommand
+                                {
+                                    SenderId = ModuleEnum.mdPurchaseDetail,
+                                    SenderReferenceId = request.PurchaseDetail.Id,
+                                    InventoryCode = request.PurchaseDetail.InventoryCode,
+                                    StartDate = request.TransDate,
+                                    Product = await _context.Product.FindAsync(request.PurchaseDetail.ProductId),
+                                    StockProductPerProcess = request.PurchaseDetail.StockProductPerProcess
+                                }
+                                );
 
-                    _inventoryChange = await _mediator.Send(
-                        new ChangeInventoryStockLevelCommand
-                        {
-                            SenderId = ModuleEnum.mdPurchaseDetail,
-                            SenderReferenceId = request.PurchaseDetail.Id,
-                            Inventory = inventory,
-                            LocationId = request.PurchaseDetail.LocationId,
-                            TransDate = request.TransDate,
-                            CostDecrease = 0,
-                            CostIncrease = request.doCostPost?request.PurchaseDetail.FinalCost:0,
-                            QtyDecrease = 0,
-                            QtyIncrease = request.doQtyPost ? request.PurchaseDetail.FinalQty:0,
-                            InventoryChangeTypeId = InventoryChangeTypeEnum.ictPurchase,
-//                            doChangeCost = request.doCostPost,
-//                            doChangeQty = request.doQtyPost,
+                Application.Model.Inventory.InventoryChange _inventoryChange;
+
+                _inventoryChange = await _mediator.Send(
+                    new ChangeInventoryStockLevelCommand
+                    {
+                        SenderId = ModuleEnum.mdPurchaseDetail,
+                        SenderReferenceId = request.PurchaseDetail.Id,
+                        Inventory = inventory,
+                        LocationId = request.PurchaseDetail.LocationId,
+                        TransDate = request.TransDate,
+                        CostDecrease = 0,
+                        CostIncrease = request.doCostPost ? request.PurchaseDetail.FinalCost : 0,
+                        QtyDecrease = 0,
+                        QtyIncrease = request.doQtyPost ? request.PurchaseDetail.FinalQty : 0,
+                        InventoryChangeTypeId = InventoryChangeTypeEnum.ictPurchase,
+                            //                            doChangeCost = request.doCostPost,
+                            //                            doChangeQty = request.doQtyPost,
                             TimeSequence = request.TimeSequence
-                        }
-                    );
+                    }
+                );
 
-                    request.PurchaseDetail.QtyPosted = request.doQtyPost;
+            }
 
-                    request.PurchaseDetail.CostPosted = request.doCostPost;
+            request.PurchaseDetail.QtyPosted = request.doQtyPost;
+
+            request.PurchaseDetail.CostPosted = request.doCostPost;
 
 
             request.PurchaseDetail.Posted = request.PurchaseDetail.QtyPosted && request.PurchaseDetail.CostPosted;

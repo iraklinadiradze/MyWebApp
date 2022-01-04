@@ -21,9 +21,9 @@ namespace Application.Model.Procurment
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [FilterParam(equals = true, useInJoin = true)]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
-        public int PurchaseAllocationSourceId { get; set; }
+        public long PurchaseAllocationSourceId { get; set; }
 
         public long PurchaseDetailId { get; set; }
 

@@ -129,6 +129,9 @@
   <data name="Purchase Cost Is Already Unposted" xml:space="preserve">
     <value>Purchase Cost Is Already Unposted</value>
   </data>
+  <data name="Purchase Cost Is Posted" xml:space="preserve">
+    <value>Purchase Cost Is Posted</value>
+  </data>
   <data name="Purchase Cost Should Be Unposted" xml:space="preserve">
     <value>Purchase Cost Should Be Unposted</value>
   </data>
@@ -156,6 +159,9 @@
   <data name="Purchase Detail Qty Should Be Posted" xml:space="preserve">
     <value>Purchase Detail Qty Should Be Posted</value>
   </data>
+  <data name="Purchase Is Already Allocated" xml:space="preserve">
+    <value>Purchase Is Already Allocated</value>
+  </data>
   <data name="Purchase Is Already Posted" xml:space="preserve">
     <value>Purchase Is Already Posted</value>
   </data>
@@ -165,10 +171,16 @@
   <data name="Purchase Is Already Qty Unposted" xml:space="preserve">
     <value>Purchase Is Already Qty Unposted</value>
   </data>
+  <data name="Purchase Is Already Unallocated" xml:space="preserve">
+    <value>Purchase Is Already Unallocated</value>
+  </data>
   <data name="Purchase Is Already Unposted" xml:space="preserve">
     <value>Purchase Is Already Unposted</value>
   </data>
   <data name="Purchase Qty Should Be Posted" xml:space="preserve">
     <value>Purchase Qty Should Be Posted</value>
+  </data>
+  <data name="Purchase Should Be Allocated" xml:space="preserve">
+    <value>Purchase Should Be Allocated</value>
   </data>
 </root>

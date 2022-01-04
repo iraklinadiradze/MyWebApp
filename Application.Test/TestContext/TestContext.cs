@@ -338,7 +338,6 @@ namespace Application.Test.TestContext
             _dbContext.SaveChanges();
 
 
-
             // Product Seeding
             Application.Model.Product.Product product1 =
                 new Application.Model.Product.Product
@@ -404,7 +403,6 @@ namespace Application.Test.TestContext
                     ProductName = "Product 5",
                     ProductGroupId = productGroup1_2.Id
                 };
-
 
             Application.Model.Product.Product product6 =
                 new Application.Model.Product.Product
@@ -497,8 +495,47 @@ namespace Application.Test.TestContext
                     ProductGroupId = productGroup2_2.Id
                 };
 
+            Application.Model.Product.Product productTransportation =
+                new Application.Model.Product.Product
+                {
+                    ProductCode = "TR-001",
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    IsSingle = false,
+                    IsTangible = false,
+                    IsWholeQuantity = true,
+                    ProductLabelId = productlabel1.Id,
+                    ProductName = "Transportation",
+                    ProductGroupId = productGroup2_2.Id
+                };
+
+            Application.Model.Product.Product productImportService =
+                new Application.Model.Product.Product
+                {
+                    ProductCode = "IMP-001",
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    IsSingle = false,
+                    IsTangible = false,
+                    IsWholeQuantity = true,
+                    ProductLabelId = productlabel1.Id,
+                    ProductName = "Transportation",
+                    ProductGroupId = productGroup2_2.Id
+                };
+
+            Application.Model.Product.Product productVAT =
+                new Application.Model.Product.Product
+                {
+                    ProductCode = "VAT",
+                    ProductUnitId = _dbContext.ProductUnit.Where(x => x.ProductUnitName == "ცალი").FirstOrDefault().Id,
+                    IsSingle = false,
+                    IsTangible = false,
+                    IsWholeQuantity = true,
+                    ProductLabelId = productlabel1.Id,
+                    ProductName = "Transportation",
+                    ProductGroupId = productGroup2_2.Id
+                };
+
             _dbContext.Product.AddRange(product1, product2, product3, product4, product5, product6, product7, 
-                product8, product9, product10, product11, product12);
+                product8, product9, product10, product11, product12, productTransportation, productImportService, productVAT);
 
             _dbContext.SaveChanges();
 
@@ -554,7 +591,7 @@ namespace Application.Test.TestContext
                     CostPosted = false,
                     QtyPosted = false ,
                     Allocated = false,
-                    FinPostStarted = false,
+                    CostPostStarted = false,
                     QtyPostStarted =  false,
                     ProcInInventory =  false,
                     Posted = false
