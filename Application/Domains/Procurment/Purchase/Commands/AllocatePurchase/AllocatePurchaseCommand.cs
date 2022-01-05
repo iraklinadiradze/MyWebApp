@@ -11,6 +11,7 @@ using Application.Common;
 using System.Linq;
 using Application.Common.Exceptions;
 
+
 namespace Application.Domains.Procurment.Purchase.Commands.AllocatePurchase
 {
     public class AllocatePurchaseCommand : IRequest<long>

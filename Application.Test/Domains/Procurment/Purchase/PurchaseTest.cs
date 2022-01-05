@@ -745,7 +745,7 @@ namespace Application.Test.Domains.Procurment.Purchase
 
             Application.Model.Procurment.Purchase _purchase = _dbContext.Purchase.FirstOrDefault();
 
-            UpdatePurchaseStatusCommand _updatePurchaseStatusCommand = new UpdatePurchaseStatusCommand
+            UpdateMovementStatusCommand _updatePurchaseStatusCommand = new UpdateMovementStatusCommand
             {
                 Id = _purchase.Id,
                 SenderId = 0,

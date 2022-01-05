@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Common.Attributes;
 
 using Application.Model.Core;
+using System.ComponentModel;
 
 namespace Application.Model.Inventory
 {
@@ -32,20 +33,34 @@ namespace Application.Model.Inventory
 
         public int ReceiveLocationId { get; set; }
 
-        public bool? SendQtyPostStarted { get; set; }
-        public bool? SendFinPostStarted { get; set; }
+        [DefaultValue("false")]
+        public bool SendQtyPostStarted { get; set; }
 
-        public bool? ReceiveQtyPostStarted { get; set; }
-        public bool? ReceiveFinPostStarted { get; set; }
+        [DefaultValue("false")]
+        public bool SendCostPostStarted { get; set; }
 
-        public bool? SendQtyPosted { get; set; }
-        public bool? SendFinPosted { get; set; }
+        [DefaultValue("false")]
+        public bool ReceiveQtyPostStarted { get; set; }
+        [DefaultValue("false")]
+        public bool ReceiveFinPostStarted { get; set; }
 
-        public bool? ReceiveQtyPosted { get; set; }
-        public bool? ReceiveFinPosted { get; set; }
+        [DefaultValue("false")]
+        public bool SendQtyPosted { get; set; }
 
-        public bool? SendPosted { get; set; }
-        public bool? ReceivePosted { get; set; }
+        [DefaultValue("false")]
+        public bool SendCostPosted { get; set; }
+
+        [DefaultValue("false")]
+        public bool ReceiveQtyPosted { get; set; }
+
+        [DefaultValue("false")]
+        public bool ReceiveCostPosted { get; set; }
+
+        [DefaultValue("false")]
+        public bool SendPosted { get; set; }
+
+        [DefaultValue("false")]
+        public bool ReceivePosted { get; set; }
 
         public virtual ICollection<MovementDetail> MovementDetail{ get; set; }
 

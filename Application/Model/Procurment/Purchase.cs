@@ -6,6 +6,7 @@ using Common.Attributes;
 
 using Application.Model.Client;
 using Application.Model.Core;
+using System.ComponentModel;
 
 namespace Application.Model.Procurment
 {
@@ -33,12 +34,11 @@ namespace Application.Model.Procurment
         [MaxLength(40)]
         public string InvoiceNumber { get; set; }
 
-        [ForeignKey("Client")]
         public int ClientId { get; set; }
 
-        [ForeignKey("Currency")]
         public int CurrencyId { get; set; }
 
+        [DefaultValue(0)]
         public decimal xrate { get; set; }
 
         public bool ProcInInventory { get; set; }
@@ -49,32 +49,44 @@ namespace Application.Model.Procurment
 
         public string Note { get; set; }
 
+        [DefaultValue(0)]
         public decimal TotalCostInvoiced { get; set; }
 
+        [DefaultValue(0)]
         public decimal TotalCostInvoicedEqu { get; set; }
 
+        [DefaultValue(0)]
         public decimal TotalAllocCost{ get; set; }
 
+        [DefaultValue(0)]
         public decimal TotalFinalCostEqu { get; set; }
 
+        [DefaultValue("false")]
         public bool AllocStarted { get; set; }
 
+        [DefaultValue("false")]
         public bool Allocated { get; set; }
 
+        [DefaultValue("false")]
         public bool CostPostStarted { get; set; }
 
+        [DefaultValue("false")]
         public bool QtyPostStarted { get; set; }
 
+        [DefaultValue("false")]
         public bool CostPosted { get; set; }
 
+        [DefaultValue("false")]
         public bool QtyPosted { get; set; }
 
+        [DefaultValue("false")]
         public bool Posted { get; set; }
 
+        [ForeignKey("ClientId")]
+        public virtual Client.Client Client{ get; set; }
 
-//        public virtual Client.Client Client{ get; set; }
-
-  //      public virtual Currency Currency { get; set; }
+        [ForeignKey("CurrencyId")]
+        public virtual Currency Currency { get; set; }
 
 
     }

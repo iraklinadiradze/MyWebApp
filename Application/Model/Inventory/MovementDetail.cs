@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Common.Attributes;
 
 using Application.Model.Product;
+using System.ComponentModel;
 
 namespace Application.Model.Inventory
 {
@@ -30,20 +31,35 @@ namespace Application.Model.Inventory
         [FilterParam(equals = true, useInJoin = true)]
         public long InventoryId { get; set; }
 
-        public decimal? SendQty { get; set; }
-        public decimal? SendValue { get; set; }
+        [DefaultValue(0)]
+        public decimal SendQty { get; set; }
 
-        public decimal? ReceiveQty { get; set; }
-        public decimal? ReceiveValue { get; set; }
+        [DefaultValue(0)]
+        public decimal SendValue { get; set; }
 
-        public bool? SendQtyPosted { get; set; }
-        public bool? SendFinPosted { get; set; }
+        [DefaultValue(0)]
+        public decimal ReceiveQty { get; set; }
 
-        public bool? ReceiveQtyPosted { get; set; }
-        public bool? ReceiveFinPosted { get; set; }
-        
-        public bool? SendPosted { get; set; }
-        public bool? ReceivePosted { get; set; }
+        [DefaultValue(false)]
+        public decimal ReceiveValue { get; set; }
+
+        [DefaultValue(false)]
+        public bool SendQtyPosted { get; set; }
+
+        [DefaultValue(false)]
+        public bool SendCostPosted { get; set; }
+
+        [DefaultValue(false)]
+        public bool ReceiveQtyPosted { get; set; }
+
+        [DefaultValue(false)]
+        public bool ReceiveCostPosted { get; set; }
+
+        [DefaultValue(false)]
+        public bool SendPosted { get; set; }
+
+        [DefaultValue(false)]
+        public bool ReceivePosted { get; set; }
 
         [ForeignKey("MovementId")]
         public virtual Movement Movement { get; set; }

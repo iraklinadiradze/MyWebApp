@@ -16,6 +16,7 @@ namespace Application.Model.Procurment
 
         public PurchaseAllocationSourceType()
         {
+
         }
 
         [Key]

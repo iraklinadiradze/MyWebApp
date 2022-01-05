@@ -17,7 +17,7 @@ using Application.Common.Exceptions;
 
 namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusCommand
 {
-    public class UpdatePurchaseStatusCommand : IRequest<Application.Model.Procurment.Purchase>
+    public class UpdateMovementStatusCommand : IRequest<Application.Model.Procurment.Purchase>
     {
         public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public int Id { get; set; }
@@ -25,7 +25,7 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
         public PurchaseAction PurchaseAction { get; set; }
     }
 
-    public class UpdatePurchaseStatusCommandHandler : IRequestHandler<UpdatePurchaseStatusCommand, Application.Model.Procurment.Purchase>
+    public class UpdatePurchaseStatusCommandHandler : IRequestHandler<UpdateMovementStatusCommand, Application.Model.Procurment.Purchase>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
@@ -38,7 +38,7 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
             _logger = logger;
         }
 
-        public async Task<Application.Model.Procurment.Purchase> Handle(UpdatePurchaseStatusCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.Purchase> Handle(UpdateMovementStatusCommand request, CancellationToken cancellationToken)
         {
 
             _logger.Information("Request UpdatePurchaseStatusCommandHandler: {@Request}", request);

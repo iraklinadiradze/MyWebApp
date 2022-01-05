@@ -76,7 +76,7 @@ namespace Application.Test.Domains.Procurment.Purchase
 
             Application.Model.Procurment.Purchase _purchase = _dbContext.Purchase.FirstOrDefault();
 
-            UpdatePurchaseStatusCommand _updatePurchaseStatusCommand = new UpdatePurchaseStatusCommand { 
+            UpdateMovementStatusCommand _updatePurchaseStatusCommand = new UpdateMovementStatusCommand { 
                 Id = _purchase.Id, 
                 SenderId = 0, 
                 PurchaseDetailId = null, 
@@ -109,7 +109,7 @@ namespace Application.Test.Domains.Procurment.Purchase
 
                 Application.Model.Procurment.Purchase _purchase = _dbContext.Purchase.FirstOrDefault();
 
-                UpdatePurchaseStatusCommand _updatePurchaseStatusCommand = new UpdatePurchaseStatusCommand
+                UpdateMovementStatusCommand _updatePurchaseStatusCommand = new UpdateMovementStatusCommand
                 {
                     Id = _purchase.Id,
                     SenderId = 0,
@@ -147,7 +147,7 @@ namespace Application.Test.Domains.Procurment.Purchase
 
             Application.Model.Procurment.Purchase _purchase = _dbContext.Purchase.FirstOrDefault();
 
-            UpdatePurchaseStatusCommand _updatePurchaseStatusCommand = new UpdatePurchaseStatusCommand
+            UpdateMovementStatusCommand _updatePurchaseStatusCommand = new UpdateMovementStatusCommand
             {
                 Id = _purchase.Id,
                 SenderId = 0,
@@ -157,7 +157,7 @@ namespace Application.Test.Domains.Procurment.Purchase
 
             var result = await _mediator.Send(_updatePurchaseStatusCommand);
 
-            UpdatePurchaseStatusCommand _updatePurchaseStatusCommand1 = new UpdatePurchaseStatusCommand
+            UpdateMovementStatusCommand _updatePurchaseStatusCommand1 = new UpdateMovementStatusCommand
             {
                 Id = _purchase.Id,
                 SenderId = 0,
