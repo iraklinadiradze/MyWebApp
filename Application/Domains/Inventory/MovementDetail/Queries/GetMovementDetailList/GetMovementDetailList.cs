@@ -59,12 +59,12 @@ namespace Application.Domains.Inventory.MovementDetail.Queries.GetMovementDetail
                              ReceivePosted = e.ReceivePosted,
                              ReceiveQty = e.ReceiveQty,
                              ReceiveQtyPosted = e.ReceiveQtyPosted,
-                             ReceiveValue = e.ReceiveValue,
+                             ReceiveCost = e.ReceiveCost,
                              SendFinPosted = e.SendFinPosted,
                              SendPosted = e.SendPosted,
                              SendQty = e.SendQty,
                              SendQtyPosted = e.SendQtyPosted,
-                             SendValue = e.SendValue,
+                             SendCost = e.SendCost,
                              inventory = new MovementDetailView._Inventory
                              {
                                  Id = _inventory.Id,

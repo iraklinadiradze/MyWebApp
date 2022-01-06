@@ -70,7 +70,7 @@ namespace Application.Domains.Inventory.MovementDetail.Commands.UpdateMovementDe
                         LocationId = request.Movement.ReceiveLocationId,
                         TransDate = (DateTime)request.Movement.ReceiveDate,
                         CostDecrease = 0,
-                        CostIncrease = request.MovementDetail.ReceiveValue,
+                        CostIncrease = request.MovementDetail.ReceiveCost,
                         QtyDecrease = 0,
                         QtyIncrease = request.MovementDetail.ReceiveQty,
                         InventoryChangeTypeId = InventoryChangeTypeEnum.ictMovement,

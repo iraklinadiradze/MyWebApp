@@ -69,7 +69,7 @@ namespace Application.Domains.Inventory.MovementDetail.Commands.UpdateMovementDe
                         Inventory = inventory,
                         LocationId = request.Movement.SendLocationId,
                         TransDate = (DateTime)request.Movement.SendDate,
-                        CostDecrease = request.MovementDetail.SendValue,
+                        CostDecrease = request.MovementDetail.SendCost,
                         CostIncrease = 0,
                         QtyDecrease = request.MovementDetail.SendQty,
                         QtyIncrease = 0,

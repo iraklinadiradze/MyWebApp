@@ -35,13 +35,13 @@ namespace Application.Model.Inventory
         public decimal SendQty { get; set; }
 
         [DefaultValue(0)]
-        public decimal SendValue { get; set; }
+        public decimal SendCost { get; set; }
 
         [DefaultValue(0)]
         public decimal ReceiveQty { get; set; }
 
         [DefaultValue(false)]
-        public decimal ReceiveValue { get; set; }
+        public decimal ReceiveCost { get; set; }
 
         [DefaultValue(false)]
         public bool SendQtyPosted { get; set; }
