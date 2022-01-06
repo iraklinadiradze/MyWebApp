@@ -24,7 +24,6 @@ namespace Application.Model.Inventory
         [FilterParam(equals = true, useInJoin = true)]
         public long Id { get; set; }
 
-        [ForeignKey("Product")]
         public int ProductId { get; set; }
 
         [MaxLength(50)]
@@ -44,7 +43,9 @@ namespace Application.Model.Inventory
         public long? EntityForeignId { get; set; }
         public string EntityProcCode { get; set; }
 
-//        public virtual Product.Product Product { get; set; }
+        [ForeignKey("ProductId")]
+        public virtual Product.Product Product { get; set; }
+
 //        public virtual ProductUnit ProductUnit { get; set; }
 
         //      public virtual ICollection<MovementDetail> MovementDetails { get; set; }

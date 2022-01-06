@@ -306,7 +306,7 @@ namespace Application.Domains.Procurment.Purchase.Commands.UpdatePurchaseStatusC
                        )
                     {
                         var _result = await _mediator.Send(
-                        new UpdatePurchaseDetailStatusCommand
+                        new UpdateMovementDetailStatusCommand
                         {
                             PurchaseDetail = purchaseDetail,
                             TransDate = purchase.TransDate,

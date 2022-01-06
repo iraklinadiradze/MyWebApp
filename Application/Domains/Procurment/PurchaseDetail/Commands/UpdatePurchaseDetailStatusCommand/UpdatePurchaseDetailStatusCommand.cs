@@ -13,7 +13,7 @@ using Application.Common.Exceptions;
 
 namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseDetailStatusCommand
 {
-    public class UpdatePurchaseDetailStatusCommand : IRequest<Application.Model.Procurment.PurchaseDetail>
+    public class UpdateMovementDetailStatusCommand : IRequest<Application.Model.Procurment.PurchaseDetail>
     {
         //        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
         public Application.Model.Procurment.PurchaseDetail PurchaseDetail { get; set; }
@@ -25,7 +25,7 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
         public DateTime TimeSequence { get; set; }
     }
 
-    public class UpdatePurchaseDetailStatusCommandHandler : IRequestHandler<UpdatePurchaseDetailStatusCommand, Application.Model.Procurment.PurchaseDetail>
+    public class UpdatePurchaseDetailStatusCommandHandler : IRequestHandler<UpdateMovementDetailStatusCommand, Application.Model.Procurment.PurchaseDetail>
     {
 
         private readonly IMediator _mediator;
@@ -39,7 +39,7 @@ namespace Application.Domains.Procurment.PurchaseDetail.Commands.UpdatePurchaseD
             _logger = logger;
         }
 
-        public async Task<Application.Model.Procurment.PurchaseDetail> Handle(UpdatePurchaseDetailStatusCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Procurment.PurchaseDetail> Handle(UpdateMovementDetailStatusCommand request, CancellationToken cancellationToken)
         {
 
             _logger.Information("Request: {@Request}", request);

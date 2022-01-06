@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,33 +16,33 @@ using Application.Common.Exceptions;
 using Application.Domains.Inventory.Movement;
 using Application.Domains.Inventory.MovementDetail.Commands.UpdateMovementDetailStatusCommand;
 
-namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendStatusCommand
+namespace Application.Domains.Procurment.movement.Commands.UpdateMovementReceiveStatusCommand
 {
-    public class UpdateMovementSendStatusCommand : IRequest<Application.Model.Inventory.Movement>
+    public class UpdateMovementReceiveStatusCommand : IRequest<Application.Model.Inventory.Movement>
     {
-        public ModuleEnum SenderId { get; set; } = ModuleEnum.mdUndefined;
+        public ModuleEnum ReceiveerId { get; set; } = ModuleEnum.mdUndefined;
         public int Id { get; set; }
         public long? MovementDetailId { get; set; }
         public MovementAction MovementAction { get; set; }
     }
 
-    public class UpdateMovementSendStatusCommandHandler : IRequestHandler<UpdateMovementSendStatusCommand, Application.Model.Inventory.Movement>
+    public class UpdateMovementReceiveStatusCommandHandler : IRequestHandler<UpdateMovementReceiveStatusCommand, Application.Model.Inventory.Movement>
     {
         private readonly IMediator _mediator;
         private readonly ICoreDBContext _context;
         private readonly Serilog.ILogger _logger;
 
-        public UpdateMovementSendStatusCommandHandler(IMediator mediator, ICoreDBContext context, Serilog.ILogger logger)
+        public UpdateMovementReceiveStatusCommandHandler(IMediator mediator, ICoreDBContext context, Serilog.ILogger logger)
         {
             _mediator = mediator;
             _context = context;
             _logger = logger;
         }
 
-        public async Task<Application.Model.Inventory.Movement> Handle(UpdateMovementSendStatusCommand request, CancellationToken cancellationToken)
+        public async Task<Application.Model.Inventory.Movement> Handle(UpdateMovementReceiveStatusCommand request, CancellationToken cancellationToken)
         {
 
-            _logger.Information("Request UpdateMovementSendStatusCommandHandler: {@Request}", request);
+            _logger.Information("Request UpdateMovementReceiveStatusCommandHandler: {@Request}", request);
 
             var movement = await _context.Movement.FindAsync(request.Id);
 
@@ -52,23 +53,23 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
 
             if (request.MovementAction == MovementAction.maFullPost)
             {
-                if (movement.SendPosted)
-                    throw new InvalidActionException("Movement Send Part Is Already Posted", ModuleEnum.mdMovement, request.Id);
+                if (movement.ReceivePosted)
+                    throw new InvalidActionException("Movement Receive Part Is Already Posted", ModuleEnum.mdMovement, request.Id);
             }
 
             if (request.MovementAction == MovementAction.maQtyPost)
             {
-                if (movement.SendQtyPosted)
-                    throw new InvalidActionException("Movement Send Qty Is Already Posted", ModuleEnum.mdMovement, request.Id);
+                if (movement.ReceiveQtyPosted)
+                    throw new InvalidActionException("Movement Receive Qty Is Already Posted", ModuleEnum.mdMovement, request.Id);
             }
 
             if (request.MovementAction == MovementAction.maCostPost)
             {
-                if (movement.SendCostPosted)
+                if (movement.ReceiveCostPosted)
                     throw new InvalidActionException("Movement Cost Is Already Posted", ModuleEnum.mdMovement, request.Id);
 
-                if ((!movement.SendQtyPosted) && (request.MovementDetailId == null))
-                    throw new InvalidActionException("Movement Send Qty Should Be Posted", ModuleEnum.mdMovement, request.Id);
+                if ((!movement.ReceiveQtyPosted) && (request.MovementDetailId == null))
+                    throw new InvalidActionException("Movement Receive Qty Should Be Posted", ModuleEnum.mdMovement, request.Id);
             }
 
 
@@ -76,22 +77,22 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
 
             if (request.MovementAction == MovementAction.maFullUnpost)
             {
-                if (!movement.SendPosted)
+                if (!movement.ReceivePosted)
                     throw new InvalidActionException("Movement Is Already Unposted", ModuleEnum.mdMovement, request.Id);
             }
 
             if (request.MovementAction == MovementAction.maCostUnpost)
             {
-                if (!movement.SendCostPosted)
+                if (!movement.ReceiveCostPosted)
                     throw new InvalidActionException("movement Cost Is Already Unposted", ModuleEnum.mdMovement, request.Id);
             }
 
             if (request.MovementAction == MovementAction.maQtyUnpost)
             {
-                if (!movement.SendQtyPosted)
+                if (!movement.ReceiveQtyPosted)
                     throw new InvalidActionException("movement Qty Is Already Unposted", ModuleEnum.mdMovement, request.Id);
 
-                if ((movement.SendCostPosted) && (request.MovementDetailId == null))
+                if ((movement.ReceiveCostPosted) && (request.MovementDetailId == null))
                     throw new InvalidActionException("movement Cost Should Be Unposted", ModuleEnum.mdMovement, request.Id);
             }
 
@@ -104,11 +105,11 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
                 MovementAction.maFullUnpostWithDetails
             }).Any(q => q == request.MovementAction)
             &&
-            (movement.SendQtyPosted)
+            (movement.ReceiveQtyPosted)
             )
             {
-                movement.SendQtyPosted = false;
-                movement.SendPosted = false;
+                movement.ReceiveQtyPosted = false;
+                movement.ReceivePosted = false;
                 _context.Movement.Update(movement);
             }
 
@@ -122,11 +123,11 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
                 &&
                 //                (request.MovementDetailId == null)
                 //                &&
-                (movement.SendCostPosted)
+                (movement.ReceiveCostPosted)
                 )
             {
-                movement.SendCostPosted = false;
-                movement.SendPosted = false;
+                movement.ReceiveCostPosted = false;
+                movement.ReceivePosted = false;
                 _context.Movement.Update(movement);
             }
 
@@ -161,7 +162,7 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
                         (request.MovementDetailId != null)
                        )
                     {
-                        if (MovementDetail.SendPosted)
+                        if (MovementDetail.ReceivePosted)
                             throw new InvalidActionException("movement Detail Is Already Posted", ModuleEnum.mdMovementDetail, MovementDetail.Id);
                     }
 
@@ -171,16 +172,16 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
                         (request.MovementDetailId != null)
                        )
                     {
-                        if (MovementDetail.SendQtyPosted)
+                        if (MovementDetail.ReceiveQtyPosted)
                             throw new InvalidActionException("movement Detail Qty Is Already Posted", ModuleEnum.mdMovementDetail, MovementDetail.Id);
                     }
 
                     if (request.MovementAction == MovementAction.maCostPost)
                     {
-                        if ((MovementDetail.SendCostPosted) && (request.MovementDetailId != null))
+                        if ((MovementDetail.ReceiveCostPosted) && (request.MovementDetailId != null))
                             throw new InvalidActionException("movement Detail Cost Is Already Posted", ModuleEnum.mdMovementDetail, MovementDetail.Id);
 
-                        if (!MovementDetail.SendQtyPosted)
+                        if (!MovementDetail.ReceiveQtyPosted)
                             throw new InvalidActionException("movement Detail Qty Should Be Posted", ModuleEnum.mdMovementDetail, MovementDetail.Id);
                     }
 
@@ -190,7 +191,7 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
                         (request.MovementAction == MovementAction.maFullUnpostWithDetails)
                        )
                     {
-                        if ((!MovementDetail.SendPosted) && (request.MovementDetailId != null))
+                        if ((!MovementDetail.ReceivePosted) && (request.MovementDetailId != null))
                             throw new InvalidActionException("movement Detail Is Already Unposted", ModuleEnum.mdMovementDetail, MovementDetail.Id);
                     }
 
@@ -200,10 +201,10 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
                         (request.MovementAction == MovementAction.maQtyUnpostWithDetails)
                        )
                     {
-                        if ((!MovementDetail.SendQtyPosted) && (request.MovementDetailId != null))
+                        if ((!MovementDetail.ReceiveQtyPosted) && (request.MovementDetailId != null))
                             throw new InvalidActionException("movement Detail Qty Is Already Unposted", ModuleEnum.mdMovementDetail, MovementDetail.Id);
 
-                        if (!MovementDetail.SendCostPosted)
+                        if (!MovementDetail.ReceiveCostPosted)
                             throw new InvalidActionException("movement Detail Cost Should Be Unposted", ModuleEnum.mdMovementDetail, MovementDetail.Id);
                     }
 
@@ -213,7 +214,7 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
                         (request.MovementAction == MovementAction.maCostUnpostWithDetails)
                        )
                     {
-                        if ((!MovementDetail.SendCostPosted) && (request.MovementDetailId != null))
+                        if ((!MovementDetail.ReceiveCostPosted) && (request.MovementDetailId != null))
                             throw new InvalidActionException("movement Detail Cost Is Already Unposted", ModuleEnum.mdMovementDetail, MovementDetail.Id);
                     }
 
@@ -222,7 +223,7 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
                     bool detailCostPostAction = false;
 
                     if (
-                        (!MovementDetail.SendQtyPosted)
+                        (!MovementDetail.ReceiveQtyPosted)
                         &&
                         (
                         (request.MovementAction == MovementAction.maFullPost)
@@ -235,7 +236,7 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
                     }
 
                     if (
-                        (MovementDetail.SendQtyPosted)
+                        (MovementDetail.ReceiveQtyPosted)
                         &&
                         (
                         (request.MovementAction == MovementAction.maFullUnpostWithDetails)
@@ -246,7 +247,7 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
                         detailQtyPostAction = false;
 
                     if (
-                        (!MovementDetail.SendCostPosted)
+                        (!MovementDetail.ReceiveCostPosted)
                         &&
                         (
                         (request.MovementAction == MovementAction.maFullPost)
@@ -259,7 +260,7 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
                     }
 
                     if (
-                    (MovementDetail.SendCostPosted)
+                    (MovementDetail.ReceiveCostPosted)
                     &&
                     (
                     (request.MovementAction == MovementAction.maCostUnpostWithDetails)
@@ -273,13 +274,13 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
 
 
                     if (
-                        (MovementDetail.SendQtyPosted != detailQtyPostAction)
+                        (MovementDetail.ReceiveQtyPosted != detailQtyPostAction)
                         ||
-                        (MovementDetail.SendCostPosted != detailCostPostAction)
+                        (MovementDetail.ReceiveCostPosted != detailCostPostAction)
                        )
                     {
-                        var _result = await _mediator.Send(
-                        new UpdateMovementDetailSendStatusCommand
+                        var _result = await _mediator.Receive(
+                        new UpdateMovementDetailReceiveStatusCommand
                         {
                             MovementDetail = MovementDetail,
                             Movement = movement,
@@ -300,17 +301,17 @@ namespace Application.Domains.Procurment.movement.Commands.UpdateMovementSendSta
                                        group x by 0 into y
                                        select new
                                        {
-                                           SendCostPostStartedNew = (bool)(y.Sum(z => z.SendCostPosted ? 1 : 0) > 0) ? true : false,
-                                           SendqtyPostStartedNew = (bool)(y.Sum(z => z.SendQtyPosted ? 1 : 0) > 0) ? true : false,
-                                           SendCostPostedNew = (bool)(y.Min(z => z.SendCostPosted ? 1 : 0) == 0) ? true : false,
-                                           SendqtyPostedNew = (bool)(y.Min(z => z.SendQtyPosted ? 1 : 0) == 0) ? true : false
+                                           ReceiveCostPostStartedNew = (bool)(y.Sum(z => z.ReceiveCostPosted ? 1 : 0) > 0) ? true : false,
+                                           ReceiveqtyPostStartedNew = (bool)(y.Sum(z => z.ReceiveQtyPosted ? 1 : 0) > 0) ? true : false,
+                                           ReceiveCostPostedNew = (bool)(y.Min(z => z.ReceiveCostPosted ? 1 : 0) == 0) ? true : false,
+                                           ReceiveqtyPostedNew = (bool)(y.Min(z => z.ReceiveQtyPosted ? 1 : 0) == 0) ? true : false
                                        }).First();
 
 
-            movement.SendCostPostStarted = finalmovementStatus.SendCostPostStartedNew;
-            movement.SendQtyPostStarted = finalmovementStatus.SendqtyPostStartedNew;
-            movement.SendCostPosted = finalmovementStatus.SendCostPostedNew;
-            movement.SendQtyPosted = finalmovementStatus.SendqtyPostedNew;
+            movement.ReceiveCostPostStarted = finalmovementStatus.ReceiveCostPostStartedNew;
+            movement.ReceiveQtyPostStarted = finalmovementStatus.ReceiveqtyPostStartedNew;
+            movement.ReceiveCostPosted = finalmovementStatus.ReceiveCostPostedNew;
+            movement.ReceiveQtyPosted = finalmovementStatus.ReceiveqtyPostedNew;
 
             _logger.Information("movement Result Status: {@ResultStatus}", finalmovementStatus);
 

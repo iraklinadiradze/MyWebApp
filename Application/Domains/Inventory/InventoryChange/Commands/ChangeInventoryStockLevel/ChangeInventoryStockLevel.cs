@@ -322,7 +322,7 @@ namespace Application.Domains.Inventory.InventoryChange.Commands.ChangeInventory
                         var _purchaseDetail = await _context.PurchaseDetail.FindAsync(invetoryChangeToRecalculate.EntityForeignId);
 
                         await _mediator.Send(
-                            new UpdatePurchaseDetailStatusCommand
+                            new UpdateMovementDetailStatusCommand
                             {
                                 PurchaseDetail = _purchaseDetail,
                                 TransDate = invetoryChangeToRecalculate.TransDate,
