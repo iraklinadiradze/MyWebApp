@@ -78,11 +78,8 @@ namespace Application.Domains.Inventory.MovementDetail.Commands.UpdateMovementDe
                     }
                 );
 
-
             request.MovementDetail.ReceiveQtyPosted = request.doQtyPost;
-
             request.MovementDetail.ReceiveCostPosted = request.doCostPost;
-
 
             request.MovementDetail.ReceivePosted = request.MovementDetail.ReceiveQtyPosted && request.MovementDetail.ReceiveCostPosted;
 

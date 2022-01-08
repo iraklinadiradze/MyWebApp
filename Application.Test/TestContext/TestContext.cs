@@ -39,10 +39,12 @@ namespace Application.Test.TestContext
         {
             var builder = new DbContextOptionsBuilder<CoreDBContext>();
             builder.UseInMemoryDatabase(databaseName: "LibraryDbInMemory");
+            
 
             _builder = builder;
 
             _dbContext = new CoreDBContext(builder.Options);
+            _dbContext.ChangeTracker.LazyLoadingEnabled = false;
             _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
 
